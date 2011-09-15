@@ -1,9 +1,9 @@
 //
 // java-signals - Simple, type-safe event dispatching
 // Copyright (c) 2011, Three Rings Design, Inc. - All rights reserved.
-// https://github.com/threerings/java-signals/blob/master/LICENSE
+// https://github.com/osjava/java-signals/blob/master/LICENSE
 
-package com.threerings.signals;
+package org.osjava.signals;
 
 import static org.junit.Assert.assertEquals;
 

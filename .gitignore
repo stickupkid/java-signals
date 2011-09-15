@@ -3,3 +3,5 @@
 .settings
 dist
 target
+*.iml
+.idea
