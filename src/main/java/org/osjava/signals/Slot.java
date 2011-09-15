@@ -5,7 +5,6 @@ package org.osjava.signals;
  * User: simonrichardson
  * Date: 15/09/2011
  * Time: 22:18
- * To change this template use File | Settings | File Templates.
  */
 public interface Slot<SignalListenerType extends SignalListener>
 {

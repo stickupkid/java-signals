@@ -1,7 +1,6 @@
 package org.osjava.signals;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,10 +49,8 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     protected SlotType findSlotByListener(SignalListenerType listener)
     {
-        final ListIterator<SlotType> iterator = bindings.listIterator() ;
-        while(iterator.hasNext())
+        for(SlotType slot : bindings)
         {
-            SlotType slot = iterator.next();
             if(slot.equals(listener)) return slot;
         }
         return null;
