@@ -13,8 +13,10 @@ public interface Slot<SignalListenerType extends SignalListener>
     void remove();
 
     SignalListenerType getListener();
+
     void setListener(SignalListenerType value);
 
     boolean getOnce();
+
     void setOnce(boolean value);
 }

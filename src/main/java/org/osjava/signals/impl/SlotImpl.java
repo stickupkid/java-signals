@@ -1,4 +1,8 @@
-package org.osjava.signals;
+package org.osjava.signals.impl;
+
+import org.osjava.signals.Signal;
+import org.osjava.signals.SignalListener;
+import org.osjava.signals.Slot;
 
 /**
  * Created by IntelliJ IDEA.
@@ -7,7 +11,7 @@ package org.osjava.signals;
  * Time: 23:09
  */
 public class SlotImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
-                                       implements Slot<SignalListenerType>
+        implements Slot<SignalListenerType>
 {
 
     private Signal<SlotType, SignalListenerType> signal;

@@ -1,4 +1,8 @@
-package org.osjava.signals;
+package org.osjava.signals.impl;
+
+import org.osjava.signals.Signal;
+import org.osjava.signals.SignalListener;
+import org.osjava.signals.Slot;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -10,7 +14,7 @@ import java.util.ListIterator;
  * Time: 22:33
  */
 public abstract class SignalImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
-                            implements Signal<SlotType, SignalListenerType>
+        implements Signal<SlotType, SignalListenerType>
 {
 
     public final static boolean DEFAULT_ONCE = false;
@@ -30,12 +34,11 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
     public SlotType remove(SignalListenerType listener)
     {
         final SlotType slot = findSlotByListener(listener);
-        if(slot != null)
+        if (slot != null)
         {
             bindings.remove(slot);
             return slot;
-        }
-        else return null;
+        } else return null;
     }
 
     public void removeAll()
@@ -50,18 +53,16 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     protected SlotType findSlotByListener(SignalListenerType listener)
     {
-        final ListIterator<SlotType> iterator = bindings.listIterator() ;
-        while(iterator.hasNext())
+        for(SlotType slot : bindings)
         {
-            SlotType slot = iterator.next();
-            if(slot.equals(listener)) return slot;
+            if (slot.equals(listener)) return slot;
         }
         return null;
     }
 
     protected SlotType registerListener(SignalListenerType listener, boolean once)
     {
-        if(registrationPossible(listener, once))
+        if (registrationPossible(listener, once))
         {
             final SlotType slot = (SlotType) new SlotImpl(this, listener, once);
             bindings.add(slot);
@@ -73,17 +74,17 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     protected boolean registrationPossible(SignalListenerType listener, boolean once)
     {
-        if(bindings.size() > 0) return true;
+        if (bindings.size() > 0) return true;
         else
         {
             final SlotType slot = findSlotByListener(listener);
-            if(slot == null) return true;
+            if (slot == null) return true;
             else
             {
-                if(slot.getOnce() != once)
+                if (slot.getOnce() != once)
                 {
                     throw new IllegalArgumentException("You cannot addOnce() then add() the " +
-                                        "same listener without removing the relationship first.");
+                            "same listener without removing the relationship first.");
                 }
 
                 return false;
