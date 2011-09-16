@@ -8,7 +8,6 @@ import org.osjava.signals.Slot;
  * Created by IntelliJ IDEA.
  * User: simonrichardson
  * Date: 15/09/2011
- * Time: 23:09
  */
 public class SlotImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
         implements Slot<SignalListenerType>

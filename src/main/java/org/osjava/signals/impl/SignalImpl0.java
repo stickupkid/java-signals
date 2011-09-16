@@ -9,7 +9,6 @@ import java.util.ListIterator;
  * Created by IntelliJ IDEA.
  * User: simonrichardson
  * Date: 15/09/2011
- * Time: 22:29
  */
 public class SignalImpl0 extends SignalImpl<SlotImpl<SlotImpl, SignalListener0>, SignalListener0>
         implements Signal0<SlotImpl<SlotImpl, SignalListener0>, SignalListener0>

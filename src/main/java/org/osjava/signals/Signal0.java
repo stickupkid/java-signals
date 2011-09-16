@@ -8,6 +8,8 @@ package org.osjava.signals;
 public interface Signal0<SlotType extends Slot, SignalListenerType extends SignalListener>
         extends Signal<SlotType, SignalListenerType>
 {
-
-    void dispatch();
+    /**
+	 * Dispatches an object to listeners.
+     */
+    public void dispatch();
 }

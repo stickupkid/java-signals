@@ -7,7 +7,6 @@ import org.osjava.signals.impl.SignalImpl0;
  * Created by IntelliJ IDEA.
  * User: simonrichardson
  * Date: 15/09/2011
- * Time: 22:40
  */
 enum SignalType
 {
