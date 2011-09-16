@@ -9,7 +9,7 @@ public interface SignalListener1<A> extends SignalListener
 {
     /**
      * Listener called when dispatch on the signal is called.
-     * @param value which is the type of signal
+     * @param value which is the first passed argument
      */
     public void apply(A value);
 }

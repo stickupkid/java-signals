@@ -18,8 +18,11 @@ public class SignalImpl1<A> extends SignalImpl<SlotImpl<SlotImpl, SignalListener
         for(SlotImpl slot : bindings)
         {
             SignalListener1 listener = (SignalListener1) slot.getListener();
-            if (slot.getOnce()) slot.remove();
-            listener.apply(value);
+            if (slot.getEnabled())
+            {
+                if (slot.getOnce()) slot.remove();
+                if (listener != null) listener.apply(value);
+            }
         }
     }
 }

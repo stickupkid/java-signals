@@ -19,11 +19,14 @@ public class SlotImpl<SlotType extends Slot, SignalListenerType extends SignalLi
 
     private boolean once;
 
+    private boolean enabled;
+
     public SlotImpl(Signal<SlotType, SignalListenerType> signal,
                     SignalListenerType listener,
                     boolean once)
     {
         this.signal = signal;
+        this.enabled = true;
 
         setListener(listener);
         setOnce(once);
@@ -52,5 +55,15 @@ public class SlotImpl<SlotType extends Slot, SignalListenerType extends SignalLi
     public void setOnce(boolean value)
     {
         once = value;
+    }
+
+    public boolean getEnabled()
+    {
+        return enabled;
+    }
+
+    public void setEnabled(boolean value)
+    {
+        enabled = value;
     }
 }

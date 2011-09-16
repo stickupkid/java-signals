@@ -10,6 +10,7 @@ public interface Signal1<A, SlotType extends Slot, SignalListenerType extends Si
 {
     /**
 	 * Dispatches an object to listeners.
+     * @param value which is the first passed argument
      */
     public void dispatch(A value);
 }
