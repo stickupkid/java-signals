@@ -8,6 +8,8 @@ package org.osjava.signals;
  */
 public interface SignalListener0 extends SignalListener
 {
-
-    void apply();
+    /**
+     * Listener called when dispatch on the signal is called.
+     */
+    public void apply();
 }
