@@ -25,6 +25,21 @@ public class Signals
         return new SignalImpl2<A, B>();
     }
 
+    public static PrioritySignalImpl0 createPrioritySignal0()
+    {
+        return new PrioritySignalImpl0();
+    }
+
+    public static <A> PrioritySignalImpl1<A> createPrioritySignal1()
+    {
+        return new PrioritySignalImpl1<A>();
+    }
+
+    public static <A, B> PrioritySignalImpl2<A, B> createPrioritySignal2()
+    {
+        return new PrioritySignalImpl2<A, B>();
+    }
+
     public static MonoSignalImpl0 createMonoSignal0()
     {
         return new MonoSignalImpl0();
