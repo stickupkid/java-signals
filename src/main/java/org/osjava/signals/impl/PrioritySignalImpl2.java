@@ -16,17 +16,6 @@ public class PrioritySignalImpl2<A,
         SignalListener2>
 {
 
-    final private DispatcherImpl2<A, B, PrioritySlotImpl<PrioritySlotImpl, SignalListener2>,
-            SignalListenerImpl2> dispatcher;
-
-    public PrioritySignalImpl2()
-    {
-        super();
-
-        dispatcher = new DispatcherImpl2<A, B, PrioritySlotImpl<PrioritySlotImpl, SignalListener2>,
-                SignalListenerImpl2>(bindings);
-    }
-
     public void dispatch(A value0, B value1)
     {
         dispatcher.dispatch(value0, value1);

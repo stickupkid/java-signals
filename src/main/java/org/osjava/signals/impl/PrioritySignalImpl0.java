@@ -14,17 +14,6 @@ public class PrioritySignalImpl0 extends PrioritySignalImpl<PrioritySlotImpl<Pri
         implements Signal0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>, SignalListener0>
 {
 
-    final private DispatcherImpl0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>,
-            SignalListenerImpl0> dispatcher;
-
-    public PrioritySignalImpl0()
-    {
-        super();
-
-        dispatcher = new DispatcherImpl0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>,
-                SignalListenerImpl0>(bindings);
-    }
-
     public void dispatch()
     {
         dispatcher.dispatch();

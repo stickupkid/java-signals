@@ -19,6 +19,8 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     protected final ArrayList<SlotType> bindings = new ArrayList<SlotType>();
 
+    protected final DispatcherImpl<SlotType> dispatcher = new DispatcherImpl<SlotType>(bindings);
+
     /**
      * @param    listener A function with arguments
      * that matches the value classes dispatched by the signal.
