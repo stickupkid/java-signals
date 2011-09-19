@@ -37,4 +37,8 @@ public interface Slot<SignalListenerType extends SignalListener>
      * @param  value which is to set wheter the slot will be removed after use.
      */
     public void setOnce(boolean value);
+
+    public boolean getEnabled();
+
+    public void setEnabled(boolean value);
 }

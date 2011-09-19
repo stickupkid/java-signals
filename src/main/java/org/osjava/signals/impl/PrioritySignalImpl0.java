@@ -14,16 +14,19 @@ public class PrioritySignalImpl0 extends PrioritySignalImpl<PrioritySlotImpl<Pri
         implements Signal0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>, SignalListener0>
 {
 
+    final private DispatcherImpl0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>,
+            SignalListenerImpl0> dispatcher;
+
+    public PrioritySignalImpl0()
+    {
+        super();
+
+        dispatcher = new DispatcherImpl0<PrioritySlotImpl<PrioritySlotImpl, SignalListener0>,
+                SignalListenerImpl0>(bindings);
+    }
+
     public void dispatch()
     {
-        for(SlotImpl slot : bindings)
-        {
-            SignalListener0 listener = (SignalListener0) slot.getListener();
-            if (slot.getEnabled())
-            {
-                if (slot.getOnce()) slot.remove();
-                if (listener != null) listener.apply();
-            }
-        }
+        dispatcher.dispatch();
     }
 }
