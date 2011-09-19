@@ -103,21 +103,9 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
     {
         if (registrationPossible(listener, once))
         {
-            SlotType slot;
-            try
-            {
-                slot = (SlotType) new SlotImpl(this, listener, once);
-            }
-            catch(NullPointerException exception)
-            {
-                slot = null;
-            }
-
-            if(slot != null)
-            {
-                bindings.add(slot);
-                return slot;
-            }
+            SlotType slot = (SlotType) new SlotImpl(this, listener, once);
+            bindings.add(slot);
+            return slot;
         }
 
         return findSlotByListener(listener);

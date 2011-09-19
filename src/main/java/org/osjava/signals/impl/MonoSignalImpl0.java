@@ -3,6 +3,8 @@ package org.osjava.signals.impl;
 import org.osjava.signals.Signal0;
 import org.osjava.signals.SignalListener0;
 
+import java.util.ArrayList;
+
 /**
  * Created by IntelliJ IDEA.
  * User: simonrichardson
@@ -14,13 +16,19 @@ public class MonoSignalImpl0 extends MonoSignalImpl<SlotImpl<SlotImpl, SignalLis
         implements Signal0<SlotImpl<SlotImpl, SignalListener0>, SignalListener0>
 {
 
+    final private DispatcherImpl0<SlotImpl<SlotImpl, SignalListener0>,
+            SignalListenerImpl0> dispatcher;
+
+    public MonoSignalImpl0()
+    {
+        super();
+
+        dispatcher = new DispatcherImpl0<SlotImpl<SlotImpl, SignalListener0>,
+                SignalListenerImpl0>(bindings);
+    }
+
     public void dispatch()
     {
-        SignalListener0 listener = slot.getListener();
-        if (slot.getEnabled())
-        {
-            if (slot.getOnce()) slot.remove();
-            if (listener != null) listener.apply();
-        }
+        dispatcher.dispatch();
     }
 }

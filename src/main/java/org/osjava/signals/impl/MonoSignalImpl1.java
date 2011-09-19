@@ -14,13 +14,19 @@ public class MonoSignalImpl1<A> extends MonoSignalImpl<SlotImpl<SlotImpl, Signal
         implements Signal1<A, SlotImpl<SlotImpl, SignalListener1>, SignalListener1>
 {
 
-    public void dispatch(A value)
+    final private DispatcherImpl1<A, SlotImpl<SlotImpl, SignalListener1>,
+            SignalListenerImpl1> dispatcher;
+
+    public MonoSignalImpl1()
     {
-        SignalListener1 listener = slot.getListener();
-        if (slot.getEnabled())
-        {
-            if (slot.getOnce()) slot.remove();
-            if (listener != null) listener.apply(value);
-        }
+        super();
+
+        dispatcher = new DispatcherImpl1<A, SlotImpl<SlotImpl, SignalListener1>,
+                SignalListenerImpl1>(bindings);
+    }
+
+    public void dispatch(A value0)
+    {
+        dispatcher.dispatch(value0);
     }
 }

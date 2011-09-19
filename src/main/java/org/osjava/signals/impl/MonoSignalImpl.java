@@ -4,6 +4,8 @@ import org.osjava.signals.Signal;
 import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
+import java.util.ArrayList;
+
 /**
  * Created by IntelliJ IDEA.
  * User: simonrichardson
@@ -16,7 +18,7 @@ public abstract class MonoSignalImpl<SlotType extends Slot, SignalListenerType e
 
     public final static boolean DEFAULT_ONCE = false;
 
-    protected SlotType slot;
+    protected final ArrayList<SlotType> bindings = new ArrayList<SlotType>();
 
     /**
      * @param    listener A function with arguments
@@ -53,11 +55,16 @@ public abstract class MonoSignalImpl<SlotType extends Slot, SignalListenerType e
      */
     public SlotType remove(SignalListenerType listener)
     {
-        if (slot != null && slot.getListener().equals(listener))
+        if (bindings.size() > 0)
         {
-            final SlotType type = slot;
-            slot = null;
-            return type;
+            final SlotType slot = bindings.get(0);
+            if(slot.getListener().equals(listener))
+            {
+                final SlotType type = slot;
+                bindings.remove(0);
+                return type;
+            }
+            else return null;
         } else return null;
     }
 
@@ -66,7 +73,7 @@ public abstract class MonoSignalImpl<SlotType extends Slot, SignalListenerType e
      */
     public void removeAll()
     {
-        if(slot != null) slot.remove();
+        if (bindings.size() > 0) bindings.get(0).remove();
     }
 
     /**
@@ -75,7 +82,7 @@ public abstract class MonoSignalImpl<SlotType extends Slot, SignalListenerType e
      */
     public int getNumListeners()
     {
-        return slot == null ? 0 : 1;
+        return bindings.size();
     }
 
     /**
@@ -86,21 +93,11 @@ public abstract class MonoSignalImpl<SlotType extends Slot, SignalListenerType e
      */
     protected SlotType registerListener(SignalListenerType listener, boolean once)
     {
-        if(slot != null)
+        if(bindings.size() > 0)
         {
             throw new IllegalArgumentException("You cannot add or addOnce with a listener" +
                         " already added, remove the current listener first.");
         }
-
-        SlotType type;
-        try
-        {
-            type = (SlotType) new SlotImpl(this, listener, once);
-        }
-        catch(NullPointerException exception)
-        {
-            type = null;
-        }
-        return type;
+        return ((SlotType) new SlotImpl(this, listener, once));
     }
 }
