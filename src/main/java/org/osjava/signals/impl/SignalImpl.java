@@ -107,8 +107,7 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
             bindings.add(slot);
             return slot;
         }
-
-        return findSlotByListener(listener);
+        else return findSlotByListener(listener);
     }
 
     /**
