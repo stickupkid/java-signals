@@ -23,7 +23,7 @@ public class DispatcherImpl<SlotType extends Slot>
         this.bindings = bindings;
     }
 
-    final public <SignalListenerType extends SignalListener0> void dispatch()
+    final synchronized public <SignalListenerType extends SignalListener0> void dispatch()
     {
         for(SlotType slot : bindings)
         {
@@ -36,7 +36,8 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final public <A, SignalListenerType extends SignalListener1> void dispatch(A value0)
+    final synchronized public <A, SignalListenerType extends SignalListener1>
+            void dispatch(A value0)
     {
         for(SlotType slot : bindings)
         {
@@ -49,7 +50,8 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final public <A, B, SignalListenerType extends SignalListener2> void dispatch(A value0, B value1)
+    final synchronized public <A, B, SignalListenerType extends SignalListener2>
+            void dispatch(A value0, B value1)
     {
         for(SlotType slot : bindings)
         {
