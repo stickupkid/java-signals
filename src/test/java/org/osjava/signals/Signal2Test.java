@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osjava.signals.factories.Signals;
 import org.osjava.signals.impl.SignalImpl2;
-import org.osjava.signals.impl.SignalListenerImpl2;
 
 import java.util.ArrayList;
 
@@ -38,10 +37,8 @@ public class Signal2Test
     @Test
     public void verify_that_add_makes_getNumListeners_equal_one()
     {
-        signal.add(new SignalListenerImpl2<Boolean, String>()
+        signal.add(new Signal2.SignalListener2<Boolean, String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -56,11 +53,11 @@ public class Signal2Test
     {
         final int total = 10;
 
-        final SignalListener2<Boolean, String> listener = new SignalListenerImpl2<Boolean,
+        final
+        Signal2.SignalListener2<Boolean, String>
+                listener = new Signal2.SignalListener2<Boolean,
                 String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -78,10 +75,8 @@ public class Signal2Test
     @Test
     public void verify_that_add_once_makes_getNumListeners_equal_one()
     {
-        signal.add(new SignalListenerImpl2<Boolean, String>()
+        signal.add(new Signal2.SignalListener2<Boolean, String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -96,11 +91,9 @@ public class Signal2Test
     {
         final int total = 10;
 
-        final SignalListener2<Boolean, String> listener = new SignalListenerImpl2<Boolean,
+        final Signal2.SignalListener2<Boolean, String> listener = new Signal2.SignalListener2<Boolean,
                 String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -119,10 +112,8 @@ public class Signal2Test
     @Test
     public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch()
     {
-        signal.add(new SignalListenerImpl2<Boolean, String>()
+        signal.add(new Signal2.SignalListener2<Boolean, String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -138,10 +129,8 @@ public class Signal2Test
     @Test
     public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch()
     {
-        signal.add(new SignalListenerImpl2<Boolean, String>()
+        signal.add(new Signal2.SignalListener2<Boolean, String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
             }
@@ -157,10 +146,8 @@ public class Signal2Test
     @Test
     public void verify_that_a_listener_is_called_after_dispatch()
     {
-        signal.add(new SignalListenerImpl2<Boolean, String>()
+        signal.add(new Signal2.SignalListener2<Boolean, String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
                 org.junit.Assert.assertTrue("Signal0 apply was called when dispatched", true);
@@ -176,11 +163,11 @@ public class Signal2Test
         final int total = 10;
         final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-        final SignalListener2<Boolean, String> listener = new SignalListenerImpl2<Boolean,
+        final
+        Signal2.SignalListener2<Boolean, String>
+                listener = new Signal2.SignalListener2<Boolean,
                 String>()
         {
-
-            @Override
             public void apply(Boolean value0, String value1)
             {
                 if(value0 && value1.equals("String")) active.add(true);

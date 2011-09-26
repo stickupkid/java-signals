@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osjava.signals.factories.Signals;
 import org.osjava.signals.impl.SignalImpl0;
-import org.osjava.signals.impl.SignalListenerImpl0;
 
 import java.util.ArrayList;
 
@@ -39,10 +38,8 @@ public class Signal0Test
     @Test
     public void verify_that_add_makes_getNumListeners_equal_one()
     {
-        signal.add(new SignalListenerImpl0()
+        signal.add(new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -57,10 +54,8 @@ public class Signal0Test
     {
         final int total = 10;
 
-        final SignalListener0 listener = new SignalListenerImpl0()
+        final Signal0.SignalListener0 listener = new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -78,10 +73,8 @@ public class Signal0Test
     @Test
     public void verify_that_add_once_makes_getNumListeners_equal_one()
     {
-        signal.add(new SignalListenerImpl0()
+        signal.add(new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -96,10 +89,8 @@ public class Signal0Test
     {
         final int total = 10;
 
-        final SignalListener0 listener = new SignalListenerImpl0()
+        final Signal0.SignalListener0 listener = new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -117,10 +108,8 @@ public class Signal0Test
     @Test
     public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch()
     {
-        signal.add(new SignalListenerImpl0()
+        signal.add(new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -135,10 +124,8 @@ public class Signal0Test
     @Test
     public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch()
     {
-        signal.add(new SignalListenerImpl0()
+        signal.add(new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
             }
@@ -153,10 +140,8 @@ public class Signal0Test
     @Test
     public void verify_that_a_listener_is_called_after_dispatch()
     {
-        signal.add(new SignalListenerImpl0()
+        signal.add(new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
                 Assert.assertTrue("Signal0 apply was called when dispatched", true);
@@ -172,10 +157,8 @@ public class Signal0Test
         final int total = 10;
         final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-        final SignalListener0 listener = new SignalListenerImpl0()
+        final Signal0.SignalListener0 listener = new Signal0.SignalListener0()
         {
-
-            @Override
             public void apply()
             {
                 active.add(true);

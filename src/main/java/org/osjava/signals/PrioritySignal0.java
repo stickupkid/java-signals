@@ -7,7 +7,7 @@ package org.osjava.signals;
  * Date: 18/09/2011
  * Time: 22:01
  */
-public interface PrioritySignal0<SlotType extends Slot, SignalListenerType extends SignalListener>
+public interface PrioritySignal0<SlotType extends Slot, SignalListenerType extends Signal0.SignalListener0>
         extends PrioritySignal<SlotType, SignalListenerType>
 {
     /**

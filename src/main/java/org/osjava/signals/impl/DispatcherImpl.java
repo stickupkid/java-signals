@@ -1,8 +1,8 @@
 package org.osjava.signals.impl;
 
-import org.osjava.signals.SignalListener0;
-import org.osjava.signals.SignalListener1;
-import org.osjava.signals.SignalListener2;
+import org.osjava.signals.Signal0;
+import org.osjava.signals.Signal1;
+import org.osjava.signals.Signal2;
 import org.osjava.signals.Slot;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class DispatcherImpl<SlotType extends Slot>
         this.bindings = bindings;
     }
 
-    final synchronized public <SignalListenerType extends SignalListener0> void dispatch()
+    final synchronized public <SignalListenerType extends Signal0.SignalListener0> void dispatch()
     {
         for(SlotType slot : bindings)
         {
@@ -36,7 +36,7 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final synchronized public <A, SignalListenerType extends SignalListener1>
+    final synchronized public <A, SignalListenerType extends Signal1.SignalListener1>
             void dispatch(A value0)
     {
         for(SlotType slot : bindings)
@@ -50,7 +50,7 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final synchronized public <A, B, SignalListenerType extends SignalListener2>
+    final synchronized public <A, B, SignalListenerType extends Signal2.SignalListener2>
             void dispatch(A value0, B value1)
     {
         for(SlotType slot : bindings)

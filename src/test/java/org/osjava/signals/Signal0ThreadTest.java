@@ -30,8 +30,8 @@ public class Signal0ThreadTest
     }
 
     @Test
-    private void test_dispatching_from_multiple_threads() {
-        signal.add(new SignalListener0()
+    public void test_dispatching_from_multiple_threads() {
+        signal.add(new Signal0.SignalListener0()
         {
             public void apply()
             {
