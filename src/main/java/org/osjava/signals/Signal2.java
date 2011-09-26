@@ -14,11 +14,9 @@ public interface Signal2<A, B, SlotType extends Slot, SignalListenerType extends
      * @param value0 which is the first passed argument
      * @param value1 which is the second passed argument
      */
-    public void dispatch(A value0,
-                         B value1);
+    public void dispatch(A value0, B value1);
 
-    public interface SignalListener2<A, B>
-            extends SignalListener
+    public interface SignalListener2<A, B> extends SignalListener
     {
         /**
          * Listener called when dispatch on the signal is called.
@@ -26,7 +24,6 @@ public interface Signal2<A, B, SlotType extends Slot, SignalListenerType extends
          * @param value0 which is the first passed argument
          * @param value1 which is the second passed argument
          */
-        public void apply(A value0,
-                          B value1);
+        public void apply(A value0, B value1);
     }
 }

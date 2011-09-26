@@ -20,12 +20,14 @@ public class Signal0Test
     private SignalImpl0 signal;
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         signal = Signals.createSignal0();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
         signal.removeAll();
     }
 
@@ -61,7 +63,9 @@ public class Signal0Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }
@@ -96,7 +100,9 @@ public class Signal0Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener, true);
         }
@@ -165,7 +171,9 @@ public class Signal0Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }

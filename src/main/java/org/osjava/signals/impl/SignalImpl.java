@@ -22,10 +22,10 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
     protected final DispatcherImpl<SlotType> dispatcher = new DispatcherImpl<SlotType>(bindings);
 
     /**
-     * @param    listener A function with arguments
-     * that matches the value classes dispatched by the signal.
-     * If value classes are not specified (e.g. via Signal constructor),
-     * dispatch() can be called without arguments.
+     * @param listener A function with arguments
+     *                 that matches the value classes dispatched by the signal.
+     *                 If value classes are not specified (e.g. via Signal constructor),
+     *                 dispatch() can be called without arguments.
      * @return a SlotType, which contains the Function passed as the parameter
      */
     public SlotType add(SignalListenerType listener)
@@ -34,11 +34,11 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
     }
 
     /**
-     * @param    listener A function with arguments
-     * that matches the value classes dispatched by the signal.
-     * If value classes are not specified (e.g. via Signal constructor), dispatch() can be
-     * called without arguments.
-     * @param once  if required to only call this listener once and then remove it
+     * @param listener A function with arguments
+     *                 that matches the value classes dispatched by the signal.
+     *                 If value classes are not specified (e.g. via Signal constructor), dispatch() can be
+     *                 called without arguments.
+     * @param once     if required to only call this listener once and then remove it
      * @return a SlotType, which contains the Function passed as the parameter
      */
     public SlotType add(SignalListenerType listener, boolean once)
@@ -48,10 +48,11 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     /**
      * Un-subscribes a listener from the signal.
-     * @param    listener listener A function with arguments
-     * that matches the value classes dispatched by the signal.
-     * If value classes are not specified (e.g. via Signal constructor), dispatch() can be
-     * called without arguments.
+     *
+     * @param listener listener A function with arguments
+     *                 that matches the value classes dispatched by the signal.
+     *                 If value classes are not specified (e.g. via Signal constructor), dispatch() can be
+     *                 called without arguments.
      * @return a SlotType, which contains the Function passed as the parameter
      */
     public SlotType remove(SignalListenerType listener)
@@ -74,6 +75,7 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     /**
      * The current number of listeners for the signal.
+     *
      * @return a int of the number of listeners
      */
     public int getNumListeners()
@@ -83,12 +85,13 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     /**
      * Find the slot by the associated listener
-     * @param listener  which is the type of SignalListenerType to look for
+     *
+     * @param listener which is the type of SignalListenerType to look for
      * @return a SlotType, which contains the Function passed as the parameter
      */
     protected SlotType findSlotByListener(SignalListenerType listener)
     {
-        for(SlotType slot : bindings)
+        for (SlotType slot : bindings)
         {
             if (slot.equals(listener)) return slot;
         }
@@ -97,8 +100,9 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     /**
      * Register a listener
+     *
      * @param listener which is the type of SignalListenerType
-     * @param once if the listener should just be called once
+     * @param once     if the listener should just be called once
      * @return a SlotType, which contains the Function passed as the parameter
      */
     protected synchronized SlotType registerListener(SignalListenerType listener, boolean once)
@@ -108,13 +112,12 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
             SlotType slot = (SlotType) new SlotImpl(this, listener, once);
             bindings.add(slot);
             return slot;
-        }
-        else return findSlotByListener(listener);
+        } else return findSlotByListener(listener);
     }
 
     /**
-     * @param listener  which is the type of SignalListenerType
-     * @param once if the listener should just be called once
+     * @param listener which is the type of SignalListenerType
+     * @param once     if the listener should just be called once
      * @return boolean if successful
      * @throws IllegalArgumentException if you try to re-add with a different add type
      */

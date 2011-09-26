@@ -10,7 +10,8 @@ import org.osjava.signals.Signal1;
  */
 public class PrioritySignalImpl1<A> extends PrioritySignalImpl<PrioritySlotImpl<PrioritySlotImpl,
         Signal1.SignalListener1>, Signal1.SignalListener1>
-        implements Signal1<A, PrioritySlotImpl<PrioritySlotImpl, Signal1.SignalListener1>, Signal1.SignalListener1>
+        implements
+        Signal1<A, PrioritySlotImpl<PrioritySlotImpl, Signal1.SignalListener1>, Signal1.SignalListener1>
 {
 
     public void dispatch(A value0)

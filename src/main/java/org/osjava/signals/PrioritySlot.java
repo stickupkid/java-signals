@@ -7,7 +7,7 @@ package org.osjava.signals;
  * Time: 22:20
  */
 public interface PrioritySlot<SignalListenerType extends SignalListener>
-            extends Slot<SignalListenerType>
+        extends Slot<SignalListenerType>
 {
 
     public int getPriority();

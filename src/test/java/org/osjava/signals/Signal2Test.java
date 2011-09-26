@@ -19,12 +19,14 @@ public class Signal2Test
     private SignalImpl2<Boolean, String> signal;
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         signal = Signals.createSignal2();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
         signal.removeAll();
     }
 
@@ -63,12 +65,14 @@ public class Signal2Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }
 
-        org.junit.Assert.assertEquals("Signal getNumListeners should equal total after add", total,
+        Assert.assertEquals("Signal getNumListeners should equal total after add", total,
                 signal.getNumListeners());
     }
 
@@ -82,7 +86,7 @@ public class Signal2Test
             }
         }, true);
 
-        org.junit.Assert.assertEquals("Signal getNumListeners should equal one after add once", 1,
+        Assert.assertEquals("Signal getNumListeners should equal one after add once", 1,
                 signal.getNumListeners());
     }
 
@@ -91,21 +95,23 @@ public class Signal2Test
     {
         final int total = 10;
 
-        final Signal2.SignalListener2<Boolean, String> listener = new Signal2.SignalListener2<Boolean,
-                String>()
-        {
-            public void apply(Boolean value0, String value1)
-            {
-            }
-        };
+        final Signal2.SignalListener2<Boolean, String> listener =
+                new Signal2.SignalListener2<Boolean,
+                        String>()
+                {
+                    public void apply(Boolean value0, String value1)
+                    {
+                    }
+                };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener, true);
         }
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal total after add once", total,
+       Assert.assertEquals("Signal getNumListeners should equal total after add once", total,
                         signal.getNumListeners());
     }
 
@@ -121,8 +127,7 @@ public class Signal2Test
 
         signal.dispatch(true, "String");
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal one after add and then dispatch",
+        Assert.assertEquals("Signal getNumListeners should equal one after add and then dispatch",
                         1, signal.getNumListeners());
     }
 
@@ -138,8 +143,7 @@ public class Signal2Test
 
         signal.dispatch(true, "String");
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal one after add once and then " +
+        Assert.assertEquals("Signal getNumListeners should equal one after add once and then " +
                         "dispatch", 1, signal.getNumListeners());
     }
 
@@ -150,7 +154,7 @@ public class Signal2Test
         {
             public void apply(Boolean value0, String value1)
             {
-                org.junit.Assert.assertTrue("Signal0 apply was called when dispatched", true);
+                Assert.assertTrue("Signal0 apply was called when dispatched", true);
             }
         });
 
@@ -170,18 +174,19 @@ public class Signal2Test
         {
             public void apply(Boolean value0, String value1)
             {
-                if(value0 && value1.equals("String")) active.add(true);
+                if (value0 && value1.equals("String")) active.add(true);
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }
 
         signal.dispatch(true, "String");
 
-        org.junit.Assert
-                .assertEquals("Number of signals dispatched should equal total", 10, active.size());
+        Assert.assertEquals("Number of signals dispatched should equal total", 10, active.size());
     }
 }

@@ -11,9 +11,9 @@ import org.osjava.signals.SignalListener;
  * Time: 22:03
  */
 public abstract class PrioritySignalImpl<SlotType extends PrioritySlot,
-                SignalListenerType extends SignalListener>
-                extends SignalImpl<SlotType, SignalListenerType>
-                implements PrioritySignal<SlotType, SignalListenerType>
+        SignalListenerType extends SignalListener>
+        extends SignalImpl<SlotType, SignalListenerType>
+        implements PrioritySignal<SlotType, SignalListenerType>
 {
 
     public final static int DEFAULT_PRIORITY = 0;
@@ -27,11 +27,11 @@ public abstract class PrioritySignalImpl<SlotType extends PrioritySlot,
      * @param priority The priority level of the event listener.
      *                 The higher the number, the higher the priority.
      *                 All listeners with priority n are processed before listeners of priority n-1.
+     * @param listener A function with arguments
+     *                 that matches the value classes dispatched by the signal.
+     *                 If value classes are not specified (e.g. via Signal constructor), dispatch() can be
+     *                 called without arguments.
      * @return a SlotType, which contains the Function passed as the parameter
-     * @param    listener A function with arguments
-     * that matches the value classes dispatched by the signal.
-     * If value classes are not specified (e.g. via Signal constructor), dispatch() can be
-     * called without arguments.
      */
     public SlotType add(SignalListenerType listener, boolean once, int priority)
     {
@@ -44,11 +44,11 @@ public abstract class PrioritySignalImpl<SlotType extends PrioritySlot,
      * @param priority The priority level of the event listener.
      *                 The higher the number, the higher the priority.
      *                 All listeners with priority n are processed before listeners of priority n-1.
+     * @param listener A function with arguments
+     *                 that matches the value classes dispatched by the signal.
+     *                 If value classes are not specified (e.g. via Signal constructor),
+     *                 dispatch() can be called without arguments.
      * @return a SlotType, which contains the Function passed as the parameter
-     * @param    listener A function with arguments
-     * that matches the value classes dispatched by the signal.
-     * If value classes are not specified (e.g. via Signal constructor),
-     * dispatch() can be called without arguments.
      */
     public SlotType add(SignalListenerType listener, int priority)
     {
@@ -84,23 +84,22 @@ public abstract class PrioritySignalImpl<SlotType extends PrioritySlot,
             try
             {
                 slot = (SlotType) new PrioritySlotImpl(this, listener, once, priority);
-            }
-            catch(NullPointerException exception)
+            } catch (NullPointerException exception)
             {
                 slot = null;
             }
 
-            if(slot != null)
+            if (slot != null)
             {
-                if(bindings.size() == 0) bindings.add(slot);
+                if (bindings.size() == 0) bindings.add(slot);
                 else
                 {
                     int position = 0;
-                    for(SlotType type : bindings)
+                    for (SlotType type : bindings)
                     {
                         // If the priority is greater than the one in the bindings, insert it
                         // nearer to the head. That way they get executed first.
-                        if(priority > type.getPriority())
+                        if (priority > type.getPriority())
                         {
                             bindings.add(position, slot);
                             break;

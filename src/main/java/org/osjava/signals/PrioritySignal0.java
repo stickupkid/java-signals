@@ -11,7 +11,7 @@ public interface PrioritySignal0<SlotType extends Slot, SignalListenerType exten
         extends PrioritySignal<SlotType, SignalListenerType>
 {
     /**
-	 * Dispatches an object to listeners.
+     * Dispatches an object to listeners.
      */
     public void dispatch();
 }

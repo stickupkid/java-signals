@@ -20,12 +20,14 @@ public class Signal1Test
     private SignalImpl1<Boolean> signal;
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         signal = Signals.createSignal1();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown()
+    {
         signal.removeAll();
     }
 
@@ -61,12 +63,14 @@ public class Signal1Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }
 
-        org.junit.Assert.assertEquals("Signal getNumListeners should equal total after add", total,
+        Assert.assertEquals("Signal getNumListeners should equal total after add", total,
                 signal.getNumListeners());
     }
 
@@ -80,7 +84,7 @@ public class Signal1Test
             }
         }, true);
 
-        org.junit.Assert.assertEquals("Signal getNumListeners should equal one after add once", 1,
+        Assert.assertEquals("Signal getNumListeners should equal one after add once", 1,
                 signal.getNumListeners());
     }
 
@@ -96,13 +100,14 @@ public class Signal1Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener, true);
         }
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal total after add once", total,
+        Assert.assertEquals("Signal getNumListeners should equal total after add once", total,
                         signal.getNumListeners());
     }
 
@@ -118,8 +123,7 @@ public class Signal1Test
 
         signal.dispatch(true);
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal one after add and then dispatch",
+        Assert.assertEquals("Signal getNumListeners should equal one after add and then dispatch",
                         1, signal.getNumListeners());
     }
 
@@ -135,8 +139,7 @@ public class Signal1Test
 
         signal.dispatch(true);
 
-        org.junit.Assert
-                .assertEquals("Signal getNumListeners should equal one after add once and then " +
+        Assert.assertEquals("Signal getNumListeners should equal one after add once and then " +
                         "dispatch", 1, signal.getNumListeners());
     }
 
@@ -147,7 +150,7 @@ public class Signal1Test
         {
             public void apply(Boolean value)
             {
-                org.junit.Assert.assertTrue("Signal0 apply was called when dispatched", true);
+                Assert.assertTrue("Signal0 apply was called when dispatched", true);
             }
         });
 
@@ -168,14 +171,15 @@ public class Signal1Test
             }
         };
 
-        for(int i = 0; i < total; i++)
+        for (int i = 0;
+             i < total;
+             i++)
         {
             signal.add(listener);
         }
 
         signal.dispatch(true);
 
-        org.junit.Assert
-                .assertEquals("Number of signals dispatched should equal total", 10, active.size());
+        Assert.assertEquals("Number of signals dispatched should equal total", 10, active.size());
     }
 }

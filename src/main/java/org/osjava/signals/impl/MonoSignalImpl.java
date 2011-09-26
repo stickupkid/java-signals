@@ -1,8 +1,8 @@
 package org.osjava.signals.impl;
 
-import org.osjava.signals.*;
-
-import java.util.ArrayList;
+import org.osjava.signals.Signal;
+import org.osjava.signals.SignalListener;
+import org.osjava.signals.Slot;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,31 +11,31 @@ import java.util.ArrayList;
  * Time: 21:09
  */
 public abstract class MonoSignalImpl<SlotType extends Slot,
-                SignalListenerType extends SignalListener>
-                extends SignalImpl<SlotType, SignalListenerType>
-                implements Signal<SlotType, SignalListenerType>
+        SignalListenerType extends SignalListener>
+        extends SignalImpl<SlotType, SignalListenerType>
+        implements Signal<SlotType, SignalListenerType>
 {
 
     /**
      * Register a listener
+     *
      * @param listener which is the type of SignalListenerType
-     * @param once if the listener should just be called once
+     * @param once     if the listener should just be called once
      * @return a SlotType, which contains the Function passed as the parameter
      */
     @Override
     protected SlotType registerListener(SignalListenerType listener, boolean once)
     {
-        if(!registrationPossible(listener, once))
+        if (!registrationPossible(listener, once))
         {
             throw new IllegalArgumentException("You cannot add or addOnce with a listener" +
-                        " already added, remove the current listener first.");
-        }
-        else return ((SlotType) new SlotImpl(this, listener, once));
+                    " already added, remove the current listener first.");
+        } else return ((SlotType) new SlotImpl(this, listener, once));
     }
 
     /**
-     * @param listener  which is the type of SignalListenerType
-     * @param once if the listener should just be called once
+     * @param listener which is the type of SignalListenerType
+     * @param once     if the listener should just be called once
      * @return boolean if successful
      */
     @Override

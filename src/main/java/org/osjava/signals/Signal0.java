@@ -9,7 +9,7 @@ public interface Signal0<SlotType extends Slot, SignalListenerType extends Signa
         extends Signal<SlotType, SignalListenerType>
 {
     /**
-	 * Dispatches an object to listeners.
+     * Dispatches an object to listeners.
      */
     public void dispatch();
 

@@ -10,7 +10,8 @@ public interface PrioritySignal1<A, SlotType extends Slot, SignalListenerType ex
         extends PrioritySignal<SlotType, SignalListenerType>
 {
     /**
-	 * Dispatches an object to listeners.
+     * Dispatches an object to listeners.
+     *
      * @param value which is the first passed argument
      */
     public void dispatch(A value);

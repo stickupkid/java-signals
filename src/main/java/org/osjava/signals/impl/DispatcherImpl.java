@@ -25,7 +25,7 @@ public class DispatcherImpl<SlotType extends Slot>
 
     final synchronized public <SignalListenerType extends Signal0.SignalListener0> void dispatch()
     {
-        for(SlotType slot : bindings)
+        for (SlotType slot : bindings)
         {
             SignalListenerType listener = (SignalListenerType) slot.getListener();
             if (slot.getEnabled())
@@ -37,9 +37,9 @@ public class DispatcherImpl<SlotType extends Slot>
     }
 
     final synchronized public <A, SignalListenerType extends Signal1.SignalListener1>
-            void dispatch(A value0)
+    void dispatch(A value0)
     {
-        for(SlotType slot : bindings)
+        for (SlotType slot : bindings)
         {
             SignalListenerType listener = (SignalListenerType) slot.getListener();
             if (slot.getEnabled())
@@ -51,9 +51,9 @@ public class DispatcherImpl<SlotType extends Slot>
     }
 
     final synchronized public <A, B, SignalListenerType extends Signal2.SignalListener2>
-            void dispatch(A value0, B value1)
+    void dispatch(A value0, B value1)
     {
-        for(SlotType slot : bindings)
+        for (SlotType slot : bindings)
         {
             SignalListenerType listener = (SignalListenerType) slot.getListener();
             if (slot.getEnabled())
