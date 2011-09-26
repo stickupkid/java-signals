@@ -101,7 +101,7 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
      * @param once if the listener should just be called once
      * @return a SlotType, which contains the Function passed as the parameter
      */
-    protected SlotType registerListener(SignalListenerType listener, boolean once)
+    protected synchronized SlotType registerListener(SignalListenerType listener, boolean once)
     {
         if (registrationPossible(listener, once))
         {
