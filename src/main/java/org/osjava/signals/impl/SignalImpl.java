@@ -5,6 +5,7 @@ import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,7 +18,7 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
 
     public final static boolean DEFAULT_ONCE = false;
 
-    protected final ArrayList<SlotType> bindings = new ArrayList<SlotType>();
+    protected final CopyOnWriteArrayList<SlotType> bindings = new CopyOnWriteArrayList<SlotType>();
 
     protected final DispatcherImpl<SlotType> dispatcher = new DispatcherImpl<SlotType>(bindings);
 
@@ -105,7 +106,7 @@ public abstract class SignalImpl<SlotType extends Slot, SignalListenerType exten
      * @param once     if the listener should just be called once
      * @return a SlotType, which contains the Function passed as the parameter
      */
-    protected synchronized SlotType registerListener(SignalListenerType listener, boolean once)
+    protected SlotType registerListener(SignalListenerType listener, boolean once)
     {
         if (registrationPossible(listener, once))
         {

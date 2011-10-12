@@ -44,6 +44,7 @@ public class Signal0Test
         {
             public void apply()
             {
+                System.out.print("FUCK");
             }
         });
 

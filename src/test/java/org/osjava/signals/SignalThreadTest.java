@@ -36,9 +36,7 @@ public abstract class SignalThreadTest
         Assert.assertEquals(futures.size(), threadCount);
 
         List<Integer> expectedList = new ArrayList<Integer>(threadCount);
-        for (int i = 1;
-             i <= threadCount;
-             i++)
+        for (int i = 1; i <= threadCount; i++)
         {
             expectedList.add(i);
         }

@@ -5,7 +5,7 @@ import org.osjava.signals.Signal1;
 import org.osjava.signals.Signal2;
 import org.osjava.signals.Slot;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class DispatcherImpl<SlotType extends Slot>
 {
 
-    private final ArrayList<SlotType> bindings;
+    private final List<SlotType> bindings;
 
-    public DispatcherImpl(ArrayList<SlotType> bindings)
+    public DispatcherImpl(List<SlotType> bindings)
     {
         this.bindings = bindings;
     }
 
-    final synchronized public <SignalListenerType extends Signal0.SignalListener0> void dispatch()
+    final public <SignalListenerType extends Signal0.SignalListener0> void dispatch()
     {
         for (SlotType slot : bindings)
         {
@@ -36,8 +36,7 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final synchronized public <A, SignalListenerType extends Signal1.SignalListener1>
-    void dispatch(A value0)
+    final public <A, SignalListenerType extends Signal1.SignalListener1> void dispatch(A value0)
     {
         for (SlotType slot : bindings)
         {
@@ -50,8 +49,8 @@ public class DispatcherImpl<SlotType extends Slot>
         }
     }
 
-    final synchronized public <A, B, SignalListenerType extends Signal2.SignalListener2>
-    void dispatch(A value0, B value1)
+    final public <A, B, SignalListenerType extends Signal2.SignalListener2> void dispatch(A value0,
+                                                                                          B value1)
     {
         for (SlotType slot : bindings)
         {
