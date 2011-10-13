@@ -1,7 +1,6 @@
 package org.osjava.signals.impl;
 
 import org.osjava.signals.Signal;
-import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
 /**
@@ -9,7 +8,7 @@ import org.osjava.signals.Slot;
  * User: simonrichardson
  * Date: 15/09/2011
  */
-public class SlotImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
+public class SlotImpl<SlotType extends Slot, SignalListenerType extends Signal.SignalListener>
         implements Slot<SignalListenerType>
 {
 

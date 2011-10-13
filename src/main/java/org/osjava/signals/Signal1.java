@@ -15,7 +15,7 @@ public interface Signal1<A, SlotType extends Slot, SignalListenerType extends Si
      */
     public void dispatch(A value);
 
-    public interface SignalListener1<A> extends SignalListener
+    public interface SignalListener1<A> extends Signal.SignalListener
     {
         /**
          * Listener called when dispatch on the signal is called.

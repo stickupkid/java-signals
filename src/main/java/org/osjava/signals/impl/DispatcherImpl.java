@@ -6,6 +6,7 @@ import org.osjava.signals.Signal2;
 import org.osjava.signals.Slot;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by IntelliJ IDEA.

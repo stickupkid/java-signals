@@ -13,7 +13,7 @@ public interface Signal0<SlotType extends Slot, SignalListenerType extends Signa
      */
     public void dispatch();
 
-    public interface SignalListener0 extends SignalListener
+    public interface SignalListener0 extends Signal.SignalListener
     {
         /**
          * Listener called when dispatch on the signal is called.

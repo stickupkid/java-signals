@@ -4,26 +4,26 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.osjava.signals.factories.Signals;
-import org.osjava.signals.impl.SignalImpl0;
+import org.osjava.signals.impl.SignalImpl1;
+import org.osjava.signals.impl.SignalImpl2;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by IntelliJ IDEA.
- * User: simonrichardson
- * Date: 26/09/2011
- * Time: 09:53
+ * User: cereals
+ * Date: 13/10/2011
  */
-public class Signal0ThreadTest extends SignalThreadTest
+public class Signal2ThreadTest extends SignalThreadTest
 {
 
-    private SignalImpl0 signal;
+    private SignalImpl2<Boolean, String> signal;
 
     @Before
     public void setUp()
     {
-        signal = Signals.createSignal0();
+        signal = Signals.createSignal2();
     }
 
     @After
@@ -118,9 +118,9 @@ public class Signal0ThreadTest extends SignalThreadTest
         {
             public Integer call() throws Exception
             {
-                signal.add(new Signal0.SignalListener0()
+                signal.add(new Signal2.SignalListener2<Boolean, String>()
                 {
-                    public void apply()
+                    public void apply(Boolean value0, String value1)
                     {
                     }
                 }, isOnce);

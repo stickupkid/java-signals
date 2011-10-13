@@ -44,7 +44,6 @@ public class Signal0Test
         {
             public void apply()
             {
-                System.out.print("FUCK");
             }
         });
 
@@ -64,9 +63,7 @@ public class Signal0Test
             }
         };
 
-        for (int i = 0;
-             i < total;
-             i++)
+        for (int i = 0; i < total; i++)
         {
             signal.add(listener);
         }
@@ -101,9 +98,7 @@ public class Signal0Test
             }
         };
 
-        for (int i = 0;
-             i < total;
-             i++)
+        for (int i = 0; i < total; i++)
         {
             signal.add(listener, true);
         }
@@ -172,9 +167,7 @@ public class Signal0Test
             }
         };
 
-        for (int i = 0;
-             i < total;
-             i++)
+        for (int i = 0; i < total; i++)
         {
             signal.add(listener);
         }

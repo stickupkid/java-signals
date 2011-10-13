@@ -2,7 +2,6 @@ package org.osjava.signals.impl;
 
 import org.osjava.signals.PrioritySlot;
 import org.osjava.signals.Signal;
-import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
 /**
@@ -11,7 +10,7 @@ import org.osjava.signals.Slot;
  * Date: 18/09/2011
  * Time: 22:16
  */
-public class PrioritySlotImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
+public class PrioritySlotImpl<SlotType extends Slot, SignalListenerType extends Signal.SignalListener>
         extends SlotImpl<SlotType, SignalListenerType>
         implements PrioritySlot<SignalListenerType>
 {

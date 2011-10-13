@@ -1,10 +1,8 @@
 package org.osjava.signals.impl;
 
 import org.osjava.signals.Signal;
-import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -12,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * User: simonrichardson
  * Date: 15/09/2011
  */
-public abstract class SignalImpl<SlotType extends Slot, SignalListenerType extends SignalListener>
+public abstract class SignalImpl<SlotType extends Slot, SignalListenerType extends Signal.SignalListener>
         implements Signal<SlotType, SignalListenerType>
 {
 

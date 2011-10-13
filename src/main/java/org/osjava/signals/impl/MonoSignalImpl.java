@@ -1,7 +1,6 @@
 package org.osjava.signals.impl;
 
 import org.osjava.signals.Signal;
-import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
 /**
@@ -11,7 +10,7 @@ import org.osjava.signals.Slot;
  * Time: 21:09
  */
 public abstract class MonoSignalImpl<SlotType extends Slot,
-        SignalListenerType extends SignalListener>
+        SignalListenerType extends Signal.SignalListener>
         extends SignalImpl<SlotType, SignalListenerType>
         implements Signal<SlotType, SignalListenerType>
 {

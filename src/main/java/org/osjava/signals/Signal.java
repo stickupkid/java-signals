@@ -5,7 +5,7 @@ package org.osjava.signals;
  * User: simonrichardson
  * Date: 15/09/2011
  */
-public interface Signal<SlotType extends Slot, SignalListenerType extends SignalListener>
+public interface Signal<SlotType extends Slot, SignalListenerType extends Signal.SignalListener>
 {
     /**
      * Subscribes a listener for the signal.
@@ -51,4 +51,8 @@ public interface Signal<SlotType extends Slot, SignalListenerType extends Signal
      * @return a int of the number of listeners
      */
     public int getNumListeners();
+
+    public interface SignalListener
+    {
+    }
 }

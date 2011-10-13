@@ -2,7 +2,7 @@ package org.osjava.signals.impl;
 
 import org.osjava.signals.PrioritySignal;
 import org.osjava.signals.PrioritySlot;
-import org.osjava.signals.SignalListener;
+import org.osjava.signals.Signal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,7 +11,7 @@ import org.osjava.signals.SignalListener;
  * Time: 22:03
  */
 public abstract class PrioritySignalImpl<SlotType extends PrioritySlot,
-        SignalListenerType extends SignalListener>
+        SignalListenerType extends Signal.SignalListener>
         extends SignalImpl<SlotType, SignalListenerType>
         implements PrioritySignal<SlotType, SignalListenerType>
 {

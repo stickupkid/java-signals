@@ -5,7 +5,7 @@ package org.osjava.signals;
  * User: simonrichardson
  * Date: 15/09/2011
  */
-public interface Slot<SignalListenerType extends SignalListener>
+public interface Slot<SignalListenerType extends Signal.SignalListener>
 {
 
     /**
