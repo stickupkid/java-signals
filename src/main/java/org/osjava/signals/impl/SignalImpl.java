@@ -1,142 +1,149 @@
 package org.osjava.signals.impl;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.osjava.signals.Signal;
 import org.osjava.signals.Slot;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 /**
- * Created by IntelliJ IDEA.
- * User: simonrichardson
- * Date: 15/09/2011
+ * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
-public abstract class SignalImpl<SlotType extends Slot, SignalListenerType extends Signal.SignalListener>
-        implements Signal<SlotType, SignalListenerType>
-{
+public abstract class SignalImpl<SlotType extends Slot<Signal.SignalListener>, SignalListenerType extends Signal.SignalListener>
+		implements Signal<SlotType, SignalListenerType> {
 
-    public final static boolean DEFAULT_ONCE = false;
+	public final static boolean DEFAULT_ONCE = false;
 
-    protected final CopyOnWriteArrayList<SlotType> bindings = new CopyOnWriteArrayList<SlotType>();
+	protected final CopyOnWriteArrayList<SlotType> bindings = new CopyOnWriteArrayList<SlotType>();
 
-    protected final DispatcherImpl<SlotType> dispatcher = new DispatcherImpl<SlotType>(bindings);
+	protected final DispatcherImpl<SlotType> dispatcher = new DispatcherImpl<SlotType>(bindings);
 
-    /**
-     * @param listener A function with arguments
-     *                 that matches the value classes dispatched by the signal.
-     *                 If value classes are not specified (e.g. via Signal constructor),
-     *                 dispatch() can be called without arguments.
-     * @return a SlotType, which contains the Function passed as the parameter
-     */
-    public SlotType add(SignalListenerType listener)
-    {
-        return add(listener, SignalImpl.DEFAULT_ONCE);
-    }
+	/**
+	 * @param listener
+	 *            A function with arguments that matches the value classes
+	 *            dispatched by the signal. If value classes are not specified
+	 *            (e.g. via Signal constructor), dispatch() can be called
+	 *            without arguments.
+	 * @return a SlotType, which contains the Function passed as the parameter
+	 */
+	public SlotType add(SignalListenerType listener) {
+		return add(listener, SignalImpl.DEFAULT_ONCE);
+	}
 
-    /**
-     * @param listener A function with arguments
-     *                 that matches the value classes dispatched by the signal.
-     *                 If value classes are not specified (e.g. via Signal constructor), dispatch() can be
-     *                 called without arguments.
-     * @param once     if required to only call this listener once and then remove it
-     * @return a SlotType, which contains the Function passed as the parameter
-     */
-    public SlotType add(SignalListenerType listener, boolean once)
-    {
-        return registerListener(listener, once);
-    }
+	/**
+	 * @param listener
+	 *            A function with arguments that matches the value classes
+	 *            dispatched by the signal. If value classes are not specified
+	 *            (e.g. via Signal constructor), dispatch() can be called
+	 *            without arguments.
+	 * @param once
+	 *            if required to only call this listener once and then remove it
+	 * @return a SlotType, which contains the Function passed as the parameter
+	 */
+	public SlotType add(SignalListenerType listener, boolean once) {
+		return registerListener(listener, once);
+	}
 
-    /**
-     * Un-subscribes a listener from the signal.
-     *
-     * @param listener listener A function with arguments
-     *                 that matches the value classes dispatched by the signal.
-     *                 If value classes are not specified (e.g. via Signal constructor), dispatch() can be
-     *                 called without arguments.
-     * @return a SlotType, which contains the Function passed as the parameter
-     */
-    public SlotType remove(SignalListenerType listener)
-    {
-        final SlotType slot = findSlotByListener(listener);
-        if (slot != null)
-        {
-            bindings.remove(slot);
-            return slot;
-        } else return null;
-    }
+	/**
+	 * Unsubscribes a listener from the signal.
+	 * 
+	 * @param listener
+	 *            listener A function with arguments that matches the value
+	 *            classes dispatched by the signal. If value classes are not
+	 *            specified (e.g. via Signal constructor), dispatch() can be
+	 *            called without arguments.
+	 * @return a SlotType, which contains the Function passed as the parameter
+	 */
+	public SlotType remove(SignalListenerType listener) {
+		final SlotType slot = findSlotByListener(listener);
+		if (slot != null) {
+			bindings.remove(slot);
+			return slot;
+		} else
+			return null;
+	}
 
-    /**
-     * Un-subscribes all listeners from the signal.
-     */
-    public void removeAll()
-    {
-        bindings.clear();
-    }
+	/**
+	 * Un-subscribes all listeners from the signal.
+	 */
+	public void removeAll() {
+		bindings.clear();
+	}
 
-    /**
-     * The current number of listeners for the signal.
-     *
-     * @return a int of the number of listeners
-     */
-    public int getNumListeners()
-    {
-        return bindings.size();
-    }
+	/**
+	 * The current number of listeners for the signal.
+	 * 
+	 * @return a int of the number of listeners
+	 */
+	public int getNumListeners() {
+		return bindings.size();
+	}
 
-    /**
-     * Find the slot by the associated listener
-     *
-     * @param listener which is the type of SignalListenerType to look for
-     * @return a SlotType, which contains the Function passed as the parameter
-     */
-    protected SlotType findSlotByListener(SignalListenerType listener)
-    {
-        for (SlotType slot : bindings)
-        {
-            if (slot.equals(listener)) return slot;
-        }
-        return null;
-    }
+	/**
+	 * Find the slot by the associated listener
+	 * 
+	 * @param listener
+	 *            which is the type of SignalListenerType to look for
+	 * @return a SlotType, which contains the Function passed as the parameter
+	 */
+	protected SlotType findSlotByListener(SignalListenerType listener) {
+		for (SlotType slot : bindings) {
+			if (slot.equals(listener))
+				return slot;
+		}
+		return null;
+	}
 
-    /**
-     * Register a listener
-     *
-     * @param listener which is the type of SignalListenerType
-     * @param once     if the listener should just be called once
-     * @return a SlotType, which contains the Function passed as the parameter
-     */
-    protected SlotType registerListener(SignalListenerType listener, boolean once)
-    {
-        if (registrationPossible(listener, once))
-        {
-            SlotType slot = (SlotType) new SlotImpl(this, listener, once);
-            bindings.add(slot);
-            return slot;
-        } else return findSlotByListener(listener);
-    }
+	/**
+	 * Register a listener
+	 * 
+	 * @param listener
+	 *            which is the type of SignalListenerType
+	 * @param once
+	 *            if the listener should just be called once
+	 * @return a SlotType, which contains the Function passed as the parameter
+	 */
+	@SuppressWarnings("unchecked")
+	protected SlotType registerListener(SignalListenerType listener, boolean once) {
+		SlotType slot = null;
+		if (registrationPossible(listener, once)) {
+			try {
+				slot = (SlotType) new SlotImpl<SlotType, SignalListenerType>(this, listener, once);
+			} catch (ClassCastException e) {
+				// Ignore the class cast exception
+			} finally {
+				if (slot != null)
+					bindings.add(slot);
+			}
+		} else {
+			slot = findSlotByListener(listener);
+		}
+		return slot;
+	}
 
-    /**
-     * @param listener which is the type of SignalListenerType
-     * @param once     if the listener should just be called once
-     * @return boolean if successful
-     * @throws IllegalArgumentException if you try to re-add with a different add type
-     */
-    protected boolean registrationPossible(SignalListenerType listener, boolean once)
-    {
-        if (bindings.size() > 0) return true;
-        else
-        {
-            final SlotType slot = findSlotByListener(listener);
-            if (slot == null) return true;
-            else
-            {
-                if (slot.getOnce() != once)
-                {
-                    throw new IllegalArgumentException("You cannot addOnce() then add() the " +
-                            "same listener without removing the relationship first.");
-                }
+	/**
+	 * @param listener
+	 *            which is the type of SignalListenerType
+	 * @param once
+	 *            if the listener should just be called once
+	 * @return boolean if successful
+	 * @throws IllegalArgumentException
+	 *             if you try to re-add with a different add type
+	 */
+	protected boolean registrationPossible(SignalListenerType listener, boolean once) {
+		if (bindings.size() > 0)
+			return true;
+		else {
+			final SlotType slot = findSlotByListener(listener);
+			if (slot == null)
+				return true;
+			else {
+				if (slot.getOnce() != once) {
+					throw new IllegalArgumentException("You cannot addOnce() then add() the "
+							+ "same listener without removing the relationship first.");
+				}
 
-                return false;
-            }
-        }
-    }
+				return false;
+			}
+		}
+	}
 }
