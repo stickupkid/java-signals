@@ -61,10 +61,10 @@ public class Signal1Test {
 
 	@Test
 	public void verify_that_add_once_makes_getNumListeners_equal_one() {
-		signal.add(new Signal1.SignalListener1<Boolean>() {
+		signal.addOnce(new Signal1.SignalListener1<Boolean>() {
 			public void apply(Boolean value) {
 			}
-		}, true);
+		});
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add once", 1,
 				signal.getNumListeners());
@@ -80,7 +80,7 @@ public class Signal1Test {
 		};
 
 		for (int i = 0; i < total; i++) {
-			signal.add(listener, true);
+			signal.addOnce(listener);
 		}
 
 		Assert.assertEquals("Signal getNumListeners should equal total after add once", total,
@@ -102,10 +102,10 @@ public class Signal1Test {
 
 	@Test
 	public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch() {
-		signal.add(new Signal1.SignalListener1<Boolean>() {
+		signal.addOnce(new Signal1.SignalListener1<Boolean>() {
 			public void apply(Boolean value) {
 			}
-		}, true);
+		});
 
 		signal.dispatch(true);
 

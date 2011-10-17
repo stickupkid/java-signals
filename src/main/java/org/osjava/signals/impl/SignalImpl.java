@@ -12,8 +12,6 @@ import org.osjava.signals.Slot;
  */
 public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
-	public final static boolean DEFAULT_ONCE = false;
-
 	private final CopyOnWriteArrayList<Slot<L>> bindings = new CopyOnWriteArrayList<Slot<L>>();
 
 	/**
@@ -34,14 +32,14 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public Slot<L> add(L listener) {
-		return add(listener, SignalImpl.DEFAULT_ONCE);
+		return registerListener(listener, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Slot<L> add(L listener, boolean once) {
-		return registerListener(listener, once);
+	public Slot<L> addOnce(L listener) {
+		return registerListener(listener, true);
 	}
 
 	/**

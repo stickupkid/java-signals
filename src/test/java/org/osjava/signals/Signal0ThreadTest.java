@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.osjava.signals.Signal0.SignalListener0;
 import org.osjava.signals.impl.SignalImpl0;
 
 /**
@@ -94,10 +95,15 @@ public class Signal0ThreadTest extends SignalThreadTest {
 			throws InterruptedException, ExecutionException {
 		Callable<Integer> task = new Callable<Integer>() {
 			public Integer call() throws Exception {
-				signal.add(new Signal0.SignalListener0() {
+				SignalListener0 listener = new SignalListener0() {
 					public void apply() {
 					}
-				}, isOnce);
+				};
+				if (isOnce) {
+					signal.addOnce(listener);
+				} else {
+					signal.add(listener);
+				}
 				return signal.getNumListeners();
 			}
 		};

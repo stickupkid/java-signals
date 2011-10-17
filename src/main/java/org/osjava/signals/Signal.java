@@ -23,8 +23,6 @@ public interface Signal<L extends SignalListener> {
 	 * the listener automatically the first time it is called, after the
 	 * dispatch to all listeners is complete.
 	 * 
-	 * @param once
-	 *            if required to only call this listener once and then remove it
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 * @param listener
 	 *            A function with arguments that matches the value classes
@@ -32,7 +30,7 @@ public interface Signal<L extends SignalListener> {
 	 *            (e.g. via Signal constructor), dispatch() can be called
 	 *            without arguments.
 	 */
-	public Slot<L> add(L listener, boolean once);
+	public Slot<L> addOnce(L listener);
 
 	/**
 	 * Unsubscribes a listener from the signal.

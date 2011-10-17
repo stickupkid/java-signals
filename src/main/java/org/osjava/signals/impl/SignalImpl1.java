@@ -40,8 +40,8 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Slot<SignalListener1<A>> add(SignalListener1<A> listener, boolean once) {
-		return signal.add(listener, once);
+	public Slot<SignalListener1<A>> addOnce(SignalListener1<A> listener) {
+		return signal.addOnce(listener);
 	}
 
 	/**
