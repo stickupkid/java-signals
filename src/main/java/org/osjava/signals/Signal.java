@@ -1,9 +1,11 @@
 package org.osjava.signals;
 
+import org.osjava.signals.Signal.SignalListener;
+
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
-public interface Signal<SlotType extends Slot<Signal.SignalListener>, SignalListenerType extends Signal.SignalListener> {
+public interface Signal<L extends SignalListener> {
 	/**
 	 * Subscribes a listener for the signal.
 	 * 
@@ -14,7 +16,7 @@ public interface Signal<SlotType extends Slot<Signal.SignalListener>, SignalList
 	 *            (e.g. via Signal constructor), dispatch() can be called
 	 *            without arguments.
 	 */
-	public SlotType add(SignalListenerType listener);
+	public Slot<L> add(L listener);
 
 	/**
 	 * Subscribes a one-time listener for this signal. The signal will remove
@@ -30,7 +32,7 @@ public interface Signal<SlotType extends Slot<Signal.SignalListener>, SignalList
 	 *            (e.g. via Signal constructor), dispatch() can be called
 	 *            without arguments.
 	 */
-	public SlotType add(SignalListenerType listener, boolean once);
+	public Slot<L> add(L listener, boolean once);
 
 	/**
 	 * Unsubscribes a listener from the signal.
@@ -39,7 +41,7 @@ public interface Signal<SlotType extends Slot<Signal.SignalListener>, SignalList
 	 * @param listener
 	 *            A function with arguments
 	 */
-	public SlotType remove(SignalListenerType listener);
+	public Slot<L> remove(L listener);
 
 	/**
 	 * Unsubscribes all listeners from the signal.

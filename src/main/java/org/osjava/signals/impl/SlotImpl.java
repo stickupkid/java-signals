@@ -1,24 +1,23 @@
 package org.osjava.signals.impl;
 
 import org.osjava.signals.Signal;
+import org.osjava.signals.Signal.SignalListener;
 import org.osjava.signals.Slot;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
-public class SlotImpl<SlotType extends Slot<Signal.SignalListener>, SignalListenerType extends Signal.SignalListener>
-		implements Slot<SignalListenerType> {
+public class SlotImpl<L extends SignalListener> implements Slot<L> {
 
-	private final Signal<SlotType, SignalListenerType> signal;
+	private final Signal<L> signal;
 
-	private SignalListenerType listener;
+	private L listener;
 
 	private boolean once;
 
 	private boolean enabled;
 
-	public SlotImpl(Signal<SlotType, SignalListenerType> signal, SignalListenerType listener,
-			boolean once) {
+	public SlotImpl(Signal<L> signal, L listener, boolean once) {
 		this.signal = signal;
 		this.enabled = true;
 
@@ -36,14 +35,14 @@ public class SlotImpl<SlotType extends Slot<Signal.SignalListener>, SignalListen
 	/**
 	 * {@inheritDoc}
 	 */
-	public SignalListenerType getListener() {
+	public L getListener() {
 		return listener;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setListener(SignalListenerType value) {
+	public void setListener(L value) {
 		listener = value;
 	}
 

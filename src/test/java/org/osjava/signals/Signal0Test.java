@@ -5,24 +5,23 @@
 
 package org.osjava.signals;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.factories.Signals;
 import org.osjava.signals.impl.SignalImpl0;
-
-import java.util.ArrayList;
 
 public class Signal0Test
 {
 
-    private SignalImpl0 signal;
+    private Signal0 signal;
 
     @Before
     public void setUp()
     {
-        signal = Signals.createSignal0();
+        signal = SignalImpl0.newInstance();
     }
 
     @After

@@ -1,10 +1,11 @@
 package org.osjava.signals;
 
+import org.osjava.signals.Signal2.SignalListener2;
+
 /**
  * Created by IntelliJ IDEA. User: cereals Date: 16/09/2011
  */
-public interface Signal2<A, B, SlotType extends Slot<SignalListenerType>, SignalListenerType extends Signal2.SignalListener2<A, B>>
-		extends Signal<SlotType, SignalListenerType> {
+public interface Signal2<A, B> extends Signal<SignalListener2<A, B>> {
 	/**
 	 * Dispatches an object to listeners.
 	 * 

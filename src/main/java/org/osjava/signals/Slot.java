@@ -1,9 +1,11 @@
 package org.osjava.signals;
 
+import org.osjava.signals.Signal.SignalListener;
+
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
-public interface Slot<SignalListenerType extends Signal.SignalListener> {
+public interface Slot<L extends SignalListener> {
 
 	/**
 	 * Removes the slot from its signal.
@@ -15,7 +17,7 @@ public interface Slot<SignalListenerType extends Signal.SignalListener> {
 	 * 
 	 * @return SignalListener associated with the slot
 	 */
-	public SignalListenerType getListener();
+	public L getListener();
 
 	/**
 	 * Set the listener associated with this slot.
@@ -23,7 +25,7 @@ public interface Slot<SignalListenerType extends Signal.SignalListener> {
 	 * @param value
 	 *            which is a type SignalListener
 	 */
-	public void setListener(SignalListenerType value);
+	public void setListener(L value);
 
 	/**
 	 * Get whether this slot is automatically removed after it has been used
