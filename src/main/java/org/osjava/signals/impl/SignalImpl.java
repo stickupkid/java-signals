@@ -1,7 +1,6 @@
 package org.osjava.signals.impl;
 
-import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 import org.osjava.signals.Signal;
 import org.osjava.signals.Signal.SignalListener;
@@ -11,9 +10,13 @@ import org.osjava.signals.Slot;
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
 public class SignalImpl<L extends SignalListener> implements Signal<L> {
+		
+	private final List<Slot<L>> _bindings;
 
-	private final CopyOnWriteArrayList<Slot<L>> bindings = new CopyOnWriteArrayList<Slot<L>>();
-
+	private SignalImpl(List<Slot<L>> bindings) {
+		_bindings = bindings;
+	}
+	
 	/**
 	 * Create a new instance of the SignalImplementation.
 	 * 
@@ -24,8 +27,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 *            the binding.
 	 * @return A new instance of Signal
 	 */
-	public static <L extends SignalListener> SignalImpl<L> newInstance() {
-		return new SignalImpl<L>();
+	public static <L extends SignalListener> SignalImpl<L> newInstance(List<Slot<L>> bindings) {
+		return new SignalImpl<L>(bindings);
 	}
 
 	/**
@@ -48,7 +51,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	public Slot<L> remove(L listener) {
 		final Slot<L> slot = findSlotByListener(listener);
 		if (slot != null) {
-			bindings.remove(slot);
+			_bindings.remove(slot);
 			return slot;
 		} else
 			return null;
@@ -58,21 +61,14 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public void removeAll() {
-		bindings.clear();
+		_bindings.clear();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public int getNumListeners() {
-		return bindings.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Iterator<Slot<L>> getIterator() {
-		return bindings.listIterator();
+		return _bindings.size();
 	}
 
 	/**
@@ -83,7 +79,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 */
 	private Slot<L> findSlotByListener(L listener) {
-		for (Slot<L> slot : bindings) {
+		for (Slot<L> slot : _bindings) {
 			if (slot.equals(listener))
 				return slot;
 		}
@@ -104,7 +100,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		if (registrationPossible(listener, once)) {
 			slot = new SlotImpl<L>(this, listener, once);
 			if (slot != null)
-				bindings.add(slot);
+				_bindings.add(slot);
 		} else {
 			slot = findSlotByListener(listener);
 		}
@@ -121,7 +117,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 *             if you try to re-add with a different add type
 	 */
 	private boolean registrationPossible(L listener, boolean once) {
-		if (bindings.size() > 0)
+		if (_bindings.size() > 0)
 			return true;
 		else {
 			final Slot<L> slot = findSlotByListener(listener);

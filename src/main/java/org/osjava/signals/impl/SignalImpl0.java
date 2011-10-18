@@ -1,7 +1,9 @@
 package org.osjava.signals.impl;
 
-import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osjava.signals.Dispatcher;
 import org.osjava.signals.Signal0;
 import org.osjava.signals.Slot;
 
@@ -9,14 +11,15 @@ import org.osjava.signals.Slot;
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
  */
 public class SignalImpl0 implements Signal0 {
+	
+	private final List<Slot<SignalListener0>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener0>>();
+	
+	private final Dispatcher<SignalListener0> _dispatcher = DispatcherImpl.newInstance(_bindings);
+	
+	private final SignalImpl<SignalListener0> _signal = SignalImpl.newInstance(_bindings);
 
-	private final SignalImpl<SignalListener0> signal = SignalImpl.newInstance();
-
-	/**
-	 * Private constructor
-	 */
 	private SignalImpl0() {
-
+		// Private constructor
 	}
 
 	/**
@@ -33,7 +36,7 @@ public class SignalImpl0 implements Signal0 {
 	 */
 	@Override
 	public Slot<SignalListener0> add(SignalListener0 listener) {
-		return signal.add(listener);
+		return _signal.add(listener);
 	}
 
 	/**
@@ -41,7 +44,7 @@ public class SignalImpl0 implements Signal0 {
 	 */
 	@Override
 	public Slot<SignalListener0> addOnce(SignalListener0 listener) {
-		return signal.addOnce(listener);
+		return _signal.addOnce(listener);
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class SignalImpl0 implements Signal0 {
 	 */
 	@Override
 	public Slot<SignalListener0> remove(SignalListener0 listener) {
-		return signal.remove(listener);
+		return _signal.remove(listener);
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class SignalImpl0 implements Signal0 {
 	 */
 	@Override
 	public void removeAll() {
-		signal.removeAll();
+		_signal.removeAll();
 	}
 
 	/**
@@ -65,23 +68,13 @@ public class SignalImpl0 implements Signal0 {
 	 */
 	@Override
 	public int getNumListeners() {
-		return signal.getNumListeners();
+		return _signal.getNumListeners();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void dispatch() {
-		Iterator<Slot<SignalListener0>> iterator = signal.getIterator();
-		while (iterator.hasNext()) {
-			Slot<SignalListener0> slot = iterator.next();
-			SignalListener0 listener = slot.getListener();
-			if (listener != null && slot.getEnabled()) {
-				if (slot.getOnce())
-					slot.remove();
-				if (listener != null)
-					listener.apply();
-			}
-		}
+		_dispatcher.dispatch();
 	}
 }

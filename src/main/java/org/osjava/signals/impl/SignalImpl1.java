@@ -1,7 +1,9 @@
 package org.osjava.signals.impl;
 
-import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osjava.signals.Dispatcher;
 import org.osjava.signals.Signal1;
 import org.osjava.signals.Slot;
 
@@ -10,7 +12,12 @@ import org.osjava.signals.Slot;
  */
 public class SignalImpl1<A> implements Signal1<A> {
 
-	private final SignalImpl<SignalListener1<A>> signal = SignalImpl.newInstance();
+	private final List<Slot<SignalListener1<A>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
+
+	private final Dispatcher<SignalListener1<A>> _dispatcher = DispatcherImpl
+			.newInstance(_bindings);
+
+	private final SignalImpl<SignalListener1<A>> _signal = SignalImpl.newInstance(_bindings);
 
 	/**
 	 * Private constructor
@@ -33,7 +40,7 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 */
 	@Override
 	public Slot<SignalListener1<A>> add(SignalListener1<A> listener) {
-		return signal.add(listener);
+		return _signal.add(listener);
 	}
 
 	/**
@@ -41,7 +48,7 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 */
 	@Override
 	public Slot<SignalListener1<A>> addOnce(SignalListener1<A> listener) {
-		return signal.addOnce(listener);
+		return _signal.addOnce(listener);
 	}
 
 	/**
@@ -49,7 +56,7 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 */
 	@Override
 	public Slot<SignalListener1<A>> remove(SignalListener1<A> listener) {
-		return signal.remove(listener);
+		return _signal.remove(listener);
 	}
 
 	/**
@@ -57,7 +64,7 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 */
 	@Override
 	public void removeAll() {
-		signal.removeAll();
+		_signal.removeAll();
 	}
 
 	/**
@@ -65,23 +72,13 @@ public class SignalImpl1<A> implements Signal1<A> {
 	 */
 	@Override
 	public int getNumListeners() {
-		return signal.getNumListeners();
+		return _signal.getNumListeners();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void dispatch(A value0) {
-		Iterator<Slot<SignalListener1<A>>> iterator = signal.getIterator();
-		while (iterator.hasNext()) {
-			Slot<SignalListener1<A>> slot = iterator.next();
-			SignalListener1<A> listener = (SignalListener1<A>) slot.getListener();
-			if (listener != null && slot.getEnabled()) {
-				if (slot.getOnce())
-					slot.remove();
-				if (listener != null)
-					listener.apply(value0);
-			}
-		}
+		_dispatcher.dispatch(value0);
 	}
 }
