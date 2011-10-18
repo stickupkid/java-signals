@@ -8,16 +8,16 @@ import java.util.concurrent.Executors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.Signal0.SignalListener0;
-import org.osjava.signals.impl.SignalImpl0;
+import org.osjava.signals.Signal2.SignalListener2;
+import org.osjava.signals.impl.SignalImpl2;
 
-public class Signal0ThreadDispatchTest extends SignalThreadTest {
+public class Signal2ThreadDispatchTest  extends SignalThreadTest {
 
-	private Signal0 signal;
+	private Signal2<Integer, Integer> signal;
 
 	@Before
 	public void setUp() {
-		signal = SignalImpl0.newInstance();
+		signal = SignalImpl2.newInstance();
 	}
 
 	@After
@@ -117,7 +117,7 @@ public class Signal0ThreadDispatchTest extends SignalThreadTest {
 		testDispatchWithMultipleThreads(signal, task, threadCount);
 	}
 
-	private class SignalDispatchListener implements SignalListener0 {
+	private class SignalDispatchListener implements SignalListener2<Integer, Integer> {
 
 		private final SignalDispatchRunnable _runnable = new SignalDispatchRunnableImpl();
 
@@ -131,7 +131,7 @@ public class Signal0ThreadDispatchTest extends SignalThreadTest {
 		}
 
 		@Override
-		public void apply() {
+		public void apply(Integer value0, Integer value1) {
 			_runnable.setNumListeners(_numListeners);
 		}
 

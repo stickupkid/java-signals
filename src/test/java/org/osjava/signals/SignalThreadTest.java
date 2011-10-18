@@ -40,16 +40,23 @@ public abstract class SignalThreadTest {
 		Assert.assertEquals(expectedList, resultList);
 	}
 
-	protected void testDispatchWithMultipleThreads(final Signal0 signal, final Callable<SignalDispatchRunnable> task,
-			final int threadCount) throws InterruptedException, ExecutionException {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void testDispatchWithMultipleThreads(final Signal signal,
+			final Callable<SignalDispatchRunnable> task, final int threadCount)
+			throws InterruptedException, ExecutionException {
 
 		List<Callable<SignalDispatchRunnable>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		List<Future<SignalDispatchRunnable>> futures = executorService.invokeAll(tasks);
 		List<Integer> resultList = new ArrayList<Integer>(futures.size());
-		
-		signal.dispatch();
-				
+
+		if (signal instanceof Signal0)
+			((Signal0) signal).dispatch();
+		else if (signal instanceof Signal1)
+			((Signal1<Integer>) signal).dispatch(1);
+		else if (signal instanceof Signal2)
+			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
+
 		// Check for exceptions
 		for (Future<SignalDispatchRunnable> future : futures) {
 			// Throws an exception if an exception was thrown by the task.
