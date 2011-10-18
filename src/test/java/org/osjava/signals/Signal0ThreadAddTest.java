@@ -6,19 +6,19 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.Signal1.SignalListener1;
-import org.osjava.signals.impl.SignalImpl1;
+import org.osjava.signals.Signal0.SignalListener0;
+import org.osjava.signals.impl.SignalImpl0;
 
 /**
- * Created by IntelliJ IDEA. User: cereals Date: 13/10/2011
+ * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 09:53
  */
-public class Signal1ThreadTest extends SignalThreadTest {
+public class Signal0ThreadAddTest extends SignalThreadTest {
 
-	private Signal1<Boolean> signal;
+	private Signal0 signal;
 
 	@Before
 	public void setUp() {
-		signal = SignalImpl1.newInstance();
+		signal = SignalImpl0.newInstance();
 	}
 
 	@After
@@ -95,8 +95,8 @@ public class Signal1ThreadTest extends SignalThreadTest {
 			throws InterruptedException, ExecutionException {
 		Callable<Integer> task = new Callable<Integer>() {
 			public Integer call() throws Exception {
-				SignalListener1<Boolean> listener = new SignalListener1<Boolean>() {
-					public void apply(Boolean value0) {
+				SignalListener0 listener = new SignalListener0() {
+					public void apply() {
 					}
 				};
 				if (isOnce) {
