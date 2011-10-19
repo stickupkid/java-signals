@@ -13,7 +13,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		
 	private final List<Slot<L>> _bindings;
 
-	private SignalImpl(List<Slot<L>> bindings) {
+	public SignalImpl(List<Slot<L>> bindings) {
 		_bindings = bindings;
 	}
 	
@@ -78,7 +78,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 *            which is the type of SignalListenerType to look for
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 */
-	private Slot<L> findSlotByListener(L listener) {
+	protected Slot<L> findSlotByListener(L listener) {
 		for (Slot<L> slot : _bindings) {
 			if (slot.getListener().equals(listener))
 				return slot;
@@ -95,7 +95,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 *            if the listener should just be called once
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 */
-	private Slot<L> registerListener(L listener, boolean once) {
+	protected Slot<L> registerListener(L listener, boolean once) {
 		Slot<L> slot = null;
 		if (registrationPossible(listener, once)) {
 			slot = new SlotImpl<L>(this, listener, once);
@@ -116,7 +116,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * @throws IllegalArgumentException
 	 *             if you try to re-add with a different add type
 	 */
-	private boolean registrationPossible(L listener, boolean once) {
+	protected boolean registrationPossible(L listener, boolean once) {
 		if (_bindings.size() > 0)
 			return true;
 		else {
