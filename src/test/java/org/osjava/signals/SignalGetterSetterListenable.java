@@ -1,6 +1,6 @@
 package org.osjava.signals;
 
-public interface SignalDispatchRunnable {
+public interface SignalGetterSetterListenable {
 	public int getNumListeners();
 
 	public void setNumListeners(final int numListeners);
