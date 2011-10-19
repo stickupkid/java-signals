@@ -111,7 +111,7 @@ public class Signal0Test {
 		signal.dispatch();
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add once and then "
-				+ "dispatch", 1, signal.getNumListeners());
+				+ "dispatch", 0, signal.getNumListeners());
 	}
 
 	@Test

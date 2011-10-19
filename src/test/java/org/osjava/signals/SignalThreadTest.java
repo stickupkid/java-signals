@@ -57,13 +57,34 @@ public abstract class SignalThreadTest {
 			((Signal0) signal).dispatch();
 		else if (signal instanceof Signal1)
 			((Signal1<Integer>) signal).dispatch(1);
-		else if (signal instanceof Signal2)
-		{
+		else if (signal instanceof Signal2) {
 			total += total * 2;
 			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
 		}
 
 		Assert.assertEquals(futures.size(), threadCount);
+		Assert.assertEquals(incrementer.get(), total);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void testRemoveWithMultipleThreads(final Signal signal, final Callable<Integer> task,
+			final int threadCount) throws InterruptedException, ExecutionException {
+
+		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
+		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+		List<Future<Integer>> futures = executorService.invokeAll(tasks);
+
+		int total = futures.size();
+		if (signal instanceof Signal0)
+			((Signal0) signal).dispatch();
+		else if (signal instanceof Signal1)
+			((Signal1<Integer>) signal).dispatch(1);
+		else if (signal instanceof Signal2) {
+			total += total * 2;
+			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
+		}
+
+		Assert.assertEquals(signal.getNumListeners(), 0);
 		Assert.assertEquals(incrementer.get(), total);
 	}
 }

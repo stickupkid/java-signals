@@ -80,7 +80,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 */
 	private Slot<L> findSlotByListener(L listener) {
 		for (Slot<L> slot : _bindings) {
-			if (slot.equals(listener))
+			if (slot.getListener().equals(listener))
 				return slot;
 		}
 		return null;
