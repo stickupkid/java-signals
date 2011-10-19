@@ -11,10 +11,10 @@ import org.osjava.signals.Slot;
  */
 public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		
-	private final List<Slot<L>> _bindings;
+	protected final List<Slot<L>> bindings;
 
 	public SignalImpl(List<Slot<L>> bindings) {
-		_bindings = bindings;
+		this.bindings = bindings;
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	public Slot<L> remove(L listener) {
 		final Slot<L> slot = findSlotByListener(listener);
 		if (slot != null) {
-			_bindings.remove(slot);
+			bindings.remove(slot);
 			return slot;
 		} else
 			return null;
@@ -61,14 +61,14 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public void removeAll() {
-		_bindings.clear();
+		bindings.clear();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public int getNumListeners() {
-		return _bindings.size();
+		return bindings.size();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 */
 	protected Slot<L> findSlotByListener(L listener) {
-		for (Slot<L> slot : _bindings) {
+		for (Slot<L> slot : bindings) {
 			if (slot.getListener().equals(listener))
 				return slot;
 		}
@@ -100,7 +100,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		if (registrationPossible(listener, once)) {
 			slot = new SlotImpl<L>(this, listener, once);
 			if (slot != null)
-				_bindings.add(slot);
+				bindings.add(slot);
 		} else {
 			slot = findSlotByListener(listener);
 		}
@@ -117,7 +117,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 *             if you try to re-add with a different add type
 	 */
 	protected boolean registrationPossible(L listener, boolean once) {
-		if (_bindings.size() > 0)
+		if (bindings.size() > 0)
 			return true;
 		else {
 			final Slot<L> slot = findSlotByListener(listener);
