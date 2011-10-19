@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 
@@ -15,6 +16,8 @@ import org.junit.Assert;
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 12:01
  */
 public abstract class SignalThreadTest {
+
+	protected AtomicInteger incrementer;
 
 	protected void testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
 			throws InterruptedException, ExecutionException {
@@ -42,35 +45,25 @@ public abstract class SignalThreadTest {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void testDispatchWithMultipleThreads(final Signal signal,
-			final Callable<SignalDispatchRunnable> task, final int threadCount)
-			throws InterruptedException, ExecutionException {
+			final Callable<Integer> task, final int threadCount) throws InterruptedException,
+			ExecutionException {
 
-		List<Callable<SignalDispatchRunnable>> tasks = Collections.nCopies(threadCount, task);
+		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
-		List<Future<SignalDispatchRunnable>> futures = executorService.invokeAll(tasks);
-		List<Integer> resultList = new ArrayList<Integer>(futures.size());
+		List<Future<Integer>> futures = executorService.invokeAll(tasks);
 
+		int total = futures.size();
 		if (signal instanceof Signal0)
 			((Signal0) signal).dispatch();
 		else if (signal instanceof Signal1)
 			((Signal1<Integer>) signal).dispatch(1);
 		else if (signal instanceof Signal2)
+		{
+			total += total * 2;
 			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
-
-		// Check for exceptions
-		for (Future<SignalDispatchRunnable> future : futures) {
-			// Throws an exception if an exception was thrown by the task.
-			resultList.add(future.get().getNumListeners());
 		}
 
 		Assert.assertEquals(futures.size(), threadCount);
-
-		List<Integer> expectedList = new ArrayList<Integer>(threadCount);
-		for (int i = 1; i <= threadCount; i++) {
-			expectedList.add(i);
-		}
-
-		Collections.sort(resultList);
-		Assert.assertEquals(expectedList, resultList);
+		Assert.assertEquals(incrementer.get(), total);
 	}
 }
