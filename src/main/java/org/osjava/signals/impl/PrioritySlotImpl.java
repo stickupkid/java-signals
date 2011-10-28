@@ -9,6 +9,12 @@ public final class PrioritySlotImpl<L extends SignalListener> extends SlotImpl<L
 
 	private final int _priority;
 
+	public PrioritySlotImpl(Signal<L> signal, boolean once, int priority) {
+		super(signal, once);
+
+		_priority = priority;
+	}
+
 	public PrioritySlotImpl(Signal<L> signal, L listener, boolean once, int priority) {
 		super(signal, listener, once);
 
