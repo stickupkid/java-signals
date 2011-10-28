@@ -25,16 +25,18 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	public void dispatch() {
 		for (Slot<L> slot : _bindings) {
 			SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener0) {
-				SignalListener0 listener = (SignalListener0) slot.getListener();
-				if (listener != null && slot.getEnabled()) {
-					if (slot.getOnce())
-						slot.remove();
-					if (listener != null)
-						listener.apply();
-				}
-			} else
-				throw new IllegalArgumentException();
+			if (null != slotListener) {
+				if (slotListener instanceof SignalListener0) {
+					SignalListener0 listener = (SignalListener0) slotListener;
+					if (slot.getEnabled()) {
+						if (slot.getOnce())
+							slot.remove();
+						if (listener != null)
+							listener.apply();
+					}
+				} else
+					throw new IllegalArgumentException();
+			}
 		}
 	}
 
@@ -43,16 +45,18 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	public <A> void dispatch(A value0) {
 		for (Slot<L> slot : _bindings) {
 			SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener1) {
-				SignalListener1<A> listener = (SignalListener1<A>) slot.getListener();
-				if (listener != null && slot.getEnabled()) {
-					if (slot.getOnce())
-						slot.remove();
-					if (listener != null)
-						listener.apply(value0);
-				}
-			} else
-				throw new IllegalArgumentException();
+			if (null != slotListener) {
+				if (slotListener instanceof SignalListener1) {
+					SignalListener1<A> listener = (SignalListener1<A>) slotListener;
+					if (slot.getEnabled()) {
+						if (slot.getOnce())
+							slot.remove();
+						if (listener != null)
+							listener.apply(value0);
+					}
+				} else
+					throw new IllegalArgumentException();
+			}
 		}
 	}
 
@@ -61,16 +65,18 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	public <A, B> void dispatch(A value0, B value1) {
 		for (Slot<L> slot : _bindings) {
 			SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener2) {
-				SignalListener2<A, B> listener = (SignalListener2<A, B>) slot.getListener();
-				if (listener != null && slot.getEnabled()) {
-					if (slot.getOnce())
-						slot.remove();
-					if (listener != null)
-						listener.apply(value0, value1);
-				}
-			} else
-				throw new IllegalArgumentException();
+			if (null != slotListener) {
+				if (slotListener instanceof SignalListener2) {
+					SignalListener2<A, B> listener = (SignalListener2<A, B>) slotListener;
+					if (slot.getEnabled()) {
+						if (slot.getOnce())
+							slot.remove();
+						if (listener != null)
+							listener.apply(value0, value1);
+					}
+				} else
+					throw new IllegalArgumentException();
+			}
 		}
 	}
 }

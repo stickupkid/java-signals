@@ -12,8 +12,10 @@ import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.Slot;
 
-public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> implements
+public final class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> implements
 		PrioritySignal<L> {
+
+	private final static int DEFAULT_PRIORITY = -1;
 
 	public PrioritySignalImpl(List<Slot<L>> bindings) {
 		super(bindings);
@@ -38,16 +40,48 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Slot<L> addWithPriority(L listener, int priority) {
-		return registerListener(listener, false, priority);
+	public Slot<L> add(L listener) {
+		assert null != listener : "Listener can not be null";
+
+		return registerListener(listener, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Slot<L> addOnce(L listener) {
+		assert null != listener : "Listener can not be null";
+
+		return registerListener(listener, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Slot<L> addWithPriority(L listener, int priority) {
+		assert null != listener : "Listener can not be null";
+
+		return registerListener(listener, false, priority);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public Slot<L> addOnceWithPriority(L listener, int priority) {
+		assert null != listener : "Listener can not be null";
+
 		return registerListener(listener, true, priority);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Slot<L> registerListener(L listener, boolean once) {
+		assert null != listener : "Listener can not be null";
+
+		return registerListener(listener, once, DEFAULT_PRIORITY);
 	}
 
 	/**
@@ -61,34 +95,35 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 	 *            priority at which to add the signal at
 	 * @return a SlotType, which contains the Function passed as the parameter
 	 */
-	@SuppressWarnings("unchecked")
 	protected Slot<L> registerListener(L listener, boolean once, int priority) {
+		assert null != listener : "Listener can not be null";
+
 		Slot<L> slot = null;
 		if (registrationPossible(listener, once)) {
 			slot = new PrioritySlotImpl<L>(this, listener, once, priority);
-			if (slot != null) {
-				// Make sure that bindings is synchronised
-				synchronized (bindings) {
-					final int total = bindings.size();
-					if (total == 0)
-						bindings.add(slot);
-					else {
-						for (int i = 0; i < total; i++) {
-							Slot<L> s = bindings.get(i);
-							if (s instanceof PrioritySlot) {
-								PrioritySlot<L> prioritySlot = (PrioritySlot<L>) s;
-								if (priority > prioritySlot.getPriority()) {
-									bindings.add(i, slot);
-									break;
-								}
-							} else {
+
+			// Make sure that bindings is synchronised
+			synchronized (bindings) {
+				final int total = bindings.size();
+				if (total == 0)
+					bindings.add(slot);
+				else {
+					for (int i = 0; i < total; i++) {
+						Slot<L> s = bindings.get(i);
+						if (s instanceof PrioritySlot) {
+							PrioritySlot<L> prioritySlot = (PrioritySlot<L>) s;
+							if (priority > prioritySlot.getPriority()) {
 								bindings.add(i, slot);
 								break;
 							}
+						} else {
+							bindings.add(i, slot);
+							break;
 						}
 					}
 				}
 			}
+
 		} else {
 			slot = findSlotByListener(listener);
 		}
@@ -139,7 +174,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		 */
 		@Override
 		public Slot<SignalListener0> addWithPriority(SignalListener0 listener, int priority) {
-			return _signal.add(listener);
+			return _signal.addWithPriority(listener, priority);
 		}
 
 		/**
@@ -147,7 +182,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		 */
 		@Override
 		public Slot<SignalListener0> addOnceWithPriority(SignalListener0 listener, int priority) {
-			return _signal.addOnce(listener);
+			return _signal.addOnceWithPriority(listener, priority);
 		}
 
 		/**
@@ -226,7 +261,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		 */
 		@Override
 		public Slot<SignalListener1<A>> addWithPriority(SignalListener1<A> listener, int priority) {
-			return _signal.add(listener);
+			return _signal.addWithPriority(listener, priority);
 		}
 
 		/**
@@ -235,7 +270,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		@Override
 		public Slot<SignalListener1<A>> addOnceWithPriority(SignalListener1<A> listener,
 				int priority) {
-			return _signal.addOnce(listener);
+			return _signal.addOnceWithPriority(listener, priority);
 		}
 
 		/**
@@ -315,7 +350,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		@Override
 		public Slot<SignalListener2<A, B>> addWithPriority(SignalListener2<A, B> listener,
 				int priority) {
-			return _signal.add(listener);
+			return _signal.addWithPriority(listener, priority);
 		}
 
 		/**
@@ -324,7 +359,7 @@ public class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> 
 		@Override
 		public Slot<SignalListener2<A, B>> addOnceWithPriority(SignalListener2<A, B> listener,
 				int priority) {
-			return _signal.addOnce(listener);
+			return _signal.addOnceWithPriority(listener, priority);
 		}
 
 		/**

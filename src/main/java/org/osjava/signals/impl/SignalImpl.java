@@ -116,13 +116,10 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		assert null != listener : "Listener can not be null";
 
 		Slot<L> slot = null;
-		if (registrationPossible(listener, once)) {
-			slot = new SlotImpl<L>(this, listener, once);
-			if (slot != null)
-				bindings.add(slot);
-		} else {
+		if (registrationPossible(listener, once))
+			bindings.add(slot = new SlotImpl<L>(this, listener, once));
+		else
 			slot = findSlotByListener(listener);
-		}
 		return slot;
 	}
 
@@ -224,7 +221,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 			_dispatcher.dispatch();
 		}
 	}
-	
+
 	public static class SignalImpl1<A> implements Signal1<A> {
 
 		private final List<Slot<SignalListener1<A>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
@@ -297,7 +294,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 			_dispatcher.dispatch(value0);
 		}
 	}
-	
+
 	public static class SignalImpl2<A, B> implements Signal2<A, B> {
 
 		private final List<Slot<SignalListener2<A, B>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener2<A, B>>>();

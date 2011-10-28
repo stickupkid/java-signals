@@ -4,10 +4,10 @@ import org.osjava.signals.PrioritySlot;
 import org.osjava.signals.Signal;
 import org.osjava.signals.SignalListener;
 
-public class PrioritySlotImpl<L extends SignalListener> extends SlotImpl<L> implements
+public final class PrioritySlotImpl<L extends SignalListener> extends SlotImpl<L> implements
 		PrioritySlot<L> {
 
-	private int _priority;
+	private final int _priority;
 
 	public PrioritySlotImpl(Signal<L> signal, L listener, boolean once, int priority) {
 		super(signal, listener, once);

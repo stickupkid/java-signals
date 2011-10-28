@@ -9,68 +9,76 @@ import org.osjava.signals.Slot;
  */
 public class SlotImpl<L extends SignalListener> implements Slot<L> {
 
-	private final Signal<L> signal;
+	private final Signal<L> _signal;
 
-	private L listener;
+	private L _listener;
 
-	private boolean once;
+	private boolean _once;
 
-	private boolean enabled;
-
+	private boolean _enabled;
+	
+	public SlotImpl(Signal<L> signal, boolean once) {
+		_signal = signal;
+		_enabled = true;
+		_once = once;
+	}
+	
 	public SlotImpl(Signal<L> signal, L listener, boolean once) {
-		this.signal = signal;
-		this.enabled = true;
-
+		_signal = signal;
+		_enabled = true;
+		_once = once;
+		
 		setListener(listener);
-		setOnce(once);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void remove() {
-		signal.remove(getListener());
+		_signal.remove(getListener());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public L getListener() {
-		return listener;
+		return _listener;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void setListener(L value) {
-		listener = value;
+		assert null != value : "Listener can not be null";
+		
+		_listener = value;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean getOnce() {
-		return once;
+		return _once;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void setOnce(boolean value) {
-		once = value;
+		_once = value;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean getEnabled() {
-		return enabled;
+		return _enabled;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void setEnabled(boolean value) {
-		enabled = value;
+		_enabled = value;
 	}
 }

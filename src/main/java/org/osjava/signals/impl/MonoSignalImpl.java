@@ -10,7 +10,7 @@ import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.Slot;
 
-public class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L> {
+public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L> {
 
 	public MonoSignalImpl(List<Slot<L>> bindings) {
 		super(bindings);
