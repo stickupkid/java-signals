@@ -3,10 +3,10 @@ package org.osjava.signals.impl;
 import java.util.List;
 
 import org.osjava.signals.Dispatcher;
-import org.osjava.signals.Signal.SignalListener;
-import org.osjava.signals.Signal0.SignalListener0;
-import org.osjava.signals.Signal1.SignalListener1;
-import org.osjava.signals.Signal2.SignalListener2;
+import org.osjava.signals.SignalListener;
+import org.osjava.signals.SignalListener.SignalListener0;
+import org.osjava.signals.SignalListener.SignalListener1;
+import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.Slot;
 
 public final class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {

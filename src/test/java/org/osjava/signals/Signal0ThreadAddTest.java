@@ -6,8 +6,9 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.Signal0.SignalListener0;
-import org.osjava.signals.impl.SignalImpl0;
+import org.osjava.signals.Signal.Signal0;
+import org.osjava.signals.SignalListener.SignalListener0;
+import org.osjava.signals.impl.SignalImpl.SignalImpl0;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 09:53
@@ -99,12 +100,17 @@ public class Signal0ThreadAddTest extends SignalThreadTest {
 					public void apply() {
 					}
 				};
-				if (isOnce) {
-					signal.addOnce(listener);
-				} else {
-					signal.add(listener);
+
+				int numListeners = 0;
+				synchronized (signal) {
+					if (isOnce) {
+						signal.addOnce(listener);
+					} else {
+						signal.add(listener);
+					}
+					numListeners = signal.getNumListeners();
 				}
-				return signal.getNumListeners();
+				return numListeners;
 			}
 		};
 

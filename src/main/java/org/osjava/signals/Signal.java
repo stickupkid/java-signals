@@ -1,6 +1,8 @@
 package org.osjava.signals;
 
-import org.osjava.signals.Signal.SignalListener;
+import org.osjava.signals.SignalListener.SignalListener0;
+import org.osjava.signals.SignalListener.SignalListener1;
+import org.osjava.signals.SignalListener.SignalListener2;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
@@ -53,6 +55,32 @@ public interface Signal<L extends SignalListener> {
 	 */
 	public int getNumListeners();
 
-	public interface SignalListener {
+	public static interface Signal0 extends Signal<SignalListener0> {
+		/**
+		 * Dispatches an object to listeners.
+		 */
+		public void dispatch();
+	}
+
+	public static interface Signal1<A> extends Signal<SignalListener1<A>> {
+		/**
+		 * Dispatches an object to listeners.
+		 * 
+		 * @param value
+		 *            which is the first passed argument
+		 */
+		public void dispatch(A value);
+	}
+
+	public static interface Signal2<A, B> extends Signal<SignalListener2<A, B>> {
+		/**
+		 * Dispatches an object to listeners.
+		 * 
+		 * @param value0
+		 *            which is the first passed argument
+		 * @param value1
+		 *            which is the second passed argument
+		 */
+		public void dispatch(A value0, B value1);
 	}
 }

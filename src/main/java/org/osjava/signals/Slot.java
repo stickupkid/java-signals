@@ -1,6 +1,5 @@
 package org.osjava.signals;
 
-import org.osjava.signals.Signal.SignalListener;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011

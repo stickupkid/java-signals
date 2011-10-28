@@ -11,6 +11,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
+import org.osjava.signals.Signal.Signal0;
+import org.osjava.signals.Signal.Signal1;
+import org.osjava.signals.Signal.Signal2;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 12:01

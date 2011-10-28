@@ -7,8 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.Signal1.SignalListener1;
-import org.osjava.signals.impl.SignalImpl1;
+import org.osjava.signals.Signal.Signal1;
+import org.osjava.signals.SignalListener.SignalListener1;
+import org.osjava.signals.impl.SignalImpl.SignalImpl1;
 
 
 public class Signal1ThreadDispatchTest extends SignalThreadTest {

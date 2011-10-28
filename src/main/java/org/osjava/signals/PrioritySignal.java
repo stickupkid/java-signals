@@ -1,6 +1,10 @@
 package org.osjava.signals;
 
-public interface PrioritySignal<L extends Signal.SignalListener> extends Signal<L> {
+import org.osjava.signals.SignalListener.SignalListener0;
+import org.osjava.signals.SignalListener.SignalListener1;
+import org.osjava.signals.SignalListener.SignalListener2;
+
+public interface PrioritySignal<L extends SignalListener> extends Signal<L> {
 
 	/**
 	 * Subscribes a listener for the signal. After you successfully register an
@@ -49,4 +53,18 @@ public interface PrioritySignal<L extends Signal.SignalListener> extends Signal<
 	 *             <code>null</code>.
 	 */
 	public Slot<L> addOnceWithPriority(L listener, int priority);
+
+	public static interface PrioritySignal0 extends PrioritySignal<SignalListener0>, Signal0 {
+
+	}
+
+	public static interface PrioritySignal1<A> extends PrioritySignal<SignalListener1<A>>,
+			Signal1<A> {
+
+	}
+
+	public static interface PrioritySignal2<A, B> extends PrioritySignal<SignalListener2<A, B>>,
+			Signal2<A, B> {
+
+	}
 }

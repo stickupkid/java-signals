@@ -1,7 +1,7 @@
 package org.osjava.signals.impl;
 
 import org.osjava.signals.Signal;
-import org.osjava.signals.Signal.SignalListener;
+import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
 
 /**
