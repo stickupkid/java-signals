@@ -32,7 +32,7 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	@Override
 	public void dispatch() throws Throwable {
 		assert null != _bindings : "Bindings can not be null";
-		
+
 		for (final Slot<L> slot : _bindings) {
 			final SignalListener slotListener = slot.getListener();
 			if (slotListener instanceof SignalListener0) {
@@ -117,14 +117,10 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 *            SignalListener to apply the parameters to.
 	 * @param params
 	 *            List of parameters to pass
-	 * @return True if apply is successful.
-	 * 
 	 * @throws Throwable
 	 *             throws the internal exception if when invoke is called.
 	 */
-	private boolean apply(final SignalListener slotListener, final List<?> params) throws Throwable {
-		boolean result = true;
-
+	private void apply(final SignalListener slotListener, final List<?> params) throws Throwable {
 		try {
 			// Invoke method here
 			// Get all the methods in the class using reflection
@@ -162,19 +158,15 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						// We have to make an Object[] hence the toArray
 						// method
 						slotMethod.invoke(slotListener, params.toArray());
-						result = true;
 						break;
 					}
 				}
 			}
-		} catch (IllegalArgumentException e) {
-			result = false;
-		} catch (IllegalAccessException e) {
-			result = false;
 		} catch (InvocationTargetException e) {
+			// Re-throw the cause of the exception, otherwise the
+			// InvocationTargetException will swallow all exceptions that where
+			// thrown inside the method
 			throw e.getCause();
 		}
-
-		return result;
 	}
 }
