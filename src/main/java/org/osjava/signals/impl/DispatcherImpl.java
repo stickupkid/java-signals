@@ -140,6 +140,7 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 				if (numParamTypes == params.size()) {
 					// Iterate through the methods parameters
 					for (Class<?> slotMethodParamType : slotMethodParamTypes) {
+						// TODO : Workout the boxed and unboxed versions i.e. Integer = int
 						if (slotMethodParamType.equals(paramClassType)) {
 							numParamTypes--;
 						} else {
