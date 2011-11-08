@@ -153,11 +153,11 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 */
 	private void invoke(final SignalListener slotListener, final Object[] values,
 			final List<?> params) throws Throwable {
-		
+
 		assert null != slotListener : "SignalListener can not be null";
 		assert null != values : "Non-optional parameters can not be null";
 		assert null != params : "Optional parameters can not be null";
-	
+
 		try {
 			// Invoke method here
 			// Get all the methods in the class using reflection
@@ -194,14 +194,21 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 					}
 
 					// Find out if the slot method isAccessible
-					if (numParamTypes == 0) {
+					if (numParamTypes == values.length) {
 						if (!slotMethod.isAccessible()) {
 							slotMethod.setAccessible(true);
 						}
 
-						// We have to make an Object[] hence the toArray
-						// method
-						slotMethod.invoke(slotListener, params.toArray());
+						// We have to make an Object[] to call the invoke method
+						// hence the toArray. Ideally we could keep it all a
+						// type of List<T> but this won't allow it
+						// To top it off we have to concat to Object[]s
+						// together...
+						Object[] optionalParams = params.toArray();
+						Object[] allParams = concat(values, optionalParams);
+						
+						// Invoke it!
+						slotMethod.invoke(slotListener, allParams);
 						valid = true;
 						break;
 					}
@@ -215,7 +222,36 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 			// Re-throw the cause of the exception, otherwise the
 			// InvocationTargetException will swallow all exceptions that where
 			// thrown inside the method
-			throw e.getCause();
+			throw e.getTargetException();
 		}
+	}
+
+	/**
+	 * Method to concat two different arrays into one.
+	 * 
+	 * @param a
+	 *            array of Object[]
+	 * @param b
+	 *            array of Object[]
+	 * @return a concat of both a and b, or in some cases just a or b if either
+	 *         one is empty.
+	 */
+	private Object[] concat(Object[] a, Object[] b) {
+		// We don't need to concat if the items are already 0
+		final int aLength = a.length;
+		if (aLength == 0)
+			return b;
+
+		final int bLength = b.length;
+		if (bLength == 0)
+			return a;
+
+		final Object[] result = new Object[aLength + bLength];
+
+		// Insert the items into the array
+		System.arraycopy(a, 0, result, 0, aLength);
+		System.arraycopy(b, 0, result, aLength, bLength);
+
+		return result;
 	}
 }
