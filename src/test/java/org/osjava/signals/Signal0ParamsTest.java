@@ -63,7 +63,7 @@ public class Signal0ParamsTest {
 			}
 		}).callWith(list);
 
-		Assert.assertTrue(signal.dispatch());
+		signal.dispatch();
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class Signal0ParamsTest {
 			}
 		}).callWith(list);
 
-		Assert.assertTrue(signal.dispatch());
+		signal.dispatch();
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class Signal0ParamsTest {
 			}
 		});
 
-		Assert.assertTrue(signal.dispatch());
+		signal.dispatch();
 	}
 
 	private void compare(List<?> a, List<?> b) {

@@ -217,8 +217,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		/**
 		 * {@inheritDoc}
 		 */
-		public boolean dispatch() throws Throwable {
-			return _dispatcher.dispatch();
+		public void dispatch() throws Throwable {
+			_dispatcher.dispatch();
 		}
 	}
 

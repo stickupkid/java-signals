@@ -4,7 +4,7 @@ package org.osjava.signals;
 
 public interface Dispatcher<L extends SignalListener> {
 
-	public boolean dispatch() throws Throwable;
+	public void dispatch() throws Throwable;
 
 	public <A> void dispatch(A value0) throws IllegalAccessException;
 

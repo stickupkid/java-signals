@@ -30,15 +30,11 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 * @throws Throwable
 	 */
 	@Override
-	public boolean dispatch() throws Throwable {
-		boolean result = true;
-
+	public void dispatch() throws Throwable {
 		for (final Slot<L> slot : _bindings) {
 			// If it's not enable skip this
 			if (!slot.getEnabled())
 				continue;
-
-			result = false;
 
 			// Move through the following
 			final SignalListener slotListener = slot.getListener();
@@ -48,56 +44,7 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 			// See if the slot has any parameters
 			final List<?> params = slot.getParams();
 			if (null != params && params.size() > 0) {
-				try {
-					// Invoke method here
-					// Get all the methods in the class using reflection
-					Class<?> slotListenerClass = slotListener.getClass();
-					Method[] slotListenerMethods = slotListenerClass.getDeclaredMethods();
-
-					// Locate the current class type
-					final Class<?> paramClassType = params.get(0).getClass();
-
-					// Iterate through them and try and match it
-					for (final Method slotMethod : slotListenerMethods) {
-						Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
-
-						// If the paramTypes length match the params size
-						// then we can nail it down
-						int numParamTypes = slotMethodParamTypes.length;
-						if (numParamTypes == params.size()) {
-							// Iterate through the methods parameters
-							for (Class<?> slotMethodParamType : slotMethodParamTypes) {
-								if (slotMethodParamType.equals(paramClassType)) {
-									numParamTypes--;
-								} else {
-									// Exit out early, because we've not
-									// matched.
-									break;
-								}
-							}
-
-							// Find out if the slot method isAccessible
-							if (numParamTypes == 0) {
-								if (!slotMethod.isAccessible()) {
-									slotMethod.setAccessible(true);
-								}
-								// We have to make an Object[] hence the toArray
-								// method
-								slotMethod.invoke(slotListener, params.toArray());
-								result = true;
-								break;
-							}
-						}
-					}
-				} catch (IllegalArgumentException e) {
-					result = false;
-					break;
-				} catch (IllegalAccessException e) {
-					result = false;
-					break;
-				} catch (InvocationTargetException e) {
-					throw e.getCause();
-				}
+				apply(slotListener, params);
 			} else {
 				// Normal interface access
 				if (slotListener instanceof SignalListener0) {
@@ -106,14 +53,11 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						slot.remove();
 					if (null != listener)
 						listener.apply();
-					result = true;
 				} else {
 					break;
 				}
 			}
 		}
-
-		return result;
 	}
 
 	/**
@@ -164,5 +108,74 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 					throw new IllegalArgumentException();
 			}
 		}
+	}
+
+	/**
+	 * Specifies the value of slotListener to be used within any function that
+	 * is executed. This method also specifies the parameters to be passed to
+	 * any called listener.
+	 * 
+	 * @param slotListener
+	 *            SignalListener to apply the parameters to.
+	 * @param params
+	 *            List of parameters to pass
+	 * @return True if apply is successful.
+	 * 
+	 * @throws Throwable throws the internal exception if when invoke is called.
+	 */
+	private boolean apply(final SignalListener slotListener, final List<?> params) throws Throwable {
+		boolean result = true;
+
+		try {
+			// Invoke method here
+			// Get all the methods in the class using reflection
+			Class<?> slotListenerClass = slotListener.getClass();
+			Method[] slotListenerMethods = slotListenerClass.getDeclaredMethods();
+
+			// Locate the current class type
+			final Class<?> paramClassType = params.get(0).getClass();
+
+			// Iterate through them and try and match it
+			for (final Method slotMethod : slotListenerMethods) {
+				Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
+
+				// If the paramTypes length match the params size
+				// then we can nail it down
+				int numParamTypes = slotMethodParamTypes.length;
+				if (numParamTypes == params.size()) {
+					// Iterate through the methods parameters
+					for (Class<?> slotMethodParamType : slotMethodParamTypes) {
+						if (slotMethodParamType.equals(paramClassType)) {
+							numParamTypes--;
+						} else {
+							// Exit out early, because we've not
+							// matched.
+							break;
+						}
+					}
+
+					// Find out if the slot method isAccessible
+					if (numParamTypes == 0) {
+						if (!slotMethod.isAccessible()) {
+							slotMethod.setAccessible(true);
+						}
+
+						// We have to make an Object[] hence the toArray
+						// method
+						slotMethod.invoke(slotListener, params.toArray());
+						result = true;
+						break;
+					}
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			result = false;
+		} catch (IllegalAccessException e) {
+			result = false;
+		} catch (InvocationTargetException e) {
+			throw e.getCause();
+		}
+
+		return result;
 	}
 }

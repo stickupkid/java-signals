@@ -109,8 +109,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		/**
 		 * {@inheritDoc}
 		 */
-		public boolean dispatch() throws Throwable {
-			return _dispatcher.dispatch();
+		public void dispatch() throws Throwable {
+			_dispatcher.dispatch();
 		}
 	}
 

@@ -236,8 +236,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 */
-		public boolean dispatch() throws Throwable {
-			return _dispatcher.dispatch();
+		public void dispatch() throws Throwable {
+			_dispatcher.dispatch();
 		}
 	}
 
