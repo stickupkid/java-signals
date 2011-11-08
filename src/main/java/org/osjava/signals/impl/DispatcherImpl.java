@@ -32,30 +32,27 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	@Override
 	public void dispatch() throws Throwable {
 		for (final Slot<L> slot : _bindings) {
-			// If it's not enable skip this
-			if (!slot.getEnabled())
-				continue;
-
-			// Move through the following
 			final SignalListener slotListener = slot.getListener();
-			if (null == slotListener)
-				continue;
+			if (slotListener instanceof SignalListener0) {
 
-			// See if the slot has any parameters
-			final List<?> params = slot.getParams();
-			if (null != params && params.size() > 0) {
-				apply(slotListener, params);
-			} else {
-				// Normal interface access
-				if (slotListener instanceof SignalListener0) {
+				// If it's not enable skip this
+				if (!slot.getEnabled())
+					continue;
+
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					apply(slotListener, params);
+				} else {
+					// Normal interface access
 					final SignalListener0 listener = (SignalListener0) slotListener;
 					if (slot.getOnce())
 						slot.remove();
 					if (null != listener)
 						listener.apply();
-				} else
-					throw new IllegalAccessError("SlotListener does not implement SignalListener0");
-			}
+				}
+			} else
+				throw new IllegalAccessError("SlotListener does not implement SignalListener0");
 		}
 	}
 

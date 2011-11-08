@@ -58,7 +58,7 @@ public class Signal0ParamsTest {
 			}
 
 			@SuppressWarnings("unused")
-			public void callWith(Integer a, Integer b, Integer c) {
+			public void calledWith(Integer a, Integer b, Integer c) {
 				compare(list, Arrays.asList(a, b, c));
 			}
 		}).callWith(list);
@@ -77,7 +77,7 @@ public class Signal0ParamsTest {
 			}
 
 			@SuppressWarnings("unused")
-			public void callWith(String a, String b, String c, String d) {
+			public void calledWith(String a, String b, String c, String d) {
 				compare(list, Arrays.asList(a, b, c, d));
 			}
 		}).callWith(list);
@@ -96,7 +96,7 @@ public class Signal0ParamsTest {
 			}
 
 			@SuppressWarnings("unused")
-			public void callWith(Integer a, Integer b) {
+			public void calledWith(Integer a, Integer b) {
 				compare(list, Arrays.asList(a, b));
 			}
 		}).callWith(list);
