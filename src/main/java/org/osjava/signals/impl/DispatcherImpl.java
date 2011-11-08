@@ -33,6 +33,9 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	public void dispatch() throws Throwable {
 		assert null != _bindings : "Bindings can not be null";
 
+		// Cache this so we can use it for applying with params.
+		Object[] values = {};
+
 		for (final Slot<L> slot : _bindings) {
 			final SignalListener slotListener = slot.getListener();
 			if (slotListener instanceof SignalListener0) {
@@ -44,7 +47,7 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 				// See if the slot has any parameters
 				final List<?> params = slot.getParams();
 				if (null != params && params.size() > 0) {
-					apply(slotListener, params);
+					invoke(slotListener, values, params);
 				} else {
 					// Normal interface access
 					final SignalListener0 listener = (SignalListener0) slotListener;
@@ -65,21 +68,34 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public <A> void dispatch(A value0) throws IllegalAccessException {
-		for (Slot<L> slot : _bindings) {
-			SignalListener slotListener = slot.getListener();
-			if (null != slotListener) {
-				if (slotListener instanceof SignalListener1) {
-					SignalListener1<A> listener = (SignalListener1<A>) slotListener;
-					if (slot.getEnabled()) {
-						if (slot.getOnce())
-							slot.remove();
-						if (listener != null)
-							listener.apply(value0);
-					}
-				} else
-					throw new IllegalArgumentException();
-			}
+	public <A> void dispatch(A value0) throws Throwable {
+		assert null != _bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0 };
+
+		for (final Slot<L> slot : _bindings) {
+			final SignalListener slotListener = slot.getListener();
+			if (slotListener instanceof SignalListener1) {
+
+				// If it's not enable skip this
+				if (!slot.getEnabled())
+					continue;
+
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					invoke(slotListener, values, params);
+				} else {
+					// Normal interface access
+					final SignalListener1<A> listener = (SignalListener1<A>) slotListener;
+					if (slot.getOnce())
+						slot.remove();
+					if (null != listener)
+						listener.apply(value0);
+				}
+			} else
+				throw new IllegalAccessError("SlotListener does not implement SignalListener1");
 		}
 	}
 
@@ -90,21 +106,34 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public <A, B> void dispatch(A value0, B value1) throws IllegalAccessException {
-		for (Slot<L> slot : _bindings) {
-			SignalListener slotListener = slot.getListener();
-			if (null != slotListener) {
-				if (slotListener instanceof SignalListener2) {
-					SignalListener2<A, B> listener = (SignalListener2<A, B>) slotListener;
-					if (slot.getEnabled()) {
-						if (slot.getOnce())
-							slot.remove();
-						if (listener != null)
-							listener.apply(value0, value1);
-					}
-				} else
-					throw new IllegalArgumentException();
-			}
+	public <A, B> void dispatch(A value0, B value1) throws Throwable {
+		assert null != _bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0, value1 };
+
+		for (final Slot<L> slot : _bindings) {
+			final SignalListener slotListener = slot.getListener();
+			if (slotListener instanceof SignalListener2) {
+
+				// If it's not enable skip this
+				if (!slot.getEnabled())
+					continue;
+
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					invoke(slotListener, values, params);
+				} else {
+					// Normal interface access
+					final SignalListener2<A, B> listener = (SignalListener2<A, B>) slotListener;
+					if (slot.getOnce())
+						slot.remove();
+					if (null != listener)
+						listener.apply(value0, value1);
+				}
+			} else
+				throw new IllegalAccessError("SlotListener does not implement SignalListener1");
 		}
 	}
 
@@ -115,12 +144,20 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 * 
 	 * @param slotListener
 	 *            SignalListener to apply the parameters to.
+	 * @param values
+	 *            List of non-optional parameters to pass
 	 * @param params
 	 *            List of parameters to pass
 	 * @throws Throwable
 	 *             throws the internal exception if when invoke is called.
 	 */
-	private void apply(final SignalListener slotListener, final List<?> params) throws Throwable {
+	private void invoke(final SignalListener slotListener, final Object[] values,
+			final List<?> params) throws Throwable {
+		
+		assert null != slotListener : "SignalListener can not be null";
+		assert null != values : "Non-optional parameters can not be null";
+		assert null != params : "Optional parameters can not be null";
+	
 		try {
 			// Invoke method here
 			// Get all the methods in the class using reflection
@@ -130,6 +167,8 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 			// Locate the current class type
 			final Class<?> paramClassType = params.get(0).getClass();
 
+			boolean valid = false;
+
 			// Iterate through them and try and match it
 			for (final Method slotMethod : slotListenerMethods) {
 				Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
@@ -137,10 +176,14 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 				// If the paramTypes length match the params size
 				// then we can nail it down
 				int numParamTypes = slotMethodParamTypes.length;
-				if (numParamTypes == params.size()) {
+
+				final int total = params.size() + values.length;
+				if (numParamTypes == total) {
 					// Iterate through the methods parameters
-					for (Class<?> slotMethodParamType : slotMethodParamTypes) {
-						// TODO : Workout the boxed and unboxed versions i.e. Integer = int
+					for (int i = values.length; i < total; i++) {
+						Class<?> slotMethodParamType = slotMethodParamTypes[i];
+						// TODO : Workout the boxed and unboxed versions i.e.
+						// Integer = int
 						if (slotMethodParamType.equals(paramClassType)) {
 							numParamTypes--;
 						} else {
@@ -159,9 +202,14 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						// We have to make an Object[] hence the toArray
 						// method
 						slotMethod.invoke(slotListener, params.toArray());
+						valid = true;
 						break;
 					}
 				}
+			}
+
+			if (!valid) {
+				throw new IllegalAccessError("No method found with associated parameters");
 			}
 		} catch (InvocationTargetException e) {
 			// Re-throw the cause of the exception, otherwise the
