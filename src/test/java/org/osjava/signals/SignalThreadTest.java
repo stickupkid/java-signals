@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.osjava.signals.Signal.Signal0;
 import org.osjava.signals.Signal.Signal1;
 import org.osjava.signals.Signal.Signal2;
@@ -17,12 +18,19 @@ import org.osjava.signals.Signal.Signal2;
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 12:01
  */
-public abstract class SignalThreadTest {
+public class SignalThreadTest {
 
 	protected AtomicInteger incrementer;
 
-	protected void testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
-			throws Throwable {
+	@Test
+	public void test_true() {
+		// We need this so that we can run "ant tests"
+		Assert.assertTrue(true);
+	}
+
+	protected void
+			testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
+					throws Throwable {
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		List<Future<Integer>> futures = executorService.invokeAll(tasks);
