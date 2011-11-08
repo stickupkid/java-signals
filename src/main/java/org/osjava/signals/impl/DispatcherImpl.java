@@ -1,6 +1,5 @@
 package org.osjava.signals.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -45,7 +44,6 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 			final List<?> params = slot.getParams();
 			if (null != params && params.size() > 0) {
 				// Invoke method here
-				boolean valid = false;
 				try {
 					// Get all the methods in the class using reflection
 					Class<?> slotListenerClass = slotListener.getClass();
@@ -80,27 +78,14 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 								}
 								// We have to make an Object[] hence the toArray method
 								slotMethod.invoke(slotListener, params.toArray());
-								valid = true;
 							}
 						}
 					}
-				} catch (SecurityException e) {
+				} catch (Exception e) {
+					// Any exception we get, exit out of the dispatch quickly.
 					result = false;
 					break;
-				} catch (IllegalArgumentException e) {
-					result = false;
-					break;
-				} catch (IllegalAccessException e) {
-					result = false;
-					break;
-				} catch (InvocationTargetException e) {
-					result = false;
-					break;
-				}
-				
-				if (!valid) {
-					result = false;
-				}
+				} 
 			} else {
 				// Normal interface access
 				if (slotListener instanceof SignalListener0) {
