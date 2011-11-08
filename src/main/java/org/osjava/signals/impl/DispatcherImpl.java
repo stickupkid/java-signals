@@ -31,6 +31,8 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 */
 	@Override
 	public void dispatch() throws Throwable {
+		assert null != _bindings : "Bindings can not be null";
+		
 		for (final Slot<L> slot : _bindings) {
 			final SignalListener slotListener = slot.getListener();
 			if (slotListener instanceof SignalListener0) {
