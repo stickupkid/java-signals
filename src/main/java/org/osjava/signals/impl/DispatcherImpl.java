@@ -53,9 +53,8 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						slot.remove();
 					if (null != listener)
 						listener.apply();
-				} else {
-					break;
-				}
+				} else
+					throw new IllegalAccessError("SlotListener does not implement SignalListener0");
 			}
 		}
 	}
@@ -121,7 +120,8 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 *            List of parameters to pass
 	 * @return True if apply is successful.
 	 * 
-	 * @throws Throwable throws the internal exception if when invoke is called.
+	 * @throws Throwable
+	 *             throws the internal exception if when invoke is called.
 	 */
 	private boolean apply(final SignalListener slotListener, final List<?> params) throws Throwable {
 		boolean result = true;
