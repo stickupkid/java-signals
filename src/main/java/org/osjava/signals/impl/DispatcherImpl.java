@@ -1,5 +1,6 @@
 package org.osjava.signals.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -25,15 +26,19 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
 	 */
 	@Override
-	public boolean dispatch() {
+	public boolean dispatch() throws Throwable {
 		boolean result = true;
-		
+
 		for (final Slot<L> slot : _bindings) {
 			// If it's not enable skip this
 			if (!slot.getEnabled())
 				continue;
+
+			result = false;
 
 			// Move through the following
 			final SignalListener slotListener = slot.getListener();
@@ -43,15 +48,15 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 			// See if the slot has any parameters
 			final List<?> params = slot.getParams();
 			if (null != params && params.size() > 0) {
-				// Invoke method here
 				try {
+					// Invoke method here
 					// Get all the methods in the class using reflection
 					Class<?> slotListenerClass = slotListener.getClass();
 					Method[] slotListenerMethods = slotListenerClass.getDeclaredMethods();
-					
+
 					// Locate the current class type
 					final Class<?> paramClassType = params.get(0).getClass();
-					
+
 					// Iterate through them and try and match it
 					for (final Method slotMethod : slotListenerMethods) {
 						Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
@@ -76,16 +81,23 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 								if (!slotMethod.isAccessible()) {
 									slotMethod.setAccessible(true);
 								}
-								// We have to make an Object[] hence the toArray method
+								// We have to make an Object[] hence the toArray
+								// method
 								slotMethod.invoke(slotListener, params.toArray());
+								result = true;
+								break;
 							}
 						}
 					}
-				} catch (Exception e) {
-					// Any exception we get, exit out of the dispatch quickly.
+				} catch (IllegalArgumentException e) {
 					result = false;
 					break;
-				} 
+				} catch (IllegalAccessException e) {
+					result = false;
+					break;
+				} catch (InvocationTargetException e) {
+					throw e.getCause();
+				}
 			} else {
 				// Normal interface access
 				if (slotListener instanceof SignalListener0) {
@@ -94,13 +106,13 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						slot.remove();
 					if (null != listener)
 						listener.apply();
+					result = true;
 				} else {
-					result = false;
 					break;
 				}
 			}
 		}
-		
+
 		return result;
 	}
 

@@ -48,7 +48,7 @@ public class Signal0ParamsTest {
 	}
 
 	@Test
-	public void verify_correct_method_is_called() {
+	public void verify_integer_method_is_called() throws Throwable {
 		final List<Integer> list = Arrays.asList(42, 12, 24);
 
 		signal.add(new SignalListener0() {
@@ -62,6 +62,51 @@ public class Signal0ParamsTest {
 				compare(list, Arrays.asList(a, b, c));
 			}
 		}).callWith(list);
+
+		Assert.assertTrue(signal.dispatch());
+	}
+
+	@Test
+	public void verify_string_method_is_called() throws Throwable {
+		final List<String> list = Arrays.asList("a", "b", "c", "d");
+
+		signal.add(new SignalListener0() {
+			@Override
+			public void apply() {
+				Assert.fail("Default SignalListener0.apply() should not be called as params are sent");
+			}
+
+			@SuppressWarnings("unused")
+			public void callWith(String a, String b, String c, String d) {
+				compare(list, Arrays.asList(a, b, c, d));
+			}
+		}).callWith(list);
+
+		Assert.assertTrue(signal.dispatch());
+	}
+	
+	@Test
+	public void verify_method_is_called_when_there_are_two_listeners() throws Throwable {
+		final List<Integer> list = Arrays.asList(32, 3);
+
+		signal.add(new SignalListener0() {
+			@Override
+			public void apply() {
+				Assert.fail("Default SignalListener0.apply() should not be called as params are sent");
+			}
+
+			@SuppressWarnings("unused")
+			public void callWith(Integer a, Integer b) {
+				compare(list, Arrays.asList(a, b));
+			}
+		}).callWith(list);
+
+		signal.add(new SignalListener0() {
+			@Override
+			public void apply() {
+				Assert.assertTrue(true);
+			}
+		});
 
 		Assert.assertTrue(signal.dispatch());
 	}

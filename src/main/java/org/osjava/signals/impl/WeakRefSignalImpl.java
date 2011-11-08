@@ -189,7 +189,7 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 		/**
 		 * {@inheritDoc}
 		 */
-		public boolean dispatch() {
+		public boolean dispatch() throws Throwable {
 			return _dispatcher.dispatch();
 		}
 	}

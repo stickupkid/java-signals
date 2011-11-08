@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -23,7 +22,7 @@ public abstract class SignalThreadTest {
 	protected AtomicInteger incrementer;
 
 	protected void testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
-			throws InterruptedException, ExecutionException {
+			throws Throwable {
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		List<Future<Integer>> futures = executorService.invokeAll(tasks);
@@ -48,8 +47,7 @@ public abstract class SignalThreadTest {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void testDispatchWithMultipleThreads(final Signal signal,
-			final Callable<Integer> task, final int threadCount) throws InterruptedException,
-			ExecutionException {
+			final Callable<Integer> task, final int threadCount) throws Throwable {
 
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -71,7 +69,7 @@ public abstract class SignalThreadTest {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void testRemoveWithMultipleThreads(final Signal signal, final Callable<Integer> task,
-			final int threadCount) throws InterruptedException, ExecutionException {
+			final int threadCount) throws Throwable {
 
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
