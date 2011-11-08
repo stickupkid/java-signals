@@ -39,7 +39,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 	 */
 	@Override
 	public Slot<L> add(L listener) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, false);
 	}
@@ -49,7 +50,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 	 */
 	@Override
 	public Slot<L> addOnce(L listener) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, true);
 	}
@@ -58,7 +60,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 	 * {@inheritDoc}
 	 */
 	public Slot<L> addWithWeakRef(L listener, boolean weakRef) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, false, weakRef);
 	}
@@ -68,7 +71,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 	 */
 	@Override
 	public Slot<L> addOnceWithWeakRef(L listener, boolean weakRef) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, true, weakRef);
 	}
@@ -100,10 +104,12 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 
 		Slot<L> slot = null;
 		if (registrationPossible(listener, once)) {
-			bindings.add(slot = new WeakRefSlotImpl<L>(this, listener, once, weakRef));
-		} else {
+			slot = new WeakRefSlotImpl<L>(this, once, weakRef);
+			slot.setListener(listener);
+			
+			bindings.add(slot);
+		} else
 			slot = findSlotByListener(listener);
-		}
 		return slot;
 	}
 
@@ -277,12 +283,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0) {
-			try {
-				_dispatcher.dispatch(value0);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0) throws Throwable {
+			_dispatcher.dispatch(value0);
 		}
 	}
 
@@ -370,12 +372,8 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0, B value1) {
-			try {
-				_dispatcher.dispatch(value0, value1);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0, B value1) throws Throwable {
+			_dispatcher.dispatch(value0, value1);
 		}
 	}
 }

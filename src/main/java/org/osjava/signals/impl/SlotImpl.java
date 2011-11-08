@@ -26,14 +26,6 @@ public class SlotImpl<L extends SignalListener> implements Slot<L> {
 		_enabled = true;
 		_once = once;
 	}
-	
-	public SlotImpl(Signal<L> signal, L listener, boolean once) {
-		_signal = signal;
-		_enabled = true;
-		_once = once;
-		
-		setListener(listener);
-	}
 
 	/**
 	 * {@inheritDoc}

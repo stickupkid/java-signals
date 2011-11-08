@@ -35,6 +35,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 	 */
 	@Override
 	protected boolean registrationPossible(L listener, boolean once) {
+		assert null != listener : "Listener can not be null";
+		
 		if (getNumListeners() > 0) {
 			throw new IllegalArgumentException(
 					"You cannot add or addOnce with a listener already added,"
@@ -183,12 +185,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0) {
-			try {
-				_dispatcher.dispatch(value0);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0) throws Throwable {
+			_dispatcher.dispatch(value0);
 		}
 	}
 
@@ -261,13 +259,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0, B value1) {
-			try {
-				_dispatcher.dispatch(value0, value1);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0, B value1) throws Throwable {
+			_dispatcher.dispatch(value0, value1);
 		}
 	}
-
 }

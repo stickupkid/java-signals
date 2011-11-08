@@ -19,7 +19,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	protected final List<Slot<L>> bindings;
 
 	public SignalImpl(List<Slot<L>> bindings) {
-		assert null != bindings : "Bindings can not be null";
+		if (null == bindings)
+			throw new IllegalArgumentException("Bindings can not be null");
 
 		this.bindings = bindings;
 	}
@@ -35,7 +36,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * @return A new instance of Signal
 	 */
 	public static <L extends SignalListener> SignalImpl<L> newInstance(List<Slot<L>> bindings) {
-		assert null != bindings : "Bindings can not be null";
+		if (null == bindings)
+			throw new IllegalArgumentException("Bindings can not be null");
 
 		return new SignalImpl<L>(bindings);
 	}
@@ -44,7 +46,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public Slot<L> add(L listener) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, false);
 	}
@@ -53,7 +56,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public Slot<L> addOnce(L listener) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, true);
 	}
@@ -62,7 +66,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	 * {@inheritDoc}
 	 */
 	public Slot<L> remove(L listener) {
-		assert null != listener : "Listener can not be null";
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		final Slot<L> slot = findSlotByListener(listener);
 		if (slot != null) {
@@ -117,7 +122,12 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 		Slot<L> slot = null;
 		if (registrationPossible(listener, once))
-			bindings.add(slot = new SlotImpl<L>(this, listener, once));
+		{
+			slot = new SlotImpl<L>(this, once);
+			slot.setListener(listener);
+			
+			bindings.add(slot);
+		}
 		else
 			slot = findSlotByListener(listener);
 		return slot;
@@ -290,12 +300,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0) {
-			try {
-				_dispatcher.dispatch(value0);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0) throws Throwable {
+			_dispatcher.dispatch(value0);
 		}
 	}
 
@@ -367,13 +373,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0, B value1) {
-			try {
-				_dispatcher.dispatch(value0, value1);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0, B value1) throws Throwable {
+			_dispatcher.dispatch(value0, value1);
 		}
 	}
-
 }

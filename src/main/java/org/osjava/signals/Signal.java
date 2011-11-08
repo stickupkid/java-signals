@@ -69,7 +69,7 @@ public interface Signal<L extends SignalListener> {
 		 * @param value
 		 *            which is the first passed argument
 		 */
-		public void dispatch(A value);
+		public void dispatch(A value) throws Throwable;
 	}
 
 	public static interface Signal2<A, B> extends Signal<SignalListener2<A, B>> {
@@ -81,6 +81,6 @@ public interface Signal<L extends SignalListener> {
 		 * @param value1
 		 *            which is the second passed argument
 		 */
-		public void dispatch(A value0, B value1);
+		public void dispatch(A value0, B value1) throws Throwable;
 	}
 }

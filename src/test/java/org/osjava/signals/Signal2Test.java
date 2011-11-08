@@ -89,7 +89,8 @@ public class Signal2Test {
 	}
 
 	@Test
-	public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch() {
+	public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch()
+			throws Throwable {
 		signal.add(new SignalListener2<Boolean, String>() {
 			public void apply(Boolean value0, String value1) {
 			}
@@ -102,7 +103,8 @@ public class Signal2Test {
 	}
 
 	@Test
-	public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch() {
+	public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch()
+			throws Throwable {
 		signal.addOnce(new SignalListener2<Boolean, String>() {
 			public void apply(Boolean value0, String value1) {
 			}
@@ -115,7 +117,7 @@ public class Signal2Test {
 	}
 
 	@Test
-	public void verify_that_a_listener_is_called_after_dispatch() {
+	public void verify_that_a_listener_is_called_after_dispatch() throws Throwable {
 		signal.add(new SignalListener2<Boolean, String>() {
 			public void apply(Boolean value0, String value1) {
 				Assert.assertTrue("Signal0 apply was called when dispatched", true);
@@ -126,7 +128,7 @@ public class Signal2Test {
 	}
 
 	@Test
-	public void verify_that_multiple_listeners_are_called_after_dispatch() {
+	public void verify_that_multiple_listeners_are_called_after_dispatch() throws Throwable {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 

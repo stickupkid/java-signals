@@ -19,14 +19,6 @@ public final class WeakRefSlotImpl<L extends SignalListener> extends SlotImpl<L>
 		_weakRef = weakRef;
 	}
 	
-	public WeakRefSlotImpl(Signal<L> signal, L listener, boolean once, boolean weakRef) {
-		super(signal, once);
-
-		_weakRef = weakRef;
-
-		setListener(listener);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */

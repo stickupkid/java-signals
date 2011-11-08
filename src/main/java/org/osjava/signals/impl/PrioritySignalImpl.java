@@ -30,57 +30,67 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 	 *            The listener which will be called and will be associated with
 	 *            the binding.
 	 * @return A new instance of Signal
-	 * @throws IllegalArgumentException if bindings argument is null
+	 * @throws IllegalArgumentException
+	 *             if bindings argument is null
 	 */
 	public static <L extends SignalListener> PrioritySignalImpl<L> newInstance(
 			List<Slot<L>> bindings) {
-		if(null == bindings) throw new IllegalArgumentException("Bindings can not be null");
-		
+		if (null == bindings)
+			throw new IllegalArgumentException("Bindings can not be null");
+
 		return new PrioritySignalImpl<L>(bindings);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws IllegalArgumentException if listener argument is null
+	 * @throws IllegalArgumentException
+	 *             if listener argument is null
 	 */
 	@Override
 	public Slot<L> add(L listener) {
-		if(null == listener) throw new IllegalArgumentException("Listener can not be null");
-		
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
+
 		return registerListener(listener, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws IllegalArgumentException if listener argument is null
+	 * @throws IllegalArgumentException
+	 *             if listener argument is null
 	 */
 	@Override
 	public Slot<L> addOnce(L listener) {
-		if(null == listener) throw new IllegalArgumentException("Listener can not be null");
-		
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
+
 		return registerListener(listener, true);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws IllegalArgumentException if listener argument is null
+	 * @throws IllegalArgumentException
+	 *             if listener argument is null
 	 */
 	public Slot<L> addWithPriority(L listener, int priority) {
-		if(null == listener) throw new IllegalArgumentException("Listener can not be null");
-		
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
+
 		return registerListener(listener, false, priority);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws IllegalArgumentException if listener argument is null
+	 * @throws IllegalArgumentException
+	 *             if listener argument is null
 	 */
 	public Slot<L> addOnceWithPriority(L listener, int priority) {
-		if(null == listener) throw new IllegalArgumentException("Listener can not be null");
+		if (null == listener)
+			throw new IllegalArgumentException("Listener can not be null");
 
 		return registerListener(listener, true, priority);
 	}
@@ -88,11 +98,12 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws IllegalArgumentException if listener argument is null
+	 * @throws IllegalArgumentException
+	 *             if listener argument is null
 	 */
 	@Override
 	protected Slot<L> registerListener(L listener, boolean once) {
-		if(null == listener) throw new IllegalArgumentException("Listener can not be null");
+		assert null != listener : "Listener can not be null";
 
 		return registerListener(listener, once, DEFAULT_PRIORITY);
 	}
@@ -107,14 +118,16 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 	 * @param priority
 	 *            priority at which to add the signal at
 	 * @return a SlotType, which contains the Function passed as the parameter
-	 * @throws AssertionError if listener argument is null
+	 * @throws AssertionError
+	 *             if listener argument is null
 	 */
 	protected Slot<L> registerListener(L listener, boolean once, int priority) {
 		assert null != listener : "Listener can not be null";
 
 		Slot<L> slot = null;
 		if (registrationPossible(listener, once)) {
-			slot = new PrioritySlotImpl<L>(this, listener, once, priority);
+			slot = new PrioritySlotImpl<L>(this, once, priority);
+			slot.setListener(listener);
 
 			// Make sure that bindings is synchronised
 			synchronized (bindings) {
@@ -170,7 +183,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener0> add(SignalListener0 listener) {
@@ -180,7 +194,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener0> addOnce(SignalListener0 listener) {
@@ -190,7 +205,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener0> addWithPriority(SignalListener0 listener, int priority) {
@@ -200,7 +216,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener0> addOnceWithPriority(SignalListener0 listener, int priority) {
@@ -210,7 +227,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener0> remove(SignalListener0 listener) {
@@ -267,7 +285,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener1<A>> add(SignalListener1<A> listener) {
@@ -277,7 +296,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener1<A>> addOnce(SignalListener1<A> listener) {
@@ -287,7 +307,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener1<A>> addWithPriority(SignalListener1<A> listener, int priority) {
@@ -297,7 +318,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener1<A>> addOnceWithPriority(SignalListener1<A> listener,
@@ -308,7 +330,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener1<A>> remove(SignalListener1<A> listener) {
@@ -318,7 +341,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public void removeAll() {
@@ -328,7 +352,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public int getNumListeners() {
@@ -338,14 +363,11 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
-		public void dispatch(A value0) {
-			try {
-				_dispatcher.dispatch(value0);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0) throws Throwable {
+			_dispatcher.dispatch(value0);
 		}
 	}
 
@@ -375,7 +397,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener2<A, B>> add(SignalListener2<A, B> listener) {
@@ -385,7 +408,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener2<A, B>> addOnce(SignalListener2<A, B> listener) {
@@ -395,7 +419,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener2<A, B>> addWithPriority(SignalListener2<A, B> listener,
@@ -406,7 +431,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener2<A, B>> addOnceWithPriority(SignalListener2<A, B> listener,
@@ -417,7 +443,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @throws IllegalArgumentException if listener argument is null
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
 		 */
 		@Override
 		public Slot<SignalListener2<A, B>> remove(SignalListener2<A, B> listener) {
@@ -443,12 +470,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch(A value0, B value1) {
-			try {
-				_dispatcher.dispatch(value0, value1);
-			} catch (IllegalAccessException e) {
-				// TODO : We should do something here
-			}
+		public void dispatch(A value0, B value1) throws Throwable {
+			_dispatcher.dispatch(value0, value1);
 		}
 	}
 }

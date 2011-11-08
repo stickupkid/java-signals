@@ -28,23 +28,6 @@ public final class PrioritySlotImpl<L extends SignalListener> extends SlotImpl<L
 	}
 
 	/**
-	 * 
-	 * @param signal
-	 *            associated with the slot
-	 * @param listener
-	 *            the listener call back associated with the slot
-	 * @param once
-	 *            if the slot is only executed once before removal
-	 * @param priority
-	 *            at what priority the signal is executed
-	 */
-	public PrioritySlotImpl(Signal<L> signal, L listener, boolean once, int priority) {
-		super(signal, listener, once);
-
-		_priority = priority;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
