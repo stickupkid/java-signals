@@ -67,6 +67,27 @@ public class Signal1ParamsTest {
 
 		signal.dispatch((String) expected[0]);
 	}
+	
+	@Test
+	public void verify_string_method_is_called() throws Throwable {
+		final List<String> list = Arrays.asList("world", "!");
+		final Object[] expected = {"Hello", list.get(0), list.get(1)};
+		
+		signal.add(new SignalListener1<String>() {
+			@Override
+			public void apply(String value0) {
+				Assert.fail("Default SignalListener1.apply() should not be called as params are sent");
+			}
+
+			@SuppressWarnings("unused")
+			public void calledWith(String a, String b, String c) {
+				final Object[] result = {a, b, c};
+				compareObjects(expected, result);
+			}
+		}).callWith(list);
+
+		signal.dispatch((String) expected[0]);
+	}
 
 	private void compareLists(List<?> a, List<?> b) {
 		Assert.assertTrue("Arrays not the same length", a.size() == b.size());
