@@ -37,7 +37,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 	protected boolean registrationPossible(L listener, boolean once) {
 		if (getNumListeners() > 0) {
 			throw new IllegalArgumentException(
-					"You cannot add or addOnce with a listener already added, remove the current listener first.");
+					"You cannot add or addOnce with a listener already added,"
+							+ " remove the current listener first.");
 		}
 		return true;
 	}
@@ -108,8 +109,8 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch() {
-			_dispatcher.dispatch();
+		public boolean dispatch() {
+			return _dispatcher.dispatch();
 		}
 	}
 
@@ -183,7 +184,11 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		 * {@inheritDoc}
 		 */
 		public void dispatch(A value0) {
-			_dispatcher.dispatch(value0);
+			try {
+				_dispatcher.dispatch(value0);
+			} catch (IllegalAccessException e) {
+				// TODO : We should do something here
+			}
 		}
 	}
 
@@ -257,7 +262,11 @@ public final class MonoSignalImpl<L extends SignalListener> extends SignalImpl<L
 		 * {@inheritDoc}
 		 */
 		public void dispatch(A value0, B value1) {
-			_dispatcher.dispatch(value0, value1);
+			try {
+				_dispatcher.dispatch(value0, value1);
+			} catch (IllegalAccessException e) {
+				// TODO : We should do something here
+			}
 		}
 	}
 

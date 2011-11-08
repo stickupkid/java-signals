@@ -1,5 +1,7 @@
 package org.osjava.signals.impl;
 
+import java.util.List;
+
 import org.osjava.signals.Signal;
 import org.osjava.signals.SignalListener;
 import org.osjava.signals.Slot;
@@ -16,6 +18,8 @@ public class SlotImpl<L extends SignalListener> implements Slot<L> {
 	private boolean _once;
 
 	private boolean _enabled;
+	
+	private List<?> _params;
 	
 	public SlotImpl(Signal<L> signal, boolean once) {
 		_signal = signal;
@@ -80,5 +84,20 @@ public class SlotImpl<L extends SignalListener> implements Slot<L> {
 	 */
 	public void setEnabled(boolean value) {
 		_enabled = value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Slot<L> callWith(List<?> params) {
+		_params = params;
+		return this;
+	}
+	
+	/**
+	 * 
+	 */
+	public List<?> getParams() {
+		return _params;
 	}
 }

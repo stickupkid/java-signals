@@ -59,7 +59,7 @@ public interface Signal<L extends SignalListener> {
 		/**
 		 * Dispatches an object to listeners.
 		 */
-		public void dispatch();
+		public boolean dispatch();
 	}
 
 	public static interface Signal1<A> extends Signal<SignalListener1<A>> {

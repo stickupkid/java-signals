@@ -217,8 +217,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void dispatch() {
-			_dispatcher.dispatch();
+		public boolean dispatch() {
+			return _dispatcher.dispatch();
 		}
 	}
 
@@ -291,7 +291,11 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		 * {@inheritDoc}
 		 */
 		public void dispatch(A value0) {
-			_dispatcher.dispatch(value0);
+			try {
+				_dispatcher.dispatch(value0);
+			} catch (IllegalAccessException e) {
+				// TODO : We should do something here
+			}
 		}
 	}
 
@@ -364,7 +368,11 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		 * {@inheritDoc}
 		 */
 		public void dispatch(A value0, B value1) {
-			_dispatcher.dispatch(value0, value1);
+			try {
+				_dispatcher.dispatch(value0, value1);
+			} catch (IllegalAccessException e) {
+				// TODO : We should do something here
+			}
 		}
 	}
 
