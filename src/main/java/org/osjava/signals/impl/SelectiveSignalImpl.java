@@ -20,34 +20,6 @@ public class SelectiveSignalImpl<T, L extends SignalListener> extends SignalImpl
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if listener argument is null
-	 */
-	@Override
-	public Slot<L> add(L listener) {
-		if (null == listener)
-			throw new IllegalArgumentException("Listener can not be null");
-
-		return registerListener(listener, false);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if listener argument is null
-	 */
-	@Override
-	public Slot<L> addOnce(L listener) {
-		if (null == listener)
-			throw new IllegalArgumentException("Listener can not be null");
-
-		return registerListener(listener, true);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 */
 	@Override
 	public Slot<L> addFor(T key, L listener) {
@@ -82,19 +54,6 @@ public class SelectiveSignalImpl<T, L extends SignalListener> extends SignalImpl
 	@Override
 	public void setComparator(SelectiveSignalComparator<T> comparator) {
 		throw new AbstractMethodError();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if listener argument is null
-	 */
-	@Override
-	protected Slot<L> registerListener(L listener, boolean once) {
-		assert null != listener : "Listener can not be null";
-
-		return registerListener(listener, once, null);
 	}
 
 	/**

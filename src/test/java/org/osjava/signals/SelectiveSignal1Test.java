@@ -48,6 +48,56 @@ public class SelectiveSignal1Test {
 
 		Assert.assertNull(signal.getComparator());
 	}
+
+	@Test
+	public void verify_add_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator1<String, String>() {
+			public boolean compare(String key, String value0) {
+				return key.equals(keyValue);
+			}
+		});
+
+		signal.add(new SignalListener1<String>() {
+			public void apply(String value0) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.dispatch(keyValue);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 1);
+	}
+	
+	@Test
+	public void verify_addOnce_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator1<String, String>() {
+			public boolean compare(String key, String value0) {
+				return key.equals(keyValue);
+			}
+		});
+
+		signal.addOnce(new SignalListener1<String>() {
+			public void apply(String value0) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.dispatch(keyValue);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 0);
+	}
 	
 	@Test
 	public void verify_addFor_is_called_with_Integer_value() throws Throwable {
