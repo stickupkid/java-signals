@@ -1,5 +1,9 @@
 package org.osjava.signals;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +25,11 @@ public class SelectiveSignal0Test {
 	public void tearDown() {
 		signal.removeAll();
 	}
-
+	
 	@Test
-	public void test() throws Throwable {
+	public void verify_addFor_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
 
 		final int keyValue = 42;
 
@@ -35,11 +41,50 @@ public class SelectiveSignal0Test {
 
 		signal.addFor(keyValue, new SignalListener0() {
 			public void apply() {
+				atomicInt.incrementAndGet();
+			}
+		});
 
+		signal.addFor(100, new SignalListener0() {
+			public void apply() {
+				Assert.fail("This listener should not be called.");
 			}
 		});
 
 		signal.dispatch();
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 2);
 	}
 
+	@Test
+	public void verify_addOnceFor_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final int keyValue = 42;
+
+		signal.setComparator(new SelectiveSignalComparator0<Integer>() {
+			public boolean compare(Integer key) {
+				return key.equals(keyValue);
+			}
+		});
+
+		signal.addOnceFor(keyValue, new SignalListener0() {
+			public void apply() {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.addOnceFor(100, new SignalListener0() {
+			public void apply() {
+				Assert.fail("This listener should not be called.");
+			}
+		});
+
+		signal.dispatch();
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 1);
+	}
 }

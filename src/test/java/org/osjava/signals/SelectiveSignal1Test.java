@@ -1,5 +1,9 @@
 package org.osjava.signals;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,26 +27,62 @@ public class SelectiveSignal1Test {
 	}
 
 	@Test
-	public void test() throws Throwable {
-		signal.setComparator(new SelectiveSignalComparator1<String, String>(){
+	public void verify_addFor_is_called_with_Integer_value() throws Throwable {
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator1<String, String>() {
 			public boolean compare(String key, String value0) {
 				return value0.equals(key);
 			}
 		});
-		
-		signal.addFor("Hello", new SignalListener1<String>() {
+
+		signal.addFor(keyValue, new SignalListener1<String>() {
 			public void apply(String value0) {
-				// This should work
+				atomicInt.incrementAndGet();
 			}
 		});
-		
+
 		signal.addFor("World", new SignalListener1<String>() {
 			public void apply(String value0) {
-				// This should not work
+				Assert.fail("This listener should not be called.");
 			}
 		});
-		
-		signal.dispatch("Hello");
+
+		signal.dispatch(keyValue);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 2);
 	}
 	
+	@Test
+	public void verify_addOnceFor_is_called_with_Integer_value() throws Throwable {
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator1<String, String>() {
+			public boolean compare(String key, String value0) {
+				return value0.equals(key);
+			}
+		});
+
+		signal.addOnceFor(keyValue, new SignalListener1<String>() {
+			public void apply(String value0) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.addOnceFor("World", new SignalListener1<String>() {
+			public void apply(String value0) {
+				Assert.fail("This listener should not be called.");
+			}
+		});
+
+		signal.dispatch(keyValue);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 1);
+	}
 }

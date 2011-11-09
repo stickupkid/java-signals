@@ -1,5 +1,9 @@
 package org.osjava.signals;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,25 +27,63 @@ public class SelectiveSignal2Test {
 	}
 
 	@Test
-	public void test() throws Throwable {
-		signal.setComparator(new SelectiveSignalComparator2<String, String, Integer>(){
+	public void verify_addFor_is_called_with_Integer_value() throws Throwable {
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator2<String, String, Integer>() {
 			public boolean compare(String key, String value0, Integer value1) {
 				return value0.equals(key);
 			}
 		});
-		
-		signal.addFor("Hello", new SignalListener2<String, Integer>() {
+
+		signal.addFor(keyValue, new SignalListener2<String, Integer>() {
 			public void apply(String value0, Integer value1) {
-				// This should work
+				atomicInt.incrementAndGet();
 			}
 		});
-		
+
 		signal.addFor("World", new SignalListener2<String, Integer>() {
 			public void apply(String value0, Integer value1) {
-				// This should not work
+				Assert.fail("This listener should not be called.");
 			}
 		});
+
+		signal.dispatch(keyValue, 42);
 		
-		signal.dispatch("Hello", 42);
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 2);
 	}
+	
+	@Test
+	public void verify_addOnceFor_is_called_with_Integer_value() throws Throwable {
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator2<String, String, Integer>() {
+			public boolean compare(String key, String value0, Integer value1) {
+				return value0.equals(key);
+			}
+		});
+
+		signal.addOnceFor(keyValue, new SignalListener2<String, Integer>() {
+			public void apply(String value0, Integer value1) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.addOnceFor("World", new SignalListener2<String, Integer>() {
+			public void apply(String value0, Integer value1) {
+				Assert.fail("This listener should not be called.");
+			}
+		});
+
+		signal.dispatch(keyValue, 42);
+		
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 1);
+	}
+	
 }
