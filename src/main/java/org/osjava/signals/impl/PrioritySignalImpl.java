@@ -254,6 +254,7 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 */
+		@Override
 		public void dispatch() throws Throwable {
 			_dispatcher.dispatch();
 		}
@@ -366,6 +367,7 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		 * @throws IllegalArgumentException
 		 *             if listener argument is null
 		 */
+		@Override
 		public void dispatch(A value0) throws Throwable {
 			_dispatcher.dispatch(value0);
 		}
@@ -470,6 +472,7 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		/**
 		 * {@inheritDoc}
 		 */
+		@Override
 		public void dispatch(A value0, B value1) throws Throwable {
 			_dispatcher.dispatch(value0, value1);
 		}

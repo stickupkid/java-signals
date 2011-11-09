@@ -11,12 +11,15 @@ import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.Slot;
 
-public final class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
+public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 
-	private final List<Slot<L>> _bindings;
+	protected List<Slot<L>> bindings;
 
-	private DispatcherImpl(List<Slot<L>> bindings) {
-		_bindings = bindings;
+	protected DispatcherImpl(List<Slot<L>> bindings) {
+		if (null == bindings)
+			new AssertionError("Bindings can not be null");
+
+		this.bindings = bindings;
 	}
 
 	public static <L extends SignalListener> Dispatcher<L> newInstance(final List<Slot<L>> bindings) {
@@ -31,18 +34,67 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 	 */
 	@Override
 	public void dispatch() throws Throwable {
-		assert null != _bindings : "Bindings can not be null";
+		assert null != bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with parameters.
+		final Object[] values = {};
+
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot0(slot, values);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public <A> void dispatch(A value0) throws Throwable {
+		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
-		Object[] values = {};
+		final Object[] values = { value0 };
 
-		for (final Slot<L> slot : _bindings) {
-			final SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener0) {
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot1(slot, value0, values);
+		}
+	}
 
-				// If it's not enable skip this
-				if (!slot.getEnabled())
-					continue;
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public <A, B> void dispatch(A value0, B value1) throws Throwable {
+		assert null != bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0, value1 };
+
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot2(slot, value0, value1, values);
+		}
+	}
+
+	/**
+	 * Dispatch the slot for SignalListener0
+	 * 
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener0
+	 */
+	protected final void dispatchSlot0(final Slot<L> slot, final Object[] values) throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener0) {
+
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
 
 				// See if the slot has any parameters
 				final List<?> params = slot.getParams();
@@ -56,32 +108,32 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 					if (null != listener)
 						listener.apply();
 				}
-			} else
-				throw new IllegalAccessError("SlotListener does not implement SignalListener0");
-		}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener0");
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Dispatch the slot for SignalListener1
 	 * 
-	 * @throws IllegalAccessException
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param value0
+	 *            value to be executed on the interface
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener1
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public <A> void dispatch(A value0) throws Throwable {
-		assert null != _bindings : "Bindings can not be null";
+	protected final <A> void dispatchSlot1(final Slot<L> slot, final A value0, final Object[] values)
+			throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener1) {
 
-		// Cache this so we can use it for applying with params.
-		Object[] values = { value0 };
-
-		for (final Slot<L> slot : _bindings) {
-			final SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener1) {
-
-				// If it's not enable skip this
-				if (!slot.getEnabled())
-					continue;
-
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
 				// See if the slot has any parameters
 				final List<?> params = slot.getParams();
 				if (null != params && params.size() > 0) {
@@ -94,32 +146,32 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 					if (null != listener)
 						listener.apply(value0);
 				}
-			} else
-				throw new IllegalAccessError("SlotListener does not implement SignalListener1");
-		}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener1");
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Dispatch the slot for SignalListener1
 	 * 
-	 * @throws IllegalAccessException
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param value0
+	 *            value to be executed on the interface
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener2
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public <A, B> void dispatch(A value0, B value1) throws Throwable {
-		assert null != _bindings : "Bindings can not be null";
+	protected final <A, B> void dispatchSlot2(final Slot<L> slot, final A value0, B value1,
+			final Object[] values) throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener2) {
 
-		// Cache this so we can use it for applying with params.
-		Object[] values = { value0, value1 };
-
-		for (final Slot<L> slot : _bindings) {
-			final SignalListener slotListener = slot.getListener();
-			if (slotListener instanceof SignalListener2) {
-
-				// If it's not enable skip this
-				if (!slot.getEnabled())
-					continue;
-
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
 				// See if the slot has any parameters
 				final List<?> params = slot.getParams();
 				if (null != params && params.size() > 0) {
@@ -132,9 +184,9 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 					if (null != listener)
 						listener.apply(value0, value1);
 				}
-			} else
-				throw new IllegalAccessError("SlotListener does not implement SignalListener1");
-		}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener2");
 	}
 
 	/**
@@ -206,7 +258,7 @@ public final class DispatcherImpl<L extends SignalListener> implements Dispatche
 						// together...
 						Object[] optionalParams = params.toArray();
 						Object[] allParams = concat(values, optionalParams);
-						
+
 						// Invoke it!
 						slotMethod.invoke(slotListener, allParams);
 						valid = true;
