@@ -25,7 +25,30 @@ public class SelectiveSignal1Test {
 	public void tearDown() {
 		signal.removeAll();
 	}
+	
+	@Test
+	public void verify_signal_comparator_is_null() {
+		Assert.assertNull(signal.getComparator());
+	}
 
+	@Test
+	public void verify_signal_comparator_is_not_null() {
+		signal.setComparator(new SelectiveSignalComparator1<String, String>() {
+			public boolean compare(String key, String value0) {
+				return true;
+			}
+		});
+
+		Assert.assertNotNull(signal.getComparator());
+	}
+
+	@Test(expected = AssertionError.class)
+	public void verify_signal_comparator_can_not_null() {
+		signal.setComparator(null);
+
+		Assert.assertNull(signal.getComparator());
+	}
+	
 	@Test
 	public void verify_addFor_is_called_with_Integer_value() throws Throwable {
 		final AtomicInteger atomicInt = new AtomicInteger();
