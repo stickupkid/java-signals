@@ -7,8 +7,8 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.SelectiveSignal.SelectiveSignal2;
 import org.osjava.signals.SelectiveSignal.SelectiveSignal1.SelectiveSignalComparator1;
+import org.osjava.signals.SelectiveSignal.SelectiveSignal2;
 import org.osjava.signals.SelectiveSignal.SelectiveSignal2.SelectiveSignalComparator2;
 import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.impl.SelectiveSignalImpl.SelectiveSignalImpl2;
@@ -48,6 +48,56 @@ public class SelectiveSignal2Test {
 		signal.setComparator(null);
 
 		Assert.assertNull(signal.getComparator());
+	}
+	
+	@Test
+	public void verify_add_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator2<String, String, Integer>() {
+			public boolean compare(String key, String value0, Integer value1) {
+				return key.equals(keyValue);
+			}
+		});
+
+		signal.add(new SignalListener2<String, Integer>() {
+			public void apply(String value0, Integer value1) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.dispatch(keyValue, 42);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 1);
+	}
+	
+	@Test
+	public void verify_addOnce_is_called_with_Integer_value() throws Throwable {
+
+		final AtomicInteger atomicInt = new AtomicInteger();
+
+		final String keyValue = "Hello";
+
+		signal.setComparator(new SelectiveSignalComparator2<String, String, Integer>() {
+			public boolean compare(String key, String value0, Integer value1) {
+				return key.equals(keyValue);
+			}
+		});
+
+		signal.addOnce(new SignalListener2<String, Integer>() {
+			public void apply(String value0, Integer value1) {
+				atomicInt.incrementAndGet();
+			}
+		});
+
+		signal.dispatch(keyValue, 42);
+
+		Assert.assertEquals(atomicInt.get(), 1);
+		Assert.assertEquals(signal.getNumListeners(), 0);
 	}
 	
 	@Test
