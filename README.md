@@ -52,7 +52,3 @@ If a listener is no longer interested in a signal, it can be removed from the si
 Connecting, disconnecting, and dispatching is thread-safe. After `Signal.disconnect(Listener)` or
 `Connection.disconnect` returns, a listener is guaranteed to never receive another call to its apply
 method.
-
-Getting
--------
-The 0.1 release of signals is available as a [jar](http://ooo-maven.googlecode.com/hg/repository/com/threerings/signals/0.1/signals-0.1.jar), or you can use the `http://ooo-maven.googlecode.com/hg/repository` repository in Maven with a dependency on `com.threerings:signals:0.1`.

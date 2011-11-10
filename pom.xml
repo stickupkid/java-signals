@@ -23,35 +23,19 @@
 	</licenses>
 	<developers>
 		<developer>
-			<id>tconkling</id>
-			<name>Tim Conkling</name>
-			<email>tconkling@gmail.com</email>
-		</developer>
-		<developer>
-			<id>groves</id>
-			<name>Charlie Groves</name>
-			<email>charlie.groves@gmail.com</email>
-		</developer>
-		<developer>
 			<id>stickupkid</id>
 			<name>Simon Richardson</name>
 			<email>stickupkid@gmail.com</email>
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git://github.com/stickupkid/java-signals.git
-		</connection>
+		<connection>scm:git:git://github.com/stickupkid/java-signals.git</connection>
 	</scm>
 	<dependencies>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>r08</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

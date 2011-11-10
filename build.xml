@@ -1,72 +1,86 @@
 <?xml version="1.0"?>
 <project name="signals" default="compile" basedir=".">
-  <property name="src.dir"     value="src/main/java"/>
-  <property name="test.dir"    value="src/test/java"/>
-  <property name="deploy.dir"  value="dist"/>
-  <property name="classes.dir" value="${deploy.dir}/classes"/>
-  <property name="tclasses.dir" value="${deploy.dir}/test-classes"/>
 
-  <property name="ooo-build.vers" value="2.5"/>
-  <ant antfile="bootstrap.xml"/>
-  <import file="${user.home}/.m2/ooo-build/${ooo-build.vers}/ooo-build.xml"/>
+	<property name="jsignals.version" value="0.2-SNAPSHOT" />
+	<property name="jsignals.classpath" value="org.osjava.signals" />
+	<property name="jsignals.jar.bin" value="jsignals-${jsignals.version}.jar" />
+	<property name="jsignals.jar.src" value="jsignals-${jsignals.version}-src.jar" />
+	<property name="jsignals.jar.test" value="jsignals-${jsignals.version}-tests.jar" />
 
-  <target name="-prepare" depends="-init-contrib">
-    <mkdir dir="${deploy.dir}"/>
-    <mavendep pom="pom.xml" scope="compile"/>
-    <mavendep pom="pom.xml" id="test" scope="test"/>
-  </target>
+	<property name="junit.version" value="4.9" />
+	<property name="junit.dist" value="junit-${junit.version}" />
 
-  <target name="clean" description="Cleans out compiled classes and docs.">
-    <delete dir="${classes.dir}"/>
-    <delete dir="${tclasses.dir}"/>
-    <delete dir="${deploy.dir}/docs"/>
-  </target>
+	<property name="dir.target" location="target" />
+	<property name="dir.src" value="src/main/java" />
+	<property name="dir.test" value="src/test/java" />
+	<property name="dir.test.reports" value="${dir.target}/reports" />
+	<property name="dir.lib" location="lib" />
+	<property name="dir.dist" location="${dir.target}/bin" />
+	<property name="dir.build" location="${dir.target}/main" />
+	<property name="dir.javadoc" location="${dir.target}/javadoc" />
+	
+	<path id="classpath.main" />
+	<path id="classpath.test">
+		<pathelement location="${dir.lib}/junit/${junit.dist}.jar" />
+		<pathelement location="${dir.dist}/${jsignals.jar.test}" />
+		<path refid="classpath.main" />
+	</path>
 
-  <target name="distclean" description="Cleans out all build resultss.">
-    <delete dir="${deploy.dir}"/>
-  </target>
+	<target name="init">
+		<tstamp />
+	</target>
 
-  <target name="compile" depends="-prepare" description="Compiles main and test sources.">
-    <mkdir dir="${classes.dir}"/>
-    <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" version="1.5"
-        classpathref="pom.xml.path"/>
+	<target name="clean">
+		<delete dir="${dir.target}" includeemptydirs="true" />
+	</target>
 
-    <mkdir dir="${tclasses.dir}"/>
-    <path id="built.classpath">
-      <path refid="test.path"/>
-      <pathelement location="${classes.dir}"/>
-    </path>
-    <ooojavac srcdir="${test.dir}" destdir="${tclasses.dir}" version="1.5"
-        classpathref="built.classpath"/>
-  </target>
+	<macrodef name="jsignals-compilation">
+		<attribute name="src" />
+		<attribute name="dest" />
+		<attribute name="classpath" />
+		<sequential>
+			<mkdir dir="@{dest}" />
+			<javac srcdir="@{src}" destdir="@{dest}" debug="on" includeantruntime="false" target="1.5">
+				<classpath refid="@{classpath}" />
+				<compilerarg value="-Xlint:unchecked" />
+			</javac>
+		</sequential>
+	</macrodef>
 
-  <property name="test" value=""/>
-  <target name="tests" depends="compile"
-          description="Runs unit tests. Use -Dtest=Foo to run only FooTest.">
-    <taskdef name="unit" classpathref="test.path"
-      classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
-    <mkdir dir="${deploy.dir}/test-reports"/>
-    <unit printsummary="off" haltonfailure="yes" fork="${junit.fork}">
-      <classpath>
-        <pathelement location="${classes.dir}"/>
-        <pathelement location="${tclasses.dir}"/>
-        <path refid="built.classpath"/>
-      </classpath>
-      <sysproperty key="test_dir" value="${tclasses.dir}"/>
-      <formatter type="brief" usefile="false"/>
-      <formatter type="xml"/>
-      <batchtest todir="${deploy.dir}/test-reports">
-        <fileset dir="${test.dir}" includes="**/*${test}*Test.java"/>
-      </batchtest>
-    </unit>
-  </target>
+	<macrodef name="jsignals-tests">
+		<sequential>
+			<junit printsummary="yes" haltonfailure="no" failureproperty="junit.failure">
+				<classpath refid="classpath.test" />
 
-  <target name="dist" depends="compile" description="Builds jar files.">
-    <jar destfile="${deploy.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
-  </target>
+				<formatter type="brief" />
 
-  <target name="maven-deploy" depends="dist"
-          description="Deploys our build artifacts to a Maven repository.">
-    <mavendeploy file="${deploy.dir}/${ant.project.name}.jar" pom="pom.xml" srcdir="${src.dir}"/>
-  </target>
+				<batchtest fork="yes" todir="${dir.test.reports}">
+					<fileset dir="${dir.test}">
+						<include name="**/*Test*.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+			<fail if="junit.failure" message="Unit test(s) failed. See reports!"/>
+		</sequential>
+	</macrodef>
+
+	<target name="compile" depends="init">
+		<jsignals-compilation src="${dir.src}" dest="${dir.build}" classpath="classpath.main" />
+		<jar jarfile="${dir.dist}/${jsignals.jar.bin}" basedir="${dir.build}" excludes="" />
+		<jar jarfile="${dir.dist}/${jsignals.jar.src}" basedir="${dir.src}" excludes="**/*.class" />
+	</target>
+
+	<target name="tests" depends="clean, compile">
+		<jsignals-compilation src="${dir.src}; ${dir.test}" dest="${dir.build}" classpath="classpath.test" />
+		<jar jarfile="${dir.dist}/${jsignals.jar.test}" basedir="${dir.build}" excludes="" />
+		<mkdir dir="${dir.test.reports}"/>
+		<jsignals-tests />
+	</target>
+
+	<target name="docs">
+		<javadoc destdir="${dir.javadoc}" author="false" version="false" use="false" windowtitle="Java Signals API">
+			<sourcepath location="${dir.src}" />
+			<link href="http://java.sun.com/javase/6/docs/api/" />
+		</javadoc>
+	</target>
 </project>
