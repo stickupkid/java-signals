@@ -9,6 +9,8 @@ import org.osjava.signals.SignalListener;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
 import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 import org.osjava.signals.Slot;
 
 public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L> implements
@@ -252,7 +254,7 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 			throw new AbstractMethodError();
 		}
 	}
-	
+
 	public static class NativeSignalImpl3<A, B, C> implements NativeSignal3<A, B, C> {
 
 		private final List<Slot<SignalListener3<A, B, C>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
@@ -329,6 +331,220 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 				throw new IllegalAccessError("Target can not be null");
 
 			_dispatcher.dispatch(value0, value1, value2);
+		}
+
+		@Override
+		public A getTarget() {
+			return _signal.getTarget();
+		}
+
+		@Override
+		public void setTarget(A target) {
+			removeTargetListener();
+
+			_signal.setTarget(target);
+
+			registerTargetListener();
+		}
+
+		/**
+		 * Register the target listener
+		 */
+		protected void registerTargetListener() {
+			throw new AbstractMethodError();
+		}
+
+		/**
+		 * Remove the target listener
+		 */
+		protected void removeTargetListener() {
+			throw new AbstractMethodError();
+		}
+	}
+
+	public static class NativeSignalImpl4<A, B, C, D> implements NativeSignal4<A, B, C, D> {
+
+		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
+
+		private final Dispatcher<SignalListener4<A, B, C, D>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final NativeSignalImpl<SignalListener4<A, B, C, D>, A> _signal = new NativeSignalImpl<SignalListener4<A, B, C, D>, A>(
+				_bindings);
+
+		/**
+		 * Private constructor
+		 */
+		protected NativeSignalImpl4() {
+		}
+
+		/**
+		 * Create a newInstance of NativeSignal1
+		 * 
+		 * @return {@link NativeSignal1}
+		 */
+		public static <A, B, C, D> NativeSignalImpl4<A, B, C, D> newInstance() {
+			return new NativeSignalImpl4<A, B, C, D>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> add(SignalListener4<A, B, C, D> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addOnce(SignalListener4<A, B, C, D> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> remove(SignalListener4<A, B, C, D> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalAccessError
+		 *             if target is null when the dispatch method is called.
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
+			if (null == _signal.getTarget())
+				throw new IllegalAccessError("Target can not be null");
+
+			_dispatcher.dispatch(value0, value1, value2, value3);
+		}
+
+		@Override
+		public A getTarget() {
+			return _signal.getTarget();
+		}
+
+		@Override
+		public void setTarget(A target) {
+			removeTargetListener();
+
+			_signal.setTarget(target);
+
+			registerTargetListener();
+		}
+
+		/**
+		 * Register the target listener
+		 */
+		protected void registerTargetListener() {
+			throw new AbstractMethodError();
+		}
+
+		/**
+		 * Remove the target listener
+		 */
+		protected void removeTargetListener() {
+			throw new AbstractMethodError();
+		}
+	}
+
+	public static class NativeSignalImpl5<A, B, C, D, E> implements NativeSignal5<A, B, C, D, E> {
+
+		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
+
+		private final Dispatcher<SignalListener5<A, B, C, D, E>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final NativeSignalImpl<SignalListener5<A, B, C, D, E>, A> _signal = new NativeSignalImpl<SignalListener5<A, B, C, D, E>, A>(
+				_bindings);
+
+		/**
+		 * Private constructor
+		 */
+		protected NativeSignalImpl5() {
+		}
+
+		/**
+		 * Create a newInstance of NativeSignal1
+		 * 
+		 * @return {@link NativeSignal1}
+		 */
+		public static <A, B, C, D, E> NativeSignalImpl5<A, B, C, D, E> newInstance() {
+			return new NativeSignalImpl5<A, B, C, D, E>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> add(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addOnce(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> remove(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalAccessError
+		 *             if target is null when the dispatch method is called.
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3, E value4) throws Throwable {
+			if (null == _signal.getTarget())
+				throw new IllegalAccessError("Target can not be null");
+
+			_dispatcher.dispatch(value0, value1, value2, value3, value4);
 		}
 
 		@Override
