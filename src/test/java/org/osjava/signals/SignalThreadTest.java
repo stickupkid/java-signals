@@ -14,6 +14,9 @@ import org.junit.Test;
 import org.osjava.signals.Signal.Signal0;
 import org.osjava.signals.Signal.Signal1;
 import org.osjava.signals.Signal.Signal2;
+import org.osjava.signals.Signal.Signal3;
+import org.osjava.signals.Signal.Signal4;
+import org.osjava.signals.Signal.Signal5;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 12:01
@@ -28,9 +31,8 @@ public class SignalThreadTest {
 		Assert.assertTrue(true);
 	}
 
-	protected void
-			testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
-					throws Throwable {
+	protected void testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
+			throws Throwable {
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		List<Future<Integer>> futures = executorService.invokeAll(tasks);
@@ -69,6 +71,15 @@ public class SignalThreadTest {
 		else if (signal instanceof Signal2) {
 			total += total * 2;
 			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
+		} else if (signal instanceof Signal3) {
+			total += total * 5;
+			((Signal3<Integer, Integer, Integer>) signal).dispatch(1, 2, 3);
+		} else if (signal instanceof Signal4) {
+			total += total * 9;
+			((Signal4<Integer, Integer, Integer, Integer>) signal).dispatch(1, 2, 3, 4);
+		} else if (signal instanceof Signal5) {
+			total += total * 14;
+			((Signal5<Integer, Integer, Integer, Integer, Integer>) signal).dispatch(1, 2, 3, 4, 5);
 		}
 
 		Assert.assertEquals(futures.size(), threadCount);
@@ -91,6 +102,15 @@ public class SignalThreadTest {
 		else if (signal instanceof Signal2) {
 			total += total * 2;
 			((Signal2<Integer, Integer>) signal).dispatch(1, 2);
+		} else if (signal instanceof Signal3) {
+			total += total * 5;
+			((Signal3<Integer, Integer, Integer>) signal).dispatch(1, 2, 3);
+		} else if (signal instanceof Signal4) {
+			total += total * 9;
+			((Signal4<Integer, Integer, Integer, Integer>) signal).dispatch(1, 2, 3, 4);
+		} else if (signal instanceof Signal5) {
+			total += total * 14;
+			((Signal5<Integer, Integer, Integer, Integer, Integer>) signal).dispatch(1, 2, 3, 4, 5);
 		}
 
 		Assert.assertEquals(signal.getNumListeners(), 0);
