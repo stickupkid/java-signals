@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="signals" default="compile" basedir=".">
 
-	<property name="jsignals.version" value="0.2-SNAPSHOT" />
+	<property name="jsignals.version" value="0.3-SNAPSHOT" />
 	<property name="jsignals.classpath" value="org.osjava.signals" />
 	<property name="jsignals.jar.bin" value="jsignals-${jsignals.version}.jar" />
 	<property name="jsignals.jar.src" value="jsignals-${jsignals.version}-src.jar" />

@@ -5,7 +5,7 @@
 	<groupId>org.osjava</groupId>
 	<artifactId>signals</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.3-SNAPSHOT</version>
 	<name>signals</name>
 	<description>Simple, type-safe event dispatching</description>
 	<url>https://github.com/stickupkid/java-signals</url>
