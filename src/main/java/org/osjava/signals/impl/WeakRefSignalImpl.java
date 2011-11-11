@@ -8,6 +8,9 @@ import org.osjava.signals.SignalListener;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 import org.osjava.signals.Slot;
 import org.osjava.signals.WeakRefSignal;
 
@@ -106,7 +109,7 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 		if (registrationPossible(listener, once)) {
 			slot = new WeakRefSlotImpl<L>(this, once, weakRef);
 			slot.setListener(listener);
-			
+
 			bindings.add(slot);
 		} else
 			slot = findSlotByListener(listener);
@@ -374,6 +377,273 @@ public class WeakRefSignalImpl<L extends SignalListener> extends SignalImpl<L> i
 		 */
 		public void dispatch(A value0, B value1) throws Throwable {
 			_dispatcher.dispatch(value0, value1);
+		}
+	}
+
+	public static class WeakRefSignalImpl3<A, B, C> implements WeakRefSignal3<A, B, C> {
+
+		private final List<Slot<SignalListener3<A, B, C>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
+
+		private final Dispatcher<SignalListener3<A, B, C>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final WeakRefSignalImpl<SignalListener3<A, B, C>> _signal = WeakRefSignalImpl
+				.newInstance(_bindings);
+
+		private WeakRefSignalImpl3() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of WeakRefSignal3
+		 * 
+		 * @return {@link WeakRefSignal3}
+		 */
+		public static <A, B, C> WeakRefSignalImpl3<A, B, C> newInstance() {
+			return new WeakRefSignalImpl3<A, B, C>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> add(SignalListener3<A, B, C> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addOnce(SignalListener3<A, B, C> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addWithWeakRef(SignalListener3<A, B, C> listener,
+				boolean weakRef) {
+			return _signal.addWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addOnceWithWeakRef(SignalListener3<A, B, C> listener,
+				boolean weakRef) {
+			return _signal.addOnceWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> remove(SignalListener3<A, B, C> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		public void dispatch(A value0, B value1, C value2) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2);
+		}
+	}
+
+	public static class WeakRefSignalImpl4<A, B, C, D> implements WeakRefSignal4<A, B, C, D> {
+
+		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
+
+		private final Dispatcher<SignalListener4<A, B, C, D>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final WeakRefSignalImpl<SignalListener4<A, B, C, D>> _signal = WeakRefSignalImpl
+				.newInstance(_bindings);
+
+		private WeakRefSignalImpl4() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of WeakRefSignal4
+		 * 
+		 * @return {@link WeakRefSignal4}
+		 */
+		public static <A, B, C, D> WeakRefSignalImpl4<A, B, C, D> newInstance() {
+			return new WeakRefSignalImpl4<A, B, C, D>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> add(SignalListener4<A, B, C, D> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addOnce(SignalListener4<A, B, C, D> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addWithWeakRef(
+				SignalListener4<A, B, C, D> listener, boolean weakRef) {
+			return _signal.addWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addOnceWithWeakRef(
+				SignalListener4<A, B, C, D> listener, boolean weakRef) {
+			return _signal.addOnceWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> remove(SignalListener4<A, B, C, D> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2, value3);
+		}
+	}
+
+	public static class WeakRefSignalImpl5<A, B, C, D, E> implements WeakRefSignal5<A, B, C, D, E> {
+
+		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
+
+		private final Dispatcher<SignalListener5<A, B, C, D, E>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final WeakRefSignalImpl<SignalListener5<A, B, C, D, E>> _signal = WeakRefSignalImpl
+				.newInstance(_bindings);
+
+		private WeakRefSignalImpl5() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of WeakRefSignal5
+		 * 
+		 * @return {@link WeakRefSignal5}
+		 */
+		public static <A, B, C, D, E> WeakRefSignalImpl5<A, B, C, D, E> newInstance() {
+			return new WeakRefSignalImpl5<A, B, C, D, E>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> add(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addOnce(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addWithWeakRef(
+				SignalListener5<A, B, C, D, E> listener, boolean weakRef) {
+			return _signal.addWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addOnceWithWeakRef(
+				SignalListener5<A, B, C, D, E> listener, boolean weakRef) {
+			return _signal.addOnceWithWeakRef(listener, weakRef);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> remove(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3, E value4) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2, value3, value4);
 		}
 	}
 }

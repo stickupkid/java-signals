@@ -3,6 +3,9 @@ package org.osjava.signals;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 
 public interface PrioritySignal<L extends SignalListener> extends Signal<L> {
 
@@ -65,6 +68,21 @@ public interface PrioritySignal<L extends SignalListener> extends Signal<L> {
 
 	public static interface PrioritySignal2<A, B> extends PrioritySignal<SignalListener2<A, B>>,
 			Signal2<A, B> {
+
+	}
+
+	public static interface PrioritySignal3<A, B, C> extends
+			PrioritySignal<SignalListener3<A, B, C>>, Signal3<A, B, C> {
+
+	}
+
+	public static interface PrioritySignal4<A, B, C, D> extends
+			PrioritySignal<SignalListener4<A, B, C, D>>, Signal4<A, B, C, D> {
+
+	}
+
+	public static interface PrioritySignal5<A, B, C, D, E> extends
+			PrioritySignal<SignalListener5<A, B, C, D, E>>, Signal5<A, B, C, D, E> {
 
 	}
 }

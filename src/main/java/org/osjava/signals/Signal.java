@@ -3,6 +3,9 @@ package org.osjava.signals;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 15/09/2011
@@ -82,5 +85,53 @@ public interface Signal<L extends SignalListener> {
 		 *            which is the second passed argument
 		 */
 		public void dispatch(A value0, B value1) throws Throwable;
+	}
+
+	public static interface Signal3<A, B, C> extends Signal<SignalListener3<A, B, C>> {
+		/**
+		 * Dispatches an object to listeners.
+		 * 
+		 * @param value0
+		 *            which is the first passed argument
+		 * @param value1
+		 *            which is the second passed argument
+		 * @param value2
+		 *            which is the third passed argument
+		 */
+		public void dispatch(A value0, B value1, C value2) throws Throwable;
+	}
+
+	public static interface Signal4<A, B, C, D> extends Signal<SignalListener4<A, B, C, D>> {
+		/**
+		 * Dispatches an object to listeners.
+		 * 
+		 * @param value0
+		 *            which is the first passed argument
+		 * @param value1
+		 *            which is the second passed argument
+		 * @param value2
+		 *            which is the third passed argument
+		 * @param value3
+		 *            which is the fourth passed argument
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3) throws Throwable;
+	}
+
+	public static interface Signal5<A, B, C, D, E> extends Signal<SignalListener5<A, B, C, D, E>> {
+		/**
+		 * Dispatches an object to listeners.
+		 * 
+		 * @param value0
+		 *            which is the first passed argument
+		 * @param value1
+		 *            which is the second passed argument
+		 * @param value2
+		 *            which is the third passed argument
+		 * @param value3
+		 *            which is the fourth passed argument
+		 * @param value4
+		 *            which is the fifth passed argument
+		 */
+		public void dispatch(A value0, B value1, C value2, D value3, E value4) throws Throwable;
 	}
 }

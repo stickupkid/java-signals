@@ -10,6 +10,9 @@ import org.osjava.signals.SignalListener;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 import org.osjava.signals.Slot;
 
 public final class PrioritySignalImpl<L extends SignalListener> extends SignalImpl<L> implements
@@ -475,6 +478,322 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		@Override
 		public void dispatch(A value0, B value1) throws Throwable {
 			_dispatcher.dispatch(value0, value1);
+		}
+	}
+
+	public static class PrioritySignalImpl3<A, B, C> implements PrioritySignal3<A, B, C> {
+
+		private final List<Slot<SignalListener3<A, B, C>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
+
+		private final Dispatcher<SignalListener3<A, B, C>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final PrioritySignalImpl<SignalListener3<A, B, C>> _signal = PrioritySignalImpl
+				.newInstance(_bindings);
+
+		private PrioritySignalImpl3() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of PrioritySignal3
+		 * 
+		 * @return {@link PrioritySignal3}
+		 */
+		public static <A, B, C> PrioritySignalImpl3<A, B, C> newInstance() {
+			return new PrioritySignalImpl3<A, B, C>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> add(SignalListener3<A, B, C> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addOnce(SignalListener3<A, B, C> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addWithPriority(SignalListener3<A, B, C> listener,
+				int priority) {
+			return _signal.addWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> addOnceWithPriority(
+				SignalListener3<A, B, C> listener, int priority) {
+			return _signal.addOnceWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener3<A, B, C>> remove(SignalListener3<A, B, C> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void dispatch(A value0, B value1, C value2) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2);
+		}
+	}
+
+	public static class PrioritySignalImpl4<A, B, C, D> implements PrioritySignal4<A, B, C, D> {
+
+		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
+
+		private final Dispatcher<SignalListener4<A, B, C, D>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final PrioritySignalImpl<SignalListener4<A, B, C, D>> _signal = PrioritySignalImpl
+				.newInstance(_bindings);
+
+		private PrioritySignalImpl4() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of PrioritySignal4
+		 * 
+		 * @return {@link PrioritySignal4}
+		 */
+		public static <A, B, C, D> PrioritySignalImpl4<A, B, C, D> newInstance() {
+			return new PrioritySignalImpl4<A, B, C, D>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> add(SignalListener4<A, B, C, D> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addOnce(SignalListener4<A, B, C, D> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addWithPriority(
+				SignalListener4<A, B, C, D> listener, int priority) {
+			return _signal.addWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> addOnceWithPriority(
+				SignalListener4<A, B, C, D> listener, int priority) {
+			return _signal.addOnceWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener4<A, B, C, D>> remove(SignalListener4<A, B, C, D> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2, value3);
+		}
+	}
+
+	public static class PrioritySignalImpl5<A, B, C, D, E> implements
+			PrioritySignal5<A, B, C, D, E> {
+
+		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
+
+		private final Dispatcher<SignalListener5<A, B, C, D, E>> _dispatcher = DispatcherImpl
+				.newInstance(_bindings);
+
+		private final PrioritySignalImpl<SignalListener5<A, B, C, D, E>> _signal = PrioritySignalImpl
+				.newInstance(_bindings);
+
+		private PrioritySignalImpl5() {
+			// Private constructor
+		}
+
+		/**
+		 * Create a newInstance of PrioritySignal5
+		 * 
+		 * @return {@link PrioritySignal5}
+		 */
+		public static <A, B, C, D, E> PrioritySignalImpl5<A, B, C, D, E> newInstance() {
+			return new PrioritySignalImpl5<A, B, C, D, E>();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> add(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.add(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addOnce(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.addOnce(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addWithPriority(
+				SignalListener5<A, B, C, D, E> listener, int priority) {
+			return _signal.addWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> addOnceWithPriority(
+				SignalListener5<A, B, C, D, E> listener, int priority) {
+			return _signal.addOnceWithPriority(listener, priority);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @throws IllegalArgumentException
+		 *             if listener argument is null
+		 */
+		@Override
+		public Slot<SignalListener5<A, B, C, D, E>> remove(SignalListener5<A, B, C, D, E> listener) {
+			return _signal.remove(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeAll() {
+			_signal.removeAll();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getNumListeners() {
+			return _signal.getNumListeners();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void dispatch(A value0, B value1, C value2, D value3, E value4) throws Throwable {
+			_dispatcher.dispatch(value0, value1, value2, value3, value4);
 		}
 	}
 }

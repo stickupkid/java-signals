@@ -9,6 +9,9 @@ import org.osjava.signals.SignalListener;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 import org.osjava.signals.Slot;
 
 public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
@@ -75,6 +78,58 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 
 		for (final Slot<L> slot : bindings) {
 			dispatchSlot2(slot, value0, value1, values);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public <A, B, C> void dispatch(A value0, B value1, C value2) throws Throwable {
+		assert null != bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0, value1, value2 };
+
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot3(slot, value0, value1, value2, values);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public <A, B, C, D> void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
+		assert null != bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0, value1, value2, value3 };
+
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot4(slot, value0, value1, value2, value3, values);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public <A, B, C, D, E> void dispatch(A value0, B value1, C value2, D value3, E value4)
+			throws Throwable {
+		assert null != bindings : "Bindings can not be null";
+
+		// Cache this so we can use it for applying with params.
+		Object[] values = { value0, value1, value2, value3, value4 };
+
+		for (final Slot<L> slot : bindings) {
+			dispatchSlot5(slot, value0, value1, value2, value3, value4, values);
 		}
 	}
 
@@ -152,11 +207,13 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	}
 
 	/**
-	 * Dispatch the slot for SignalListener1
+	 * Dispatch the slot for SignalListener2
 	 * 
 	 * @param slot
 	 *            to be used to execute the listener on
 	 * @param value0
+	 *            value to be executed on the interface
+	 * @param value1
 	 *            value to be executed on the interface
 	 * @param values
 	 *            the default values to enable additional parameters on
@@ -187,6 +244,138 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 			}
 		} else
 			throw new IllegalAccessError("SlotListener does not implement SignalListener2");
+	}
+
+	/**
+	 * Dispatch the slot for SignalListener3
+	 * 
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param value0
+	 *            value to be executed on the interface
+	 * @param value1
+	 *            value to be executed on the interface
+	 * @param value2
+	 *            value to be executed on the interface
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener3
+	 */
+	@SuppressWarnings("unchecked")
+	protected final <A, B, C> void dispatchSlot3(final Slot<L> slot, final A value0, B value1,
+			C value2, final Object[] values) throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener3) {
+
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					invoke(slotListener, values, params);
+				} else {
+					// Normal interface access
+					final SignalListener3<A, B, C> listener = (SignalListener3<A, B, C>) slotListener;
+					if (slot.getOnce())
+						slot.remove();
+					if (null != listener)
+						listener.apply(value0, value1, value2);
+				}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener3");
+	}
+
+	/**
+	 * Dispatch the slot for SignalListener4
+	 * 
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param value0
+	 *            value to be executed on the interface
+	 * @param value1
+	 *            value to be executed on the interface
+	 * @param value2
+	 *            value to be executed on the interface
+	 * @param value3
+	 *            value to be executed on the interface
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener4
+	 */
+	@SuppressWarnings("unchecked")
+	protected final <A, B, C, D> void dispatchSlot4(final Slot<L> slot, final A value0, B value1,
+			C value2, D value3, final Object[] values) throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener4) {
+
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					invoke(slotListener, values, params);
+				} else {
+					// Normal interface access
+					final SignalListener4<A, B, C, D> listener = (SignalListener4<A, B, C, D>) slotListener;
+					if (slot.getOnce())
+						slot.remove();
+					if (null != listener)
+						listener.apply(value0, value1, value2, value3);
+				}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener3");
+	}
+
+	/**
+	 * Dispatch the slot for SignalListener4
+	 * 
+	 * @param slot
+	 *            to be used to execute the listener on
+	 * @param value0
+	 *            value to be executed on the interface
+	 * @param value1
+	 *            value to be executed on the interface
+	 * @param value2
+	 *            value to be executed on the interface
+	 * @param value3
+	 *            value to be executed on the interface
+	 * @param value4
+	 *            value to be executed on the interface
+	 * @param values
+	 *            the default values to enable additional parameters on
+	 * @throws Throwable
+	 * @throws {@link IllegalAccessError} if SlotListener does not implement
+	 *         SignalListener5
+	 */
+	@SuppressWarnings("unchecked")
+	protected final <A, B, C, D, E> void dispatchSlot5(final Slot<L> slot, final A value0,
+			B value1, C value2, D value3, E value4, final Object[] values) throws Throwable {
+		final SignalListener slotListener = slot.getListener();
+		if (slotListener instanceof SignalListener5) {
+
+			// If it's not enable skip this
+			if (slot.getEnabled()) {
+				// See if the slot has any parameters
+				final List<?> params = slot.getParams();
+				if (null != params && params.size() > 0) {
+					invoke(slotListener, values, params);
+				} else {
+					// Normal interface access
+					final SignalListener5<A, B, C, D, E> listener = (SignalListener5<A, B, C, D, E>) slotListener;
+					if (slot.getOnce())
+						slot.remove();
+					if (null != listener)
+						listener.apply(value0, value1, value2, value3, value4);
+				}
+			}
+		} else
+			throw new IllegalAccessError("SlotListener does not implement SignalListener3");
 	}
 
 	/**

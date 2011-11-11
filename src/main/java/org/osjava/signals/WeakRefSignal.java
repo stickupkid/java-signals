@@ -3,6 +3,9 @@ package org.osjava.signals;
 import org.osjava.signals.SignalListener.SignalListener0;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.SignalListener.SignalListener2;
+import org.osjava.signals.SignalListener.SignalListener3;
+import org.osjava.signals.SignalListener.SignalListener4;
+import org.osjava.signals.SignalListener.SignalListener5;
 
 public interface WeakRefSignal<L extends SignalListener> extends Signal<L> {
 
@@ -41,6 +44,21 @@ public interface WeakRefSignal<L extends SignalListener> extends Signal<L> {
 
 	public static interface WeakRefSignal2<A, B> extends WeakRefSignal<SignalListener2<A, B>>,
 			Signal2<A, B> {
+
+	}
+
+	public static interface WeakRefSignal3<A, B, C> extends
+			WeakRefSignal<SignalListener3<A, B, C>>, Signal3<A, B, C> {
+
+	}
+
+	public static interface WeakRefSignal4<A, B, C, D> extends
+			WeakRefSignal<SignalListener4<A, B, C, D>>, Signal4<A, B, C, D> {
+
+	}
+
+	public static interface WeakRefSignal5<A, B, C, D, E> extends
+			WeakRefSignal<SignalListener5<A, B, C, D, E>>, Signal5<A, B, C, D, E> {
 
 	}
 }
