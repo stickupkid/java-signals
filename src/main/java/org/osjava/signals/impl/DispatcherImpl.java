@@ -16,7 +16,7 @@ import org.osjava.signals.Slot;
 
 public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 
-	protected List<Slot<L>> bindings;
+	protected final List<Slot<L>> bindings;
 
 	protected DispatcherImpl(List<Slot<L>> bindings) {
 		if (null == bindings)
@@ -53,7 +53,7 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	 * @throws Throwable
 	 */
 	@Override
-	public <A> void dispatch(A value0) throws Throwable {
+	public <A> void dispatch(final A value0) throws Throwable {
 		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
@@ -70,11 +70,11 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	 * @throws Throwable
 	 */
 	@Override
-	public <A, B> void dispatch(A value0, B value1) throws Throwable {
+	public <A, B> void dispatch(final A value0, final B value1) throws Throwable {
 		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
-		Object[] values = { value0, value1 };
+		final Object[] values = { value0, value1 };
 
 		for (final Slot<L> slot : bindings) {
 			dispatchSlot2(slot, value0, value1, values);
@@ -87,11 +87,11 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	 * @throws Throwable
 	 */
 	@Override
-	public <A, B, C> void dispatch(A value0, B value1, C value2) throws Throwable {
+	public <A, B, C> void dispatch(final A value0, final B value1, final C value2) throws Throwable {
 		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
-		Object[] values = { value0, value1, value2 };
+		final Object[] values = { value0, value1, value2 };
 
 		for (final Slot<L> slot : bindings) {
 			dispatchSlot3(slot, value0, value1, value2, values);
@@ -104,11 +104,12 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	 * @throws Throwable
 	 */
 	@Override
-	public <A, B, C, D> void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
+	public <A, B, C, D> void dispatch(final A value0, final B value1, final C value2, final D value3)
+			throws Throwable {
 		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
-		Object[] values = { value0, value1, value2, value3 };
+		final Object[] values = { value0, value1, value2, value3 };
 
 		for (final Slot<L> slot : bindings) {
 			dispatchSlot4(slot, value0, value1, value2, value3, values);
@@ -121,12 +122,12 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 	 * @throws Throwable
 	 */
 	@Override
-	public <A, B, C, D, E> void dispatch(A value0, B value1, C value2, D value3, E value4)
+	public <A, B, C, D, E> void dispatch(final A value0, B value1, C value2, D value3, E value4)
 			throws Throwable {
 		assert null != bindings : "Bindings can not be null";
 
 		// Cache this so we can use it for applying with params.
-		Object[] values = { value0, value1, value2, value3, value4 };
+		final Object[] values = { value0, value1, value2, value3, value4 };
 
 		for (final Slot<L> slot : bindings) {
 			dispatchSlot5(slot, value0, value1, value2, value3, value4, values);
@@ -402,8 +403,8 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 		try {
 			// Invoke method here
 			// Get all the methods in the class using reflection
-			Class<?> slotListenerClass = slotListener.getClass();
-			Method[] slotListenerMethods = slotListenerClass.getDeclaredMethods();
+			final Class<?> slotListenerClass = slotListener.getClass();
+			final Method[] slotListenerMethods = slotListenerClass.getDeclaredMethods();
 
 			// Locate the current class type
 			final Class<?> paramClassType = params.get(0).getClass();
@@ -412,7 +413,7 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 
 			// Iterate through them and try and match it
 			for (final Method slotMethod : slotListenerMethods) {
-				Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
+				final Class<?>[] slotMethodParamTypes = slotMethod.getParameterTypes();
 
 				// If the paramTypes length match the params size
 				// then we can nail it down
@@ -422,9 +423,9 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 				if (numParamTypes == total) {
 					// Iterate through the methods parameters
 					for (int i = values.length; i < total; i++) {
-						Class<?> slotMethodParamType = slotMethodParamTypes[i];
+						final Class<?> slotMethodParamType = slotMethodParamTypes[i];
 						// TODO : Workout the boxed and unboxed versions i.e.
-						// Integer = int
+						// Integer eq int, Float eq float
 						if (slotMethodParamType.equals(paramClassType)) {
 							numParamTypes--;
 						} else {
@@ -445,8 +446,8 @@ public class DispatcherImpl<L extends SignalListener> implements Dispatcher<L> {
 						// type of List<T> but this won't allow it
 						// To top it off we have to concat to Object[]s
 						// together...
-						Object[] optionalParams = params.toArray();
-						Object[] allParams = concat(values, optionalParams);
+						final Object[] optionalParams = params.toArray();
+						final Object[] allParams = concat(values, optionalParams);
 
 						// Invoke it!
 						slotMethod.invoke(slotListener, allParams);

@@ -40,6 +40,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 
 		_target = target;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isAvailable() {
+		return true;
+	}
 
 	public static class NativeSignalImpl1<A> implements NativeSignal1<A> {
 
@@ -131,6 +139,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 			_signal.setTarget(target);
 
 			registerTargetListener();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isAvailable() {
+			return _signal.isAvailable();
 		}
 
 		/**
@@ -241,6 +257,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 		}
 
 		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isAvailable() {
+			return _signal.isAvailable();
+		}
+
+		/**
 		 * Register the target listener
 		 */
 		protected void registerTargetListener() {
@@ -347,6 +371,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 			registerTargetListener();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isAvailable() {
+			return _signal.isAvailable();
+		}
+		
 		/**
 		 * Register the target listener
 		 */
@@ -455,6 +487,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 		}
 
 		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isAvailable() {
+			return _signal.isAvailable();
+		}
+		
+		/**
 		 * Register the target listener
 		 */
 		protected void registerTargetListener() {
@@ -559,6 +599,14 @@ public class NativeSignalImpl<L extends SignalListener, T> extends SignalImpl<L>
 			_signal.setTarget(target);
 
 			registerTargetListener();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isAvailable() {
+			return _signal.isAvailable();
 		}
 
 		/**

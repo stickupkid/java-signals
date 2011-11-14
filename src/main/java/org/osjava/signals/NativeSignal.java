@@ -15,7 +15,14 @@ public interface NativeSignal<L extends SignalListener, T> extends Signal<L> {
 	public T getTarget();
 
 	public void setTarget(T target);
-
+	
+	/**
+	 * Is the current native method available to register on the signal
+	 * 
+	 * @param True if the native listener method is available
+	 */
+	public boolean isAvailable();
+	
 	public static interface NativeSignal1<T> extends NativeSignal<SignalListener1<T>, T> {
 
 	}
