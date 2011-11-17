@@ -10,7 +10,7 @@ import org.osjava.signals.Signal.Signal1;
 import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.impl.SignalImpl.SignalImpl1;
 
-public class Signal1ThreadRemoveTest extends SignalThreadTest {
+public class Signal1ThreadRemoveTest extends SignalThreadBase {
 
 	private Signal1<Integer> signal;
 

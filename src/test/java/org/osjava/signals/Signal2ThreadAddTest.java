@@ -12,7 +12,7 @@ import org.osjava.signals.impl.SignalImpl.SignalImpl2;
 /**
  * Created by IntelliJ IDEA. User: cereals Date: 13/10/2011
  */
-public class Signal2ThreadAddTest extends SignalThreadTest {
+public class Signal2ThreadAddTest extends SignalThreadBase {
 
 	private Signal2<Boolean, String> signal;
 

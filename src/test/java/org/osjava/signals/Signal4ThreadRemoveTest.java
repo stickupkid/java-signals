@@ -10,7 +10,7 @@ import org.osjava.signals.Signal.Signal4;
 import org.osjava.signals.SignalListener.SignalListener4;
 import org.osjava.signals.impl.SignalImpl.SignalImpl4;
 
-public class Signal4ThreadRemoveTest extends SignalThreadTest {
+public class Signal4ThreadRemoveTest extends SignalThreadBase {
 
 	private Signal4<Integer, Integer, Integer, Integer> signal;
 

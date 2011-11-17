@@ -21,7 +21,7 @@ import org.osjava.signals.Signal.Signal5;
 /**
  * Created by IntelliJ IDEA. User: simonrichardson Date: 26/09/2011 Time: 12:01
  */
-public class SignalThreadTest {
+public class SignalThreadBase {
 
 	protected AtomicInteger incrementer;
 

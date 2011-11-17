@@ -11,7 +11,7 @@ import org.osjava.signals.SignalListener.SignalListener1;
 import org.osjava.signals.impl.SignalImpl.SignalImpl1;
 
 
-public class Signal1ThreadDispatchTest extends SignalThreadTest {
+public class Signal1ThreadDispatchTest extends SignalThreadBase {
 	
 	private Signal1<Integer> signal;
 

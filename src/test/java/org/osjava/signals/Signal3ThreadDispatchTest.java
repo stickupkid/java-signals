@@ -10,7 +10,7 @@ import org.osjava.signals.Signal.Signal3;
 import org.osjava.signals.SignalListener.SignalListener3;
 import org.osjava.signals.impl.SignalImpl.SignalImpl3;
 
-public class Signal3ThreadDispatchTest extends SignalThreadTest {
+public class Signal3ThreadDispatchTest extends SignalThreadBase {
 
 	private Signal3<Integer, Integer, Integer> signal;
 
