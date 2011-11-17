@@ -52,25 +52,28 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void dispatch() throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator0))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator0");
-		else {
-			final SelectiveSignalComparator0<T> comparator = (SelectiveSignalComparator0<T>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = {};
+		// Cache this so we can use it for applying with params.
+		final Object[] values = {};
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator0))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator0");
+				else {
+					final SelectiveSignalComparator0<T> comparator = (SelectiveSignalComparator0<T>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey()))
 						dispatchSlot0(selectiveSlot, values);
-				} else
-					dispatchSlot0(slot, values);
-			}
+				}
+			} else
+				dispatchSlot0(slot, values);
 		}
 	}
 
@@ -86,25 +89,28 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <A> void dispatch(A value0) throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator1))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator1");
-		else {
-			final SelectiveSignalComparator1<T, A> comparator = (SelectiveSignalComparator1<T, A>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = { value0 };
+		// Cache this so we can use it for applying with params.
+		final Object[] values = { value0 };
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator1))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator1");
+				else {
+					final SelectiveSignalComparator1<T, A> comparator = (SelectiveSignalComparator1<T, A>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey(), value0))
 						dispatchSlot1(selectiveSlot, value0, values);
-				} else
-					dispatchSlot1(slot, value0, values);
-			}
+				}
+			} else
+				dispatchSlot1(slot, value0, values);
 		}
 	}
 
@@ -120,25 +126,28 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <A, B> void dispatch(A value0, B value1) throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator2))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator2");
-		else {
-			final SelectiveSignalComparator2<T, A, B> comparator = (SelectiveSignalComparator2<T, A, B>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = { value0, value1 };
+		// Cache this so we can use it for applying with params.
+		final Object[] values = { value0, value1 };
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator2))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator2");
+				else {
+					final SelectiveSignalComparator2<T, A, B> comparator = (SelectiveSignalComparator2<T, A, B>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey(), value0, value1))
 						dispatchSlot2(selectiveSlot, value0, value1, values);
-				} else
-					dispatchSlot2(slot, value0, value1, values);
-			}
+				}
+			} else
+				dispatchSlot2(slot, value0, value1, values);
 		}
 	}
 
@@ -154,25 +163,28 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <A, B, C> void dispatch(A value0, B value1, C value2) throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator3))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator3");
-		else {
-			final SelectiveSignalComparator3<T, A, B, C> comparator = (SelectiveSignalComparator3<T, A, B, C>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = { value0, value1, value2 };
+		// Cache this so we can use it for applying with params.
+		final Object[] values = { value0, value1, value2 };
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator3))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator3");
+				else {
+					final SelectiveSignalComparator3<T, A, B, C> comparator = (SelectiveSignalComparator3<T, A, B, C>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey(), value0, value1, value2))
 						dispatchSlot3(selectiveSlot, value0, value1, value2, values);
-				} else
-					dispatchSlot3(slot, value0, value1, value2, values);
-			}
+				}
+			} else
+				dispatchSlot3(slot, value0, value1, value2, values);
 		}
 	}
 
@@ -188,25 +200,28 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <A, B, C, D> void dispatch(A value0, B value1, C value2, D value3) throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator3))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator4");
-		else {
-			final SelectiveSignalComparator4<T, A, B, C, D> comparator = (SelectiveSignalComparator4<T, A, B, C, D>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = { value0, value1, value2, value3 };
+		// Cache this so we can use it for applying with params.
+		final Object[] values = { value0, value1, value2, value3 };
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator3))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator4");
+				else {
+					final SelectiveSignalComparator4<T, A, B, C, D> comparator = (SelectiveSignalComparator4<T, A, B, C, D>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey(), value0, value1, value2, value3))
 						dispatchSlot4(selectiveSlot, value0, value1, value2, value3, values);
-				} else
-					dispatchSlot4(slot, value0, value1, value2, value3, values);
-			}
+				}
+			} else
+				dispatchSlot4(slot, value0, value1, value2, value3, values);
 		}
 	}
 
@@ -223,26 +238,29 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 	@SuppressWarnings("unchecked")
 	public <A, B, C, D, E> void dispatch(A value0, B value1, C value2, D value3, E value4)
 			throws Throwable {
-		// If there is no comparator then we should just dispatch them all?
-		if (null == _comparator)
-			throw new NullPointerException("Comparator can not be null");
-		else if (!(_comparator instanceof SelectiveSignalComparator5))
-			throw new IllegalAccessError("Comparator must be a type of SelectiveSignalComparator5");
-		else {
-			final SelectiveSignalComparator5<T, A, B, C, D, E> comparator = (SelectiveSignalComparator5<T, A, B, C, D, E>) _comparator;
 
-			// Cache this so we can use it for applying with params.
-			final Object[] values = { value0, value1, value2, value3, value4 };
+		// Cache this so we can use it for applying with params.
+		final Object[] values = { value0, value1, value2, value3, value4 };
 
-			for (final Slot<L> slot : bindings) {
-				if (slot instanceof SelectiveSlot) {
+		for (final Slot<L> slot : bindings) {
+			if (slot instanceof SelectiveSlot) {
+				// If there is no comparator then we should just dispatch them
+				// all?
+				if (null == _comparator)
+					throw new NullPointerException("Comparator can not be null");
+				else if (!(_comparator instanceof SelectiveSignalComparator5))
+					throw new IllegalAccessError(
+							"Comparator must be a type of SelectiveSignalComparator5");
+				else {
+					final SelectiveSignalComparator5<T, A, B, C, D, E> comparator = (SelectiveSignalComparator5<T, A, B, C, D, E>) _comparator;
+
 					final SelectiveSlot<T, L> selectiveSlot = (SelectiveSlot<T, L>) slot;
 					if (comparator.compare(selectiveSlot.getKey(), value0, value1, value2, value3,
 							value4))
 						dispatchSlot5(selectiveSlot, value0, value1, value2, value3, value4, values);
-				} else
-					dispatchSlot5(slot, value0, value1, value2, value3, value4, values);
-			}
+				}
+			} else
+				dispatchSlot5(slot, value0, value1, value2, value3, value4, values);
 		}
 	}
 }
