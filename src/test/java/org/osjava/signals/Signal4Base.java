@@ -10,7 +10,7 @@ import org.osjava.signals.Signal.Signal4;
 import org.osjava.signals.SignalListener.SignalListener4;
 
 public class Signal4Base {
-	protected Signal4<Boolean, String, String, String> signal;
+	protected Signal4<String, String, String, Boolean> signal;
 
 	@After
 	public void tearDown() {
@@ -24,8 +24,8 @@ public class Signal4Base {
 
 	@Test
 	public void verify_that_add_makes_getNumListeners_equal_one() {
-		signal.add(new SignalListener4<Boolean, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3) {
+		signal.add(new SignalListener4<String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, Boolean value3) {
 			}
 		});
 
@@ -37,9 +37,9 @@ public class Signal4Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener4<Boolean, String, String, String> listener =
-				new SignalListener4<Boolean, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3) {
+		final SignalListener4<String, String, String, Boolean> listener =
+				new SignalListener4<String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, Boolean value3) {
 					}
 				};
 
@@ -53,8 +53,8 @@ public class Signal4Base {
 
 	@Test
 	public void verify_that_add_once_makes_getNumListeners_equal_one() {
-		signal.addOnce(new SignalListener4<Boolean, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3) {
+		signal.addOnce(new SignalListener4<String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, Boolean value3) {
 			}
 		});
 
@@ -66,9 +66,9 @@ public class Signal4Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener4<Boolean, String, String, String> listener =
-				new SignalListener4<Boolean, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3) {
+		final SignalListener4<String, String, String, Boolean> listener =
+				new SignalListener4<String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, Boolean value3) {
 					}
 				};
 
@@ -83,12 +83,12 @@ public class Signal4Base {
 	@Test
 	public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch()
 			throws Throwable {
-		signal.add(new SignalListener4<Boolean, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3) {
+		signal.add(new SignalListener4<String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, Boolean value3) {
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!");
+		signal.dispatch("Hello", "World", "!", true);
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add and then dispatch",
 				1, signal.getNumListeners());
@@ -97,12 +97,12 @@ public class Signal4Base {
 	@Test
 	public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch()
 			throws Throwable {
-		signal.addOnce(new SignalListener4<Boolean, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3) {
+		signal.addOnce(new SignalListener4<String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, Boolean value3) {
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!");
+		signal.dispatch("Hello", "World", "!", true);
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add once and then "
 				+ "dispatch", 0, signal.getNumListeners());
@@ -110,13 +110,13 @@ public class Signal4Base {
 
 	@Test
 	public void verify_that_a_listener_is_called_after_dispatch() throws Throwable {
-		signal.add(new SignalListener4<Boolean, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3) {
+		signal.add(new SignalListener4<String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, Boolean value3) {
 				Assert.assertTrue("Signal0 apply was called when dispatched", true);
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!");
+		signal.dispatch("Hello", "World", "!", true);
 	}
 
 	@Test
@@ -124,11 +124,11 @@ public class Signal4Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener4<Boolean, String, String, String> listener =
-				new SignalListener4<Boolean, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3) {
-						if (value0 && value1.equals("Hello") && value2.equals("World")
-								&& value3.equals("!"))
+		final SignalListener4<String, String, String, Boolean> listener =
+				new SignalListener4<String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, Boolean value3) {
+						if (value0.equals("Hello") && value1.equals("World")
+								&& value2.equals("!") && value3)
 							active.add(true);
 					}
 				};
@@ -137,7 +137,7 @@ public class Signal4Base {
 			signal.add(listener);
 		}
 
-		signal.dispatch(true, "Hello", "World", "!");
+		signal.dispatch("Hello", "World", "!", true);
 
 		Assert.assertEquals("Number of signals dispatched should equal total", 10, active.size());
 	}

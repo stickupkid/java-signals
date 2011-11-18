@@ -210,7 +210,7 @@ public final class SelectiveDispatcherImpl<T, L extends SignalListener> extends 
 				// all?
 				if (null == _comparator)
 					throw new NullPointerException("Comparator can not be null");
-				else if (!(_comparator instanceof SelectiveSignalComparator3))
+				else if (!(_comparator instanceof SelectiveSignalComparator4))
 					throw new IllegalAccessError(
 							"Comparator must be a type of SelectiveSignalComparator4");
 				else {
