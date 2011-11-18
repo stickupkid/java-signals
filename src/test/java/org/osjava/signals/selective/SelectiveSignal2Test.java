@@ -6,7 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.osjava.signals.SelectiveSignal.SelectiveSignal1.SelectiveSignalComparator1;
 import org.osjava.signals.SelectiveSignal.SelectiveSignal2;
 import org.osjava.signals.SelectiveSignal.SelectiveSignal2.SelectiveSignalComparator2;
 import org.osjava.signals.Signal2Base;
@@ -30,8 +29,8 @@ public class SelectiveSignal2Test extends Signal2Base {
 
 	@Test
 	public void verify_signal_comparator_is_not_null() {
-		selectiveSignal.setComparator(new SelectiveSignalComparator1<String, String>() {
-			public boolean compare(String key, String value0) {
+		selectiveSignal.setComparator(new SelectiveSignalComparator2<String, String, Boolean>() {
+			public boolean compare(String key, String value0, Boolean value1) {
 				return true;
 			}
 		});
