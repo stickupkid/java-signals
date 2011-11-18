@@ -10,7 +10,7 @@ import org.osjava.signals.Signal.Signal5;
 import org.osjava.signals.SignalListener.SignalListener5;
 
 public class Signal5Base {
-	protected Signal5<Boolean, String, String, String, String> signal;
+	protected Signal5<String, String, String, String, Boolean> signal;
 
 	@After
 	public void tearDown() {
@@ -24,9 +24,9 @@ public class Signal5Base {
 
 	@Test
 	public void verify_that_add_makes_getNumListeners_equal_one() {
-		signal.add(new SignalListener5<Boolean, String, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3,
-					String value5) {
+		signal.add(new SignalListener5<String, String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, String value3,
+					Boolean value4) {
 			}
 		});
 
@@ -38,10 +38,10 @@ public class Signal5Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener5<Boolean, String, String, String, String> listener =
-				new SignalListener5<Boolean, String, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3,
-							String value5) {
+		final SignalListener5<String, String, String, String, Boolean> listener =
+				new SignalListener5<String, String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, String value3,
+							Boolean value4) {
 					}
 				};
 
@@ -55,9 +55,9 @@ public class Signal5Base {
 
 	@Test
 	public void verify_that_add_once_makes_getNumListeners_equal_one() {
-		signal.addOnce(new SignalListener5<Boolean, String, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3,
-					String value5) {
+		signal.addOnce(new SignalListener5<String, String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, String value3,
+					Boolean value4) {
 			}
 		});
 
@@ -69,10 +69,10 @@ public class Signal5Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener5<Boolean, String, String, String, String> listener =
-				new SignalListener5<Boolean, String, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3,
-							String value5) {
+		final SignalListener5<String, String, String, String, Boolean> listener =
+				new SignalListener5<String, String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, String value3,
+							Boolean value5) {
 					}
 				};
 
@@ -87,13 +87,13 @@ public class Signal5Base {
 	@Test
 	public void verify_that_after_add_that_getNumListeners_equal_one_after_dispatch()
 			throws Throwable {
-		signal.add(new SignalListener5<Boolean, String, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3,
-					String value5) {
+		signal.add(new SignalListener5<String, String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, String value3,
+					Boolean value4) {
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!", "?");
+		signal.dispatch("Hello", "World", "!", "?", true);
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add and then dispatch",
 				1, signal.getNumListeners());
@@ -102,13 +102,13 @@ public class Signal5Base {
 	@Test
 	public void verify_that_after_add_once_that_getNumListeners_equal_one_after_dispatch()
 			throws Throwable {
-		signal.addOnce(new SignalListener5<Boolean, String, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3,
-					String value5) {
+		signal.addOnce(new SignalListener5<String, String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, String value3,
+					Boolean value4) {
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!", "?");
+		signal.dispatch("Hello", "World", "!", "?", true);
 
 		Assert.assertEquals("Signal getNumListeners should equal one after add once and then "
 				+ "dispatch", 0, signal.getNumListeners());
@@ -116,14 +116,14 @@ public class Signal5Base {
 
 	@Test
 	public void verify_that_a_listener_is_called_after_dispatch() throws Throwable {
-		signal.add(new SignalListener5<Boolean, String, String, String, String>() {
-			public void apply(Boolean value0, String value1, String value2, String value3,
-					String value5) {
+		signal.add(new SignalListener5<String, String, String, String, Boolean>() {
+			public void apply(String value0, String value1, String value2, String value3,
+					Boolean value4) {
 				Assert.assertTrue("Signal0 apply was called when dispatched", true);
 			}
 		});
 
-		signal.dispatch(true, "Hello", "World", "!", "?");
+		signal.dispatch("Hello", "World", "!", "?", true);
 	}
 
 	@Test
@@ -131,12 +131,12 @@ public class Signal5Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener5<Boolean, String, String, String, String> listener =
-				new SignalListener5<Boolean, String, String, String, String>() {
-					public void apply(Boolean value0, String value1, String value2, String value3,
-							String value5) {
-						if (value0 && value1.equals("Hello") && value2.equals("World")
-								&& value3.equals("!") && value5.equals("?"))
+		final SignalListener5<String, String, String, String, Boolean> listener =
+				new SignalListener5<String, String, String, String, Boolean>() {
+					public void apply(String value0, String value1, String value2, String value3,
+							Boolean value4) {
+						if (value0.equals("Hello") && value1.equals("World") && value2.equals("!")
+								&& value3.equals("?") && value4)
 							active.add(true);
 					}
 				};
@@ -145,7 +145,7 @@ public class Signal5Base {
 			signal.add(listener);
 		}
 
-		signal.dispatch(true, "Hello", "World", "!", "?");
+		signal.dispatch("Hello", "World", "!", "?", true);
 
 		Assert.assertEquals("Number of signals dispatched should equal total", 10, active.size());
 	}
