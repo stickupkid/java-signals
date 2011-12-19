@@ -31,8 +31,9 @@ public class SignalThreadBase {
 		Assert.assertTrue(true);
 	}
 
-	protected void testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
-			throws Throwable {
+	protected void
+			testAddingWithMultipleThreads(final Callable<Integer> task, final int threadCount)
+					throws Throwable {
 		List<Callable<Integer>> tasks = Collections.nCopies(threadCount, task);
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		List<Future<Integer>> futures = executorService.invokeAll(tasks);
