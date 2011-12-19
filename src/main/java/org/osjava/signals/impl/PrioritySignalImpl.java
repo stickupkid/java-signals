@@ -135,22 +135,22 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 			// Make sure that bindings is synchronised
 			synchronized (bindings) {
 				final int total = bindings.size();
-				if (total == 0)
+				if (total <= 0)
 					bindings.add(slot);
 				else {
+					int index = 0;
 					for (int i = 0; i < total; i++) {
-						Slot<L> s = bindings.get(i);
-						if (s instanceof PrioritySlot) {
-							PrioritySlot<L> prioritySlot = (PrioritySlot<L>) s;
-							if (priority > prioritySlot.getPriority()) {
-								bindings.add(i, slot);
+						final Slot<L> bindingSlot = bindings.get(i);
+						if (bindingSlot instanceof PrioritySlot) {
+							final PrioritySlot<L> prioritySlot = (PrioritySlot<L>) bindingSlot;
+							if (priority > prioritySlot.getPriority())
 								break;
-							}
-						} else {
-							bindings.add(i, slot);
-							break;
-						}
+							else
+								index++;
+						} else
+							index = total;
 					}
+					bindings.add(index, slot);
 				}
 			}
 
@@ -162,7 +162,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 
 	public static class PrioritySignalImpl0 implements PrioritySignal0 {
 
-		private final List<Slot<SignalListener0>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener0>>();
+		private final List<Slot<SignalListener0>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener0>>();
 
 		private final Dispatcher<SignalListener0> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -265,7 +266,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 
 	public static class PrioritySignalImpl1<A> implements PrioritySignal1<A> {
 
-		private final List<Slot<SignalListener1<A>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
+		private final List<Slot<SignalListener1<A>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
 
 		private final Dispatcher<SignalListener1<A>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -378,7 +380,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 
 	public static class PrioritySignalImpl2<A, B> implements PrioritySignal2<A, B> {
 
-		private final List<Slot<SignalListener2<A, B>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener2<A, B>>>();
+		private final List<Slot<SignalListener2<A, B>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener2<A, B>>>();
 
 		private final Dispatcher<SignalListener2<A, B>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -483,7 +486,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 
 	public static class PrioritySignalImpl3<A, B, C> implements PrioritySignal3<A, B, C> {
 
-		private final List<Slot<SignalListener3<A, B, C>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
+		private final List<Slot<SignalListener3<A, B, C>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
 
 		private final Dispatcher<SignalListener3<A, B, C>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -588,7 +592,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 
 	public static class PrioritySignalImpl4<A, B, C, D> implements PrioritySignal4<A, B, C, D> {
 
-		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
+		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
 
 		private final Dispatcher<SignalListener4<A, B, C, D>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -694,13 +699,14 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 	public static class PrioritySignalImpl5<A, B, C, D, E> implements
 			PrioritySignal5<A, B, C, D, E> {
 
-		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
+		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
 
 		private final Dispatcher<SignalListener5<A, B, C, D, E>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
 
-		private final PrioritySignalImpl<SignalListener5<A, B, C, D, E>> _signal = PrioritySignalImpl
-				.newInstance(_bindings);
+		private final PrioritySignalImpl<SignalListener5<A, B, C, D, E>> _signal =
+				PrioritySignalImpl.newInstance(_bindings);
 
 		private PrioritySignalImpl5() {
 			// Private constructor
@@ -733,7 +739,8 @@ public final class PrioritySignalImpl<L extends SignalListener> extends SignalIm
 		 *             if listener argument is null
 		 */
 		@Override
-		public Slot<SignalListener5<A, B, C, D, E>> addOnce(SignalListener5<A, B, C, D, E> listener) {
+		public Slot<SignalListener5<A, B, C, D, E>>
+				addOnce(SignalListener5<A, B, C, D, E> listener) {
 			return _signal.addOnce(listener);
 		}
 

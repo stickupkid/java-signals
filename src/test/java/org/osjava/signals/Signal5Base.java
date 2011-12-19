@@ -38,14 +38,14 @@ public class Signal5Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener5<String, String, String, String, Boolean> listener =
-				new SignalListener5<String, String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, String value3,
-							Boolean value4) {
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener5<String, String, String, String, Boolean> listener =
+					new SignalListener5<String, String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								String value3, Boolean value4) {
+						}
+					};
+
 			signal.add(listener);
 		}
 
@@ -69,14 +69,14 @@ public class Signal5Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener5<String, String, String, String, Boolean> listener =
-				new SignalListener5<String, String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, String value3,
-							Boolean value5) {
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener5<String, String, String, String, Boolean> listener =
+					new SignalListener5<String, String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								String value3, Boolean value5) {
+						}
+					};
+
 			signal.addOnce(listener);
 		}
 
@@ -131,17 +131,17 @@ public class Signal5Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener5<String, String, String, String, Boolean> listener =
-				new SignalListener5<String, String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, String value3,
-							Boolean value4) {
-						if (value0.equals("Hello") && value1.equals("World") && value2.equals("!")
-								&& value3.equals("?") && value4)
-							active.add(true);
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener5<String, String, String, String, Boolean> listener =
+					new SignalListener5<String, String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								String value3, Boolean value4) {
+							if (value0.equals("Hello") && value1.equals("World")
+									&& value2.equals("!") && value3.equals("?") && value4)
+								active.add(true);
+						}
+					};
+
 			signal.add(listener);
 		}
 

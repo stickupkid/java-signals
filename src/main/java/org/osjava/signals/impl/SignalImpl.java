@@ -146,7 +146,7 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 	protected boolean registrationPossible(L listener, boolean once) {
 		assert null != listener : "Listener can not be null";
 
-		if (bindings.size() > 0)
+		if (bindings.size() <= 0)
 			return true;
 		else {
 			final Slot<L> slot = findSlotByListener(listener);
@@ -165,7 +165,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl0 implements Signal0 {
 
-		private final List<Slot<SignalListener0>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener0>>();
+		private final List<Slot<SignalListener0>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener0>>();
 
 		private final Dispatcher<SignalListener0> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -235,7 +236,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl1<A> implements Signal1<A> {
 
-		private final List<Slot<SignalListener1<A>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
+		private final List<Slot<SignalListener1<A>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener1<A>>>();
 
 		private final Dispatcher<SignalListener1<A>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -308,7 +310,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl2<A, B> implements Signal2<A, B> {
 
-		private final List<Slot<SignalListener2<A, B>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener2<A, B>>>();
+		private final List<Slot<SignalListener2<A, B>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener2<A, B>>>();
 
 		private final Dispatcher<SignalListener2<A, B>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -381,7 +384,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl3<A, B, C> implements Signal3<A, B, C> {
 
-		private final List<Slot<SignalListener3<A, B, C>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
+		private final List<Slot<SignalListener3<A, B, C>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener3<A, B, C>>>();
 
 		private final Dispatcher<SignalListener3<A, B, C>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -455,7 +459,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl4<A, B, C, D> implements Signal4<A, B, C, D> {
 
-		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
+		private final List<Slot<SignalListener4<A, B, C, D>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener4<A, B, C, D>>>();
 
 		private final Dispatcher<SignalListener4<A, B, C, D>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -529,7 +534,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 
 	public static class SignalImpl5<A, B, C, D, E> implements Signal5<A, B, C, D, E> {
 
-		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings = new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
+		private final List<Slot<SignalListener5<A, B, C, D, E>>> _bindings =
+				new CopyOnWriteArrayList<Slot<SignalListener5<A, B, C, D, E>>>();
 
 		private final Dispatcher<SignalListener5<A, B, C, D, E>> _dispatcher = DispatcherImpl
 				.newInstance(_bindings);
@@ -565,7 +571,8 @@ public class SignalImpl<L extends SignalListener> implements Signal<L> {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Slot<SignalListener5<A, B, C, D, E>> addOnce(SignalListener5<A, B, C, D, E> listener) {
+		public Slot<SignalListener5<A, B, C, D, E>>
+				addOnce(SignalListener5<A, B, C, D, E> listener) {
 			return _signal.addOnce(listener);
 		}
 

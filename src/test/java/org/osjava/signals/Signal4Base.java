@@ -37,13 +37,14 @@ public class Signal4Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener4<String, String, String, Boolean> listener =
-				new SignalListener4<String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, Boolean value3) {
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener4<String, String, String, Boolean> listener =
+					new SignalListener4<String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								Boolean value3) {
+						}
+					};
+
 			signal.add(listener);
 		}
 
@@ -66,13 +67,14 @@ public class Signal4Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener4<String, String, String, Boolean> listener =
-				new SignalListener4<String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, Boolean value3) {
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener4<String, String, String, Boolean> listener =
+					new SignalListener4<String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								Boolean value3) {
+						}
+					};
+
 			signal.addOnce(listener);
 		}
 
@@ -124,16 +126,17 @@ public class Signal4Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener4<String, String, String, Boolean> listener =
-				new SignalListener4<String, String, String, Boolean>() {
-					public void apply(String value0, String value1, String value2, Boolean value3) {
-						if (value0.equals("Hello") && value1.equals("World")
-								&& value2.equals("!") && value3)
-							active.add(true);
-					}
-				};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener4<String, String, String, Boolean> listener =
+					new SignalListener4<String, String, String, Boolean>() {
+						public void apply(String value0, String value1, String value2,
+								Boolean value3) {
+							if (value0.equals("Hello") && value1.equals("World")
+									&& value2.equals("!") && value3)
+								active.add(true);
+						}
+					};
+
 			signal.add(listener);
 		}
 

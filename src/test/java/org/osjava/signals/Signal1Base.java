@@ -38,12 +38,12 @@ public class Signal1Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener1<String> listener = new SignalListener1<String>() {
-			public void apply(String value) {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener1<String> listener = new SignalListener1<String>() {
+				public void apply(String value) {
+				}
+			};
+
 			signal.add(listener);
 		}
 
@@ -66,12 +66,12 @@ public class Signal1Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener1<String> listener = new SignalListener1<String>() {
-			public void apply(String value) {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener1<String> listener = new SignalListener1<String>() {
+				public void apply(String value) {
+				}
+			};
+
 			signal.addOnce(listener);
 		}
 
@@ -125,14 +125,14 @@ public class Signal1Base {
 
 		final String expected = "Hello";
 
-		final SignalListener1<String> listener = new SignalListener1<String>() {
-			public void apply(String value) {
-				if (expected.equals(value))
-					active.add(value);
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener1<String> listener = new SignalListener1<String>() {
+				public void apply(String value) {
+					if (expected.equals(value))
+						active.add(value);
+				}
+			};
+
 			signal.add(listener);
 		}
 

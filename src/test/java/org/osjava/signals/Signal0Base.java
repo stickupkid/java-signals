@@ -11,12 +11,12 @@ import org.osjava.signals.SignalListener.SignalListener0;
 public class Signal0Base {
 
 	protected Signal0 signal;
-	
+
 	@After
 	public void tearDown() {
 		signal.removeAll();
 	}
-	
+
 	@Test
 	public void verify_that_getNumListeners_is_zero() {
 		Assert.assertEquals("Signal getNumListeners should be zero", 0, signal.getNumListeners());
@@ -37,12 +37,12 @@ public class Signal0Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener0 listener = new SignalListener0() {
-			public void apply() {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener0 listener = new SignalListener0() {
+				public void apply() {
+				}
+			};
+
 			signal.add(listener);
 		}
 
@@ -65,12 +65,12 @@ public class Signal0Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener0 listener = new SignalListener0() {
-			public void apply() {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener0 listener = new SignalListener0() {
+				public void apply() {
+				}
+			};
+
 			signal.addOnce(listener);
 		}
 
@@ -123,13 +123,13 @@ public class Signal0Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener0 listener = new SignalListener0() {
-			public void apply() {
-				active.add(true);
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener0 listener = new SignalListener0() {
+				public void apply() {
+					active.add(true);
+				}
+			};
+
 			signal.add(listener);
 		}
 

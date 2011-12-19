@@ -38,12 +38,13 @@ public class Signal2Base {
 	public void verify_that_add_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener2<String, Boolean> listener = new SignalListener2<String, Boolean>() {
-			public void apply(String value0, Boolean value1) {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener2<String, Boolean> listener =
+					new SignalListener2<String, Boolean>() {
+						public void apply(String value0, Boolean value1) {
+						}
+					};
+
 			signal.add(listener);
 		}
 
@@ -66,12 +67,13 @@ public class Signal2Base {
 	public void verify_that_add_once_makes_getNumListeners_equal_ten() {
 		final int total = 10;
 
-		final SignalListener2<String, Boolean> listener = new SignalListener2<String, Boolean>() {
-			public void apply(String value0, Boolean value1) {
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener2<String, Boolean> listener =
+					new SignalListener2<String, Boolean>() {
+						public void apply(String value0, Boolean value1) {
+						}
+					};
+
 			signal.addOnce(listener);
 		}
 
@@ -123,14 +125,15 @@ public class Signal2Base {
 		final int total = 10;
 		final ArrayList<Boolean> active = new ArrayList<Boolean>();
 
-		final SignalListener2<String, Boolean> listener = new SignalListener2<String, Boolean>() {
-			public void apply(String value0, Boolean value1) {
-				if (value0.equals("String") && value1)
-					active.add(true);
-			}
-		};
-
 		for (int i = 0; i < total; i++) {
+			final SignalListener2<String, Boolean> listener =
+					new SignalListener2<String, Boolean>() {
+						public void apply(String value0, Boolean value1) {
+							if (value0.equals("String") && value1)
+								active.add(true);
+						}
+					};
+
 			signal.add(listener);
 		}
 
